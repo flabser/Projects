@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" mode="on">
+    <!-- <caching>CACHING_IN_SERVER_SCOPE</caching> -->
+    <caching>NO_CACHING</caching>
+
+    <caption name="brand"/>
+
+    <caption name="new_"/>
+    <caption name="cancel"/>
+    <caption name="select"/>
+    <caption name="close"/>
+    <caption name="filter"/>
+    <caption name="wait_while_document_save"/>
+
+    <caption name="reg_date"/>
+    <caption name="expiry_date"/>
+    <caption name="reg_number"/>
+
+    <caption name="notifications"/>
+    <caption name="type"/>
+    <caption name="sender"/>
+    <caption name="recipient"/>
+    <caption name="sendtime"/>
+    <caption name="content"/>
+
+    <caption name="attach_file"/>
+    <caption name="properties"/>
+    <caption name="interface"/>
+    <caption name="del_document"/>
+    <caption name="logout"/>
+    <caption name="user_profile"/>
+    <caption name="search"/>
+    <caption name="change_skin"/>
+    <caption name="employee"/>
+    <caption name="position"/>
+    <caption name="user_name"/>
+    <caption name="login_name"/>
+    <caption name="email"/>
+    <caption name="password"/>
+    <caption name="password_confirm"/>
+    <caption name="password_confirm_not_equals"/>
+    <caption name="email"/>
+    <caption name="org_name"/>
+    <caption name="roles"/>
+    <caption name="department"/>
+    <caption name="iin"/>
+    <caption name="status"/>
+    <caption name="limit_view"/>
+    <caption name="interface_lang"/>
+    <caption name="back_to_doc_list"/>
+    <caption name="ft_search_result"/>
+
+    <caption name="orders"/>
+    <caption name="contracts"/>
+    <caption name="new_order"/>
+    <caption name="new_contract"/>
+    <caption name="office_memo"/>
+
+</rule>

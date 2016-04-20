@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rule type="page" mode="on">
+    <caching>CACHING_IN_SERVER_SCOPE</caching>
+
+    <caption name="notes"/>
+    <caption name="body"/>
+    <caption name="files"/>
+    <caption name="additional"/>
+    <caption name="save_close"/>
+    <caption name="close"/>
+    <caption name="bin"/>
+    <caption name="editable"/>
+    <caption name="author"/>
+    <caption name="organization"/>
+    <caption name="object"/>
+    <caption name="description"/>
+    <caption name="reg_documents"/>
+
+    <caption name="additional_info"/>
+
+    <caption name="documents_of_title"/>
+    <caption name="note"/>
+
+    <caption name="unknown"/>
+    <caption name="writtenoff"/>
+    <caption name="active"/>
+    <caption name="inactive"/>
+    <caption name="summary">Краткое содержание</caption>
+    <caption name="content"/>
+    <caption name="signer"/>
+</rule>
