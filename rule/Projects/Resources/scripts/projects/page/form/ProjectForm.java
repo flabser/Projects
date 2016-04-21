@@ -1,4 +1,18 @@
-package workflow.page.form;
+package projects.page.form;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
 import com.exponentus.common.model.Attachment;
 import com.exponentus.env.EnvConst;
@@ -13,38 +27,25 @@ import com.exponentus.scripting.event._DoPage;
 import com.exponentus.server.Server;
 import com.exponentus.user.IUser;
 import com.exponentus.webserver.servlet.UploadedFile;
+
 import kz.flabs.util.Util;
 import kz.nextbase.script._Exception;
 import kz.nextbase.script.actions._Action;
 import kz.nextbase.script.actions._ActionBar;
 import kz.nextbase.script.actions._ActionType;
-import workflow.dao.OfficeMemoDAO;
-import workflow.model.OfficeMemo;
-import workflow.model.Block;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.eclipse.persistence.exceptions.DatabaseException;
+import projects.dao.ProjectDAO;
+import projects.model.Project;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-public class OfficeMemoForm extends _DoPage {
+public class ProjectForm extends _DoPage {
 
 	@Override
 	public void doGET(_Session session, _WebFormData formData) {
 
 		IUser<Long> user = session.getUser();
-		OfficeMemo entity;
+		Project entity;
 		String id = formData.getValueSilently("docid");
 		if (!id.isEmpty()) {
-			OfficeMemoDAO dao = new OfficeMemoDAO(session);
+			ProjectDAO dao = new ProjectDAO(session);
 			entity = dao.findById(UUID.fromString(id));
 			addValue("formsesid", Util.generateRandomAsText());
 
@@ -53,7 +54,8 @@ public class OfficeMemoForm extends _DoPage {
 				Attachment att = entity.getAttachments().stream().filter(it -> it.getIdentifier().equals(attachmentId)).findFirst().get();
 
 				try {
-					String filePath = getTmpDirPath() + File.separator + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm", 10) + att.getRealFileName();
+					String filePath = getTmpDirPath() + File.separator + Util.generateRandomAsText("qwertyuiopasdfghjklzxcvbnm", 10)
+					        + att.getRealFileName();
 					File attFile = new File(filePath);
 					FileUtils.writeByteArrayToFile(attFile, att.getFile());
 					showFile(filePath, att.getRealFileName());
@@ -66,7 +68,7 @@ public class OfficeMemoForm extends _DoPage {
 				setBadRequest();
 			}
 		} else {
-			entity = new OfficeMemo();
+			entity = new Project();
 			entity.setAuthor(user);
 			entity.setRegDate(new Date());
 			String fsId = formData.getValueSilently(EnvConst.FSID_FIELD_NAME);
@@ -114,19 +116,19 @@ public class OfficeMemoForm extends _DoPage {
 				return;
 			}
 
-			OfficeMemoDAO dao = new OfficeMemoDAO(session);
-			OfficeMemo entity;
+			ProjectDAO dao = new ProjectDAO(session);
+			Project entity;
 			String id = formData.getValueSilently("docid");
 			boolean isNew = id.isEmpty();
 
 			if (isNew) {
-				entity = new OfficeMemo();
+				entity = new Project();
 			} else {
 				entity = dao.findById(id);
 			}
 
-			entity.setContent(formData.getValue("content"));
-			entity.setSummary(formData.getValue("summary"));
+			entity.setName(formData.getValue("name"));
+			entity.setComment(formData.getValue("comment"));
 
 			String[] fileNames = formData.getListOfValuesSilently("fileid");
 			if (fileNames.length > 0) {
@@ -163,7 +165,6 @@ public class OfficeMemoForm extends _DoPage {
 	private _Validation validate(_WebFormData formData, LanguageCode lang) {
 		_Validation ve = new _Validation();
 
-
 		if (formData.getValueSilently("summary").isEmpty()) {
 			ve.addError("summary", "required", getLocalizedWord("field_is_empty", lang));
 		}
@@ -184,11 +185,12 @@ public class OfficeMemoForm extends _DoPage {
 			return;
 		}
 
-		OfficeMemoDAO dao = new OfficeMemoDAO(session);
-		OfficeMemo entity = dao.findById(id);
+		ProjectDAO dao = new ProjectDAO(session);
+		Project entity = dao.findById(id);
 
 		List<Attachment> atts = entity.getAttachments();
-		List<Attachment> forRemove = atts.stream().filter(it -> attachmentId.equals(it.getIdentifier()) && it.getRealFileName().equals(attachmentName)).collect(Collectors.toList());
+		List<Attachment> forRemove = atts.stream()
+		        .filter(it -> attachmentId.equals(it.getIdentifier()) && it.getRealFileName().equals(attachmentName)).collect(Collectors.toList());
 		atts.removeAll(forRemove);
 
 		try {
