@@ -2,7 +2,7 @@
 <nextbase>
     <hostname>localhost</hostname>
     <port></port>  
-    <orgname>Avanti</orgname>
+    <orgname>Avanti's projects</orgname>
     <applications>
        <app>
             <name mode="on">Administrator</name>
