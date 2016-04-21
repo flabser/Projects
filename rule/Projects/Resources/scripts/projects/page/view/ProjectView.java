@@ -8,7 +8,7 @@ import kz.nextbase.script.actions._ActionBar;
 import kz.nextbase.script.actions._ActionType;
 import projects.dao.ProjectDAO;
 
-public class OfficeMemoView extends AbstractProjectsView {
+public class ProjectView extends AbstractProjectsView {
 
 	@Override
 	public void doGET(_Session session, _WebFormData formData) {
