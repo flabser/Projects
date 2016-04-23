@@ -1,0 +1,42 @@
+<div class="content-header">
+    <h1 class="header-title">
+        {{'projects'}}
+    </h1>
+    <div class="content-actions">
+        <button class="btn" type="button" (click)="composeRecord()">
+            {{'new_project'}}
+        </button>
+    </div>
+</div>
+<div class="content-body">
+    <div class="view">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" data-toggle="docid" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>
+                        {{'name'}}
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            <div class="entry-wrap" *ngFor="#project of projects">
+                <div data-id="{{project.id}}" class="entry">
+                    <label class="entry-select">
+                        <input type="checkbox" name="docid" value="{{project.id}}" />
+                    </label>
+                    <a href="{{project.id}}" class="entry-link">
+                        <div class="entry-fields">
+                            <span>
+                                {{project.name}}
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

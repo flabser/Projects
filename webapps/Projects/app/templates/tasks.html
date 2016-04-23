@@ -1,0 +1,42 @@
+<div class="content-header">
+    <h1 class="header-title">
+        {{'tasks'}}
+    </h1>
+    <div class="content-actions">
+        <button class="btn" type="button" (click)="composeRecord()">
+            {{'new_task'}}
+        </button>
+    </div>
+</div>
+<div class="content-body">
+    <div class="view">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" data-toggle="docid" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>
+                        {{'body'}}
+                    </span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            <div class="entry-wrap" *ngFor="#task of tasks">
+                <div data-id="{{task.id}}" class="entry">
+                    <label class="entry-select">
+                        <input type="checkbox" name="docid" value="{{task.id}}" />
+                    </label>
+                    <a href="{{task.id}}" class="entry-link">
+                        <div class="entry-fields">
+                            <span>
+                                {{task.body}}
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

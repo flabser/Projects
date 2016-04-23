@@ -1,0 +1,101 @@
+<form>
+    <header class="content-header">
+        <button class="btn-back" type="button" (click)="close($event)">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <h1 class="header-title">
+            {{'task'}}
+        </h1>
+        <div class="content-actions">
+            <button class="btn btn-primary" type="button" (click)="onSubmit($event)">
+                {{'save_close'}}
+            </button>
+            <button class="btn" type="button" (click)="close($event)">
+                {{'close'}}
+            </button>
+        </div>
+    </header>
+    <section class="content-body">
+        <fieldset class="fieldset">
+            <div class="form-group">
+                <div class="control-label">
+                    {{'task_type'}}
+                </div>
+                <div class="controls">
+                    <select name="taskType">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'status'}}
+                </div>
+                <div class="controls">
+                    <select name="status">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'priority'}}
+                </div>
+                <div class="controls">
+                    <select name="priority">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'body'}}
+                </div>
+                <div class="controls">
+                    <textarea name="body" class="span7">
+                        {{task.body}}
+                    </textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'assignee_user'}}
+                </div>
+                <div class="controls">
+                    <select name="assignee">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'start_date'}}
+                </div>
+                <div class="controls">
+                    <input type="date" name="startDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'due_date'}}
+                </div>
+                <div class="controls">
+                    <input type="date" name="dueDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'tags'}}
+                </div>
+                <div class="controls">
+                    <select name="tags">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                attachments
+            </div>
+        </fieldset>
+    </section>
+</form>

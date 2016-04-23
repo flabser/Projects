@@ -1,0 +1,50 @@
+<div class="layout">
+    <div class="content-overlay" (mousedown)="hideNav()" (touchstart)="hideNav()"></div>
+    <header class="header navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="btn-side-nav-toggle" type="button" (click)="toggleNav()"></button>
+                <img class="brand-logo" alt="logo" src="img/logo.png" />
+                <span class="brand-title">
+                    {{HEADER_TITLE}}
+                </span>
+            </div>
+            <nav class="navbar-nav navbar-right">
+                <ul class="nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>
+                        </a>
+                        <ul class="dropdown-menu right">
+                            <li>
+                                <a class="user-profile" [routerLink]="['UserProfile']">
+                                    {{loggedUser.userName}}
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a class="logout" href="#logout" (click)="logout()">
+                                    logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-search" name="ft-search">
+                    <input type="hidden" name="id" value="search" />
+                    <input type="search" class="q" name="keyword" value="{{search_keyword}}" placeholder={{search_placeholder}} required="required" autocomplete="off" />
+                    <button type="reset">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <input type="submit" value="search" />
+                </form>
+            </nav>
+        </div>
+    </header>
+    <section class="container">
+        <aside nav class="aside side-nav"></aside>
+        <main class="content">
+            <router-outlet></router-outlet>
+        </main>
+    </section>
+</div>
