@@ -7,12 +7,15 @@ import {
     LocationStrategy,
     HashLocationStrategy
 } from 'angular2/router';
+import 'rxjs/Rx';
 
 import {createStore} from 'redux';
 
 import {App} from './components/app';
 import {TaskActions} from './actions/task';
+import {TaskService} from './services/task-service';
 import {ProjectActions} from './actions/project';
+import {ProjectService} from './services/project-service';
 import rootReducer from './reducers/index';
 
 const appStore = createStore(rootReducer);
@@ -29,5 +32,7 @@ bootstrap(App, [
     ROUTER_PROVIDERS,
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     TaskActions,
-    ProjectActions
+    TaskService,
+    ProjectActions,
+    ProjectService
 ]).catch(err => console.error(err));

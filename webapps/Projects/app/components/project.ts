@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from 'angular2/core';
 import {Router} from 'angular2/router';
 
 import {Project} from '../models/project';
+import {ProjectService} from '../services/project-service';
 import {ProjectActions} from '../actions/project';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProjectComponent implements OnInit {
     constructor(
         @Inject('AppStore') private appStore,
         private projectActions: ProjectActions,
+        private projectService: ProjectService,
         private _router: Router
     ) { }
 
@@ -23,7 +25,7 @@ export class ProjectComponent implements OnInit {
     }
 
     onSubmit() {
-        this.appStore.dispatch(this.projectActions.saveTask(this.project));
+        this.projectService.saveProject(this.project);
     }
 
     close() {

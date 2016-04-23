@@ -1,7 +1,9 @@
-import {Component} from 'angular2/core';
+import {Component, Inject} from 'angular2/core';
 import {Router} from 'angular2/router';
+import {Observable} from 'rxjs/Observable';
 
 import {Task} from '../models/task';
+import {TaskService} from '../services/task-service';
 
 @Component({
     selector: '[tasks]',
@@ -9,9 +11,16 @@ import {Task} from '../models/task';
 })
 
 export class TasksComponent {
-    tasks: Task[];
+    tasks: Observable<Array<Task>>;
 
-    constructor(private _router: Router) {}
+    constructor(
+        @Inject('AppStore') private appStore,
+        private _router: Router,
+        private taskService: TaskService
+    ) {
+        this.tasks = taskService.tasks;
+        taskService.getTasks();
+    }
 
     composeRecord() {
         this._router.navigate(['Task', { id: 'new' }]);

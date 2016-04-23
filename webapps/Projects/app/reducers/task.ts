@@ -1,10 +1,17 @@
 import {TASK_ACTION} from '../actions/task';
 import {Task} from '../models/task';
 
-export default (state = new Task(), action: any = {}) => {
+const initialState: Task[] = [new Task(), new Task(), new Task()];
+
+export default (state = initialState, action: any = {}) => {
+    console.log('reducer task', action, state);
+
     switch (action.type) {
+        case TASK_ACTION.GET_TASKS:
+            return state;
+
         case TASK_ACTION.SAVE_TASK:
-            return state = new Task();
+            return state;
 
         case TASK_ACTION.REMOVE_TASK:
             return state;

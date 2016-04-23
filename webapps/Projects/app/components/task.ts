@@ -3,6 +3,7 @@ import {Router} from 'angular2/router';
 
 import {Task} from '../models/task';
 import {TaskActions} from '../actions/task';
+import {TaskService} from '../services/task-service';
 
 @Component({
     selector: '[task]',
@@ -15,6 +16,7 @@ export class TaskComponent implements OnInit {
     constructor (
         @Inject('AppStore') private appStore,
         private taskActions: TaskActions,
+        private taskService: TaskService,
         private _router: Router
     ) { }
 
@@ -23,7 +25,7 @@ export class TaskComponent implements OnInit {
     }
 
     onSubmit() {
-        this.appStore.dispatch(this.taskActions.saveTask(this.task));
+        this.taskActions.saveTask(this.task);
     }
 
     close() {
