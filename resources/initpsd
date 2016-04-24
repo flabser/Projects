@@ -1,5 +1,6 @@
 #Init primary data for Software developing Projects
 #
+#COMMON
 stini reference.init.FillRegionTypes
 stini reference.init.FillLocalityTypes
 stini reference.init.FillCountries
@@ -12,8 +13,9 @@ stini reference.init.FillDepartmentType
 stini reference.init.FillPositions
 stini reference.init.FillTags
 stini reference.init.FillOrgCategories
-stini reference.init.FillTaskTypesSofwareDev
 stini staff.init.FillDefaultLabels
 stini staff.init.FillDefaultRoles
 stini staff.init.FillTestOrgs
 stini staff.init.FillTestUsers
+#SPECIFIC
+stini reference.init.FillTaskTypesSofwareDev
