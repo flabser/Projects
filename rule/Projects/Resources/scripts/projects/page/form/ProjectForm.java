@@ -165,11 +165,8 @@ public class ProjectForm extends _DoPage {
 	private _Validation validate(_WebFormData formData, LanguageCode lang) {
 		_Validation ve = new _Validation();
 
-		if (formData.getValueSilently("summary").isEmpty()) {
-			ve.addError("summary", "required", getLocalizedWord("field_is_empty", lang));
-		}
-		if (formData.getValueSilently("content").isEmpty()) {
-			ve.addError("content", "required", getLocalizedWord("field_is_empty", lang));
+		if (formData.getValueSilently("name").isEmpty()) {
+			ve.addError("name", "required", getLocalizedWord("field_is_empty", lang));
 		}
 
 		return ve;

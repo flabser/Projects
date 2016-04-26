@@ -13,7 +13,7 @@
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
-                    <input type="checkbox" data-toggle="docid" class="all" />
+                    <input type="checkbox" data-toggle="id" class="all" />
                 </label>
                 <div class="entry-captions">
                     <span>
@@ -26,9 +26,9 @@
             <div class="entry-wrap" *ngFor="#project of projects">
                 <div data-id="{{project.id}}" class="entry">
                     <label class="entry-select">
-                        <input type="checkbox" name="docid" value="{{project.id}}" />
+                        <input type="checkbox" name="id" value="{{project.id}}" />
                     </label>
-                    <a href="{{project.id}}" class="entry-link">
+                    <a class="entry-link" [routerLink]="['Project', {id: project.id}]">
                         <div class="entry-fields">
                             <span>
                                 {{project.name}}

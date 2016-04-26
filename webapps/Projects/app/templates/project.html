@@ -1,4 +1,4 @@
-<form>
+<form [ngFormModel]="projectForm">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -7,7 +7,7 @@
             {{'project'}}
         </h1>
         <div class="content-actions">
-            <button class="btn btn-primary" type="button" (click)="onSubmit($event)">
+            <button class="btn btn-primary" type="button" [disabled]="!projectForm.valid" (click)="saveProject()">
                 {{'save_close'}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
@@ -22,7 +22,7 @@
                     {{'name'}}
                 </div>
                 <div class="controls">
-                    <input type="text" name="name" />
+                    <input class="span6" [(ngModel)]="project.name" ngControl="name" />
                 </div>
             </div>
             <div class="form-group">
@@ -30,8 +30,8 @@
                     {{'status'}}
                 </div>
                 <div class="controls">
-                    <select name="status">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.status" ngControl="status">
+                        <option *ngFor="#st of statuses" [value]="st">{{st}}</option>
                     </select>
                 </div>
             </div>
@@ -40,8 +40,8 @@
                     {{'customer'}}
                 </div>
                 <div class="controls">
-                    <select name="customer">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.customer" ngControl="customer">
+                        <option *ngFor="#c of customers" [value]="c">{{c}}</option>
                     </select>
                 </div>
             </div>
@@ -50,8 +50,8 @@
                     {{'manager'}}
                 </div>
                 <div class="controls">
-                    <select name="manager">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.manager" ngControl="manager">
+                        <option *ngFor="#m of managers" [value]="m">{{m}}</option>
                     </select>
                 </div>
             </div>
@@ -60,8 +60,8 @@
                     {{'programmer'}}
                 </div>
                 <div class="controls">
-                    <select name="programmer">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.programmer" ngControl="programmer">
+                        <option *ngFor="#p of programmers" [value]="p">{{p}}</option>
                     </select>
                 </div>
             </div>
@@ -70,8 +70,8 @@
                     {{'tester'}}
                 </div>
                 <div class="controls">
-                    <select name="tester">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.tester" ngControl="tester">
+                        <option *ngFor="#t of testers" [value]="t">{{t}}</option>
                     </select>
                 </div>
             </div>
@@ -80,8 +80,8 @@
                     {{'observers'}}
                 </div>
                 <div class="controls">
-                    <select name="observers">
-                        <option value=""></option>
+                    <select class="span6" [(ngModel)]="project.observers" ngControl="observers">
+                        <option *ngFor="#obs of observersOptions" [value]="obs">{{obs}}</option>
                     </select>
                 </div>
             </div>
@@ -90,9 +90,7 @@
                     {{'comment'}}
                 </div>
                 <div class="controls">
-                    <textarea name="comment">
-                        {{comment}}
-                    </textarea>
+                    <textarea class="span6" [(ngModel)]="project.comment" ngControl="comment"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -100,7 +98,7 @@
                     {{'finishDate'}}
                 </div>
                 <div class="controls">
-                    <input type="date" name="finishDate" />
+                    <input type="date" class="span2" [(ngModel)]="project.finishDate" ngControl="finishDate" />
                 </div>
             </div>
             <div class="form-group">

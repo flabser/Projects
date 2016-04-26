@@ -1,4 +1,4 @@
 export class TaskType {
-    docid: string;
+    id: string;
     name: string;
 }

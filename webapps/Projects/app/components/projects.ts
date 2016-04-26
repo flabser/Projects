@@ -1,25 +1,25 @@
 import {Component, Inject} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {Observable} from 'rxjs/Observable';
+import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project-service';
+import {ProjectFactory} from '../factories/project-factory';
 
 @Component({
     selector: '[projects]',
-    template: require('../templates/projects.html')
+    template: require('../templates/projects.html'),
+    directives: [ROUTER_DIRECTIVES]
 })
 
 export class ProjectsComponent {
-    projects: Observable<Array<Project>>;
+    projects: Project[];
 
     constructor(
-        @Inject('AppStore') private appStore,
         private _router: Router,
         private projectService: ProjectService
     ) {
-        this.projects = projectService.projects;
-        projectService.getProjects();
+        projectService.getProjects()
+            .subscribe(response => this.projects = response);
     }
 
     composeRecord() {
@@ -27,6 +27,8 @@ export class ProjectsComponent {
     }
 
     deleteProject(project: Project) {
-        
+        this.projectService.deleteProject(project)
+            .map(response => response)
+            .subscribe();
     }
 }

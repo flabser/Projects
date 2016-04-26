@@ -20,7 +20,7 @@ export const TaskStatusType = {
 };
 
 export class Task {
-    docid: string;
+    id: string;
     author: User;
     regDate: Date;
 

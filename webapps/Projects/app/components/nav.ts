@@ -1,7 +1,7 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 
-//import fetchNav from '../api/api';
+import {AppService} from '../services/app-service';
 
 @Component({
     selector: '[nav]',
@@ -9,17 +9,22 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
     directives: [ROUTER_DIRECTIVES]
 })
 
-export class NavComponent implements OnInit {
+export class NavComponent {
     menus = [
         { title: 'Projects', url: 'Projects' },
         { title: 'Tasks', url: 'Tasks' }
     ];
 
-    ngOnInit() {
-        /*fetchNav().then((response) => {
-            console.log(response);
-        }, (response) => {
-            console.log(response);
-        });*/
+    constructor(
+        private appService: AppService
+    ) {
+        appService.getNav()
+            .map(resp => resp.json())
+            .subscribe(
+                resp => {
+                    console.log(resp);
+                },
+                err => err
+            );
     }
 }

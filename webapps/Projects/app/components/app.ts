@@ -1,7 +1,10 @@
 import {Component, HostBinding, HostListener, OnInit} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
-import {User} from '../models/user';
+import {AppService} from '../services/app-service';
+import {ReferenceService} from '../services/reference-service';
+import {StaffService} from '../services/staff-service';
+
 import {NavComponent} from './nav';
 import {ProjectsComponent} from './projects';
 import {ProjectComponent} from './project';
@@ -9,6 +12,7 @@ import {TasksComponent} from './tasks';
 import {TaskComponent} from './task';
 import {UserProfileComponent} from './user-profile';
 import {UsersComponent} from './users';
+import {User} from '../models/user';
 
 @Component({
     selector: 'task-app',
@@ -31,17 +35,24 @@ export class App implements OnInit {
     isMobileDevice: Boolean;
     layoutClass: string;
 
-    @HostListener('window:resize', ['$event.target'])
-        resize(window) { this.onResize(window); };
+    @HostListener('window:resize', ['$event.target']) resize(window) { this.onResize(window); };
     @HostBinding('class.phone') get device() { return this.isMobileDevice; };
     @HostBinding('class.side-nav-toggle') get toggleNavVisible() { return this.isNavCollapsed; };
 
-    constructor() {}
+    constructor(
+        private appService: AppService,
+        private referenceService: ReferenceService,
+        private staffService: StaffService
+    ) { }
 
     ngOnInit() {
         this.isNavCollapsed = false;
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
+
+        this.appService.getTranslations()
+            .map(resp => resp.json())
+            .subscribe(resp => console.log(resp));
     }
 
     toggleNav() {

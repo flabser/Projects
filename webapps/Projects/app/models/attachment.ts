@@ -1,5 +1,5 @@
 export class Attachment {
-    docid: string;
+    id: string;
     fieldName: string;
     realFileName: string;
     author: string;
