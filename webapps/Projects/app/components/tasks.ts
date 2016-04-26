@@ -1,25 +1,27 @@
 import {Component, Inject} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {Observable} from 'rxjs/Observable';
+import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+// import {Observable} from 'rxjs/Observable';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task-service';
+import {TaskFactory} from '../factories/task-factory';
 
 @Component({
     selector: '[tasks]',
-    template: require('../templates/tasks.html')
+    template: require('../templates/tasks.html'),
+    directives: [ROUTER_DIRECTIVES]
 })
 
 export class TasksComponent {
-    tasks: Observable<Array<Task>>;
+    tasks: Task[];
 
     constructor(
-        @Inject('AppStore') private appStore,
         private _router: Router,
         private taskService: TaskService
     ) {
-        this.tasks = taskService.tasks;
-        taskService.getTasks();
+        taskService.getTasks()
+            .map(response => TaskFactory.createTaskList(response.json()))
+            .subscribe(response => this.tasks = response);
     }
 
     composeRecord() {
@@ -27,6 +29,8 @@ export class TasksComponent {
     }
 
     deleteTask(task: Task) {
-        
+        this.taskService.deleteTask(task)
+            .map(response => response)
+            .subscribe();
     }
 }

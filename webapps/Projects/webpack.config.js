@@ -38,6 +38,8 @@ const plugins = basePlugins
 
 module.exports = {
 
+    // devtool: 'inline-source-map',
+
     entry: {
         app: './app/main.ts',
         vendor: [
@@ -49,8 +51,8 @@ module.exports = {
             'angular2/core',
             'angular2/router',
             'angular2/http',
-            'redux',
-            'redux-thunk',
+            // 'redux',
+            // 'redux-thunk',
             // 'ng2-redux'
         ]
     },

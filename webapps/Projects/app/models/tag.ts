@@ -1,4 +1,4 @@
 export class Tag {
-    docid: string;
+    id: string;
     name: string;
 }
