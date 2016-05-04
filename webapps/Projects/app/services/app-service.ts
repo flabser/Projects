@@ -9,12 +9,13 @@ export class AppService {
     constructor(
         private http: Http
     ) {
-        http.get('/session', HEADER).subscribe(response => console.log(response));
+        // http.get('/session', HEADER).subscribe(response => console.log(response));
     }
 
     getTranslations() {
         let url = 'p?id=common-captions';
-        return this.http.get(url, HEADER);
+        return this.http.get(url, HEADER)
+            .map(response => response.json().captions);
     }
 
     getNav() {
@@ -23,6 +24,6 @@ export class AppService {
     }
 
     logout() {
-        // return this.http.delete(BASE_URL);
+        return this.http.delete('');
     }
 }

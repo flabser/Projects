@@ -15,11 +15,13 @@ export class StaffService {
 
     getOrganizations() {
         let url = '/Staff/p?id=get-organizations';
-        return this.http.get(url, HEADER);
+        return this.http.get(url, HEADER)
+            .map(response => response.json().objects[0].list);
     }
 
     getEmployees() {
-        let url = '/Staff/p?id=employees';
-        return this.http.get(url, HEADER);
+        let url = 'p?id=users';
+        return this.http.get(url, HEADER)
+            .map(response => response.json().objects[0].list);
     }
 }

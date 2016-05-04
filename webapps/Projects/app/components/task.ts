@@ -12,6 +12,7 @@ import {TaskFactory} from '../factories/task-factory';
 })
 
 export class TaskComponent implements OnInit {
+    loading: Boolean = true;
     task: Task;
     taskForm: ControlGroup;
     body: Control;
@@ -31,8 +32,9 @@ export class TaskComponent implements OnInit {
         if (this._params.get('id') !== 'new') {
             this._taskService.getTaskById(this._params.get('id')).subscribe(task => {
                 this.task = task;
-            }, task => {
-                this.task = TaskFactory.createTask(task.json().objects[1]);
+                this.loading = false;
+            }, err => {
+                console.log(err);
             });
 
             this.task.id = this._params.get('id');

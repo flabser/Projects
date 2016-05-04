@@ -21,13 +21,13 @@ export class TaskService {
     ) {}
 
     getTasks(at: string) {
-        return this.http.get(VIEW_URL + '&at=' + at, HEADER)
+        return this.http.get(VIEW_URL + (at ? '&at=' + at: ''), HEADER)
             .map(resp => TaskFactory.createTaskList(resp.json().objects[0].list));
     }
 
     getTaskById(projectId: string) {
         return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
-            .map(response => TaskFactory.createTask(response.json().objects[0]));
+            .map(response => TaskFactory.createTask(response.json().objects[1]));
     }
 
     saveTask(task: Task) {

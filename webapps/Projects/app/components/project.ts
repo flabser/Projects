@@ -5,6 +5,8 @@ import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from 'an
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project-service';
 import {ProjectFactory} from '../factories/project-factory';
+import {StaffService} from '../services/staff-service';
+import {User} from '../models/user';
 
 @Component({
     selector: '[project]',
@@ -12,6 +14,8 @@ import {ProjectFactory} from '../factories/project-factory';
 })
 
 export class ProjectComponent implements OnInit {
+    loading: Boolean = true;
+    users: User[];
     project: Project = new Project();
 
     projectForm: ControlGroup;
@@ -29,6 +33,7 @@ export class ProjectComponent implements OnInit {
 
     constructor(
         private _projectService: ProjectService,
+        private _staffService: StaffService,
         private _router: Router,
         private _params: RouteParams,
         private _formBuilder: FormBuilder
@@ -59,15 +64,16 @@ export class ProjectComponent implements OnInit {
 
         if (this._params.get('id') !== 'new') {
             this._projectService.getProjectById(this._params.get('id')).subscribe(project => {
-                console.log('form ', project);
                 this.project = project;
-            }, project => {
-                console.log('form2 ', project);
-                this.project = ProjectFactory.createProject(project.json().objects[1]);
+                this.loading = false;
+            }, err => {
+                console.log(err);
             });
 
             this.project.id = this._params.get('id');
         }
+
+        _staffService.getEmployees().subscribe(users => this.users = users);
     }
 
     ngOnInit() {

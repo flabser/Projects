@@ -15,11 +15,13 @@ export class ReferenceService {
 
     getTags() {
         let url = '/Reference/p?id=tags';
-        return this.http.get(url, HEADER);
+        return this.http.get(url, HEADER)
+            .map(response => response.json().objects[0].list);
     }
 
     getTaskTypes() {
         let url = '/Reference/p?id=tasktypes';
-        return this.http.get(url, HEADER);
+        return this.http.get(url, HEADER)
+            .map(response => response.json().objects[0].list);
     }
 }

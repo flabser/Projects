@@ -10,21 +10,8 @@ import {AppService} from '../services/app-service';
 })
 
 export class NavComponent {
-    menus = [
-        { title: 'Projects', url: 'Projects' },
-        { title: 'Tasks', url: 'Tasks' }
-    ];
-
     constructor(
-        private appService: AppService
-    ) {
-        /*appService.getNav()
-            .map(resp => resp.json())
-            .subscribe(
-                resp => {
-                    console.log(resp);
-                },
-                err => err
-            );*/
-    }
+        private _appService: AppService,
+        private _router: Router
+    ) { }
 }

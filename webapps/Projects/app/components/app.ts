@@ -11,11 +11,12 @@ import {ProjectComponent} from './project';
 import {TasksComponent} from './tasks';
 import {TaskComponent} from './task';
 import {UserProfileComponent} from './user-profile';
+import {LoginComponent} from './login';
 import {UsersComponent} from './users';
 import {User} from '../models/user';
 
 @Component({
-    selector: 'task-app',
+    selector: 'project-app',
     template: require('../templates/app.html'),
     directives: [ROUTER_DIRECTIVES, NavComponent]
 })
@@ -25,12 +26,13 @@ import {User} from '../models/user';
     { path: '/projects/:id', name: 'Project', component: ProjectComponent },
     { path: '/tasks', name: 'Tasks', component: TasksComponent, useAsDefault: true },
     { path: '/tasks/:id', name: 'Task', component: TaskComponent },
-    { path: '/profile', name: 'UserProfile', component: UserProfileComponent }
+    { path: '/profile', name: 'UserProfile', component: UserProfileComponent },
+    { path: '/login', name: 'Login', component: LoginComponent }
 ])
 
 export class App implements OnInit {
     loggedUser: User;
-    HEADER_TITLE: string = "Task";
+    HEADER_TITLE: string = "Projects";
     isNavCollapsed: Boolean;
     isMobileDevice: Boolean;
     layoutClass: string;
@@ -52,8 +54,10 @@ export class App implements OnInit {
         this.isMobileDevice = this.isMobile();
 
         this.appService.getTranslations()
-            .map(resp => resp.json())
-            .subscribe(resp => console.log(resp));
+            .subscribe(
+                captions => console.log(captions),
+                err => this._router.navigate(['Login'])
+            );
     }
 
     toggleNav() {

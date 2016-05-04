@@ -13,6 +13,7 @@ import {TaskFactory} from '../factories/task-factory';
 })
 
 export class TasksComponent {
+    loading: Boolean = true;
     tasks: Task[];
 
     constructor(
@@ -21,7 +22,10 @@ export class TasksComponent {
         private taskService: TaskService
     ) {
         taskService.getTasks(_params.get('at'))
-            .subscribe(response => this.tasks = response);
+            .subscribe(tasks => {
+                this.tasks = tasks;
+                this.loading = false;
+            });
     }
 
     composeRecord() {

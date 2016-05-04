@@ -1,4 +1,7 @@
-<form [ngFormModel]="taskForm">
+<div *ngIf=loading>
+    {{'loading'}}
+</div>
+<form [ngFormModel]="taskForm" [hidden]=loading>
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>

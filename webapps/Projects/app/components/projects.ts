@@ -12,6 +12,7 @@ import {ProjectFactory} from '../factories/project-factory';
 })
 
 export class ProjectsComponent {
+    loading: Boolean = true;
     projects: Project[];
 
     constructor(
@@ -19,7 +20,10 @@ export class ProjectsComponent {
         private projectService: ProjectService
     ) {
         projectService.getProjects()
-            .subscribe(response => this.projects = response);
+            .subscribe(projects => {
+                this.projects = projects;
+                this.loading = false;
+            });
     }
 
     composeRecord() {

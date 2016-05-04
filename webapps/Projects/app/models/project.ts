@@ -31,11 +31,11 @@ export class Project {
         return serializeObj({
             name: this.name,
             status: this.status,
-            customer: this.customer || 0,
+            customer: (this.customer ? this.customer.id : '') || '',
             manager: this.manager || 0,
             programmer: this.programmer || 0,
             tester: this.tester || 0,
-            observers: this.observers ? this.observers.join(',') : '',
+            observers: this.observers ? this.observers : '',
             comment: this.comment,
             finishDate: this.finishDate ? this.finishDate.toString() : '',
             attachments: '' //this.attachments.join('')

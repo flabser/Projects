@@ -26,7 +26,7 @@ export class ProjectService {
 
     getProjectById(projectId: string) {
         return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
-            .map(resp => ProjectFactory.createProject(resp.json().objects[0]));
+            .map(resp => ProjectFactory.createProject(resp.json().objects[1]));
     }
 
     saveProject(project: Project) {

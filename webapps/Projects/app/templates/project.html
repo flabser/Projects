@@ -1,4 +1,7 @@
-<form [ngFormModel]="projectForm">
+<div *ngIf=loading>
+    {{'loading'}}
+</div>
+<form [ngFormModel]="projectForm" [hidden]=loading>
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -27,16 +30,6 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'status'}}
-                </div>
-                <div class="controls">
-                    <select class="span6" [(ngModel)]="project.status" ngControl="status">
-                        <option *ngFor="#st of statuses" [value]="st">{{st}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="control-label">
                     {{'customer'}}
                 </div>
                 <div class="controls">
@@ -51,7 +44,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.manager" ngControl="manager">
-                        <option *ngFor="#m of managers" [value]="m">{{m}}</option>
+                        <option *ngFor="#m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                 </div>
             </div>
@@ -61,7 +54,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.programmer" ngControl="programmer">
-                        <option *ngFor="#p of programmers" [value]="p">{{p}}</option>
+                        <option *ngFor="#p of users" [value]="p.id">{{p.login}}</option>
                     </select>
                 </div>
             </div>
@@ -71,7 +64,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.tester" ngControl="tester">
-                        <option *ngFor="#t of testers" [value]="t">{{t}}</option>
+                        <option *ngFor="#t of users" [value]="t.id">{{t.login}}</option>
                     </select>
                 </div>
             </div>
@@ -81,16 +74,18 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.observers" ngControl="observers">
-                        <option *ngFor="#obs of observersOptions" [value]="obs">{{obs}}</option>
+                        <option *ngFor="#obs of users" [value]="obs.id">{{obs.login}}</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'comment'}}
+                    {{'status'}}
                 </div>
                 <div class="controls">
-                    <textarea class="span6" [(ngModel)]="project.comment" ngControl="comment"></textarea>
+                    <select class="span6" [(ngModel)]="project.status" ngControl="status">
+                        <option *ngFor="#st of statuses" [value]="st">{{st}}</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -99,6 +94,14 @@
                 </div>
                 <div class="controls">
                     <input type="date" class="span2" [(ngModel)]="project.finishDate" ngControl="finishDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'comment'}}
+                </div>
+                <div class="controls">
+                    <textarea class="span6" [(ngModel)]="project.comment" ngControl="comment"></textarea>
                 </div>
             </div>
             <div class="form-group">
