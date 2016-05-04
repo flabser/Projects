@@ -21,7 +21,6 @@ export class TasksComponent {
         private taskService: TaskService
     ) {
         taskService.getTasks(_params.get('at'))
-            .map(response => TaskFactory.createTaskList(response.json()))
             .subscribe(response => this.tasks = response);
     }
 

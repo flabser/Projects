@@ -1,5 +1,5 @@
 import {Component, HostBinding, HostListener, OnInit} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {AppService} from '../services/app-service';
 import {ReferenceService} from '../services/reference-service';
@@ -40,6 +40,7 @@ export class App implements OnInit {
     @HostBinding('class.side-nav-toggle') get toggleNavVisible() { return this.isNavCollapsed; };
 
     constructor(
+        private _router: Router,
         private appService: AppService,
         private referenceService: ReferenceService,
         private staffService: StaffService
@@ -70,6 +71,10 @@ export class App implements OnInit {
 
     goBack() {
         window.history.back();
+    }
+
+    preventDefault(event) {
+        event.preventDefault();
     }
 
     isMobile() {

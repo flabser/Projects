@@ -6,9 +6,6 @@ import com.exponentus.env.Environment;
 import com.exponentus.exception.SecureException;
 import com.exponentus.localization.LanguageCode;
 import com.exponentus.scripting.*;
-import com.exponentus.scripting.actions._Action;
-import com.exponentus.scripting.actions._ActionBar;
-import com.exponentus.scripting.actions._ActionType;
 import com.exponentus.scripting.event._DoPage;
 import com.exponentus.server.Server;
 import com.exponentus.user.IUser;
@@ -90,13 +87,6 @@ public class ProjectForm extends _DoPage {
         }
 
         addContent(entity);
-        _ActionBar actionBar = new _ActionBar(session);
-        actionBar.addAction(new _Action(getLocalizedWord("save_close", session.getLang()), "", _ActionType.SAVE_AND_CLOSE));
-        actionBar.addAction(new _Action(getLocalizedWord("close", session.getLang()), "", _ActionType.CLOSE));
-        if (entity.getId() != null) {
-
-        }
-        addContent(actionBar);
         startSaveFormTransact(entity);
     }
 

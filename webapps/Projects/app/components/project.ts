@@ -65,6 +65,8 @@ export class ProjectComponent implements OnInit {
                 console.log('form2 ', project);
                 this.project = ProjectFactory.createProject(project.json().objects[1]);
             });
+
+            this.project.id = this._params.get('id');
         }
     }
 
@@ -73,7 +75,7 @@ export class ProjectComponent implements OnInit {
     }
 
     saveProject() {
-        this._projectService.saveProject(this.project).subscribe(resp => this.close());
+        this._projectService.saveProject(this.project).subscribe(response => this.close());
     }
 
     close() {

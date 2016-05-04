@@ -2,6 +2,7 @@ import {Attachment} from './attachment';
 import {Tag} from './tag';
 import {TaskType} from './task-type';
 import {User} from './user';
+import {serializeObj} from '../utils/obj-utils';
 
 export const TaskPriorityType = {
     UNKNOWN: 0,
@@ -36,4 +37,10 @@ export class Task {
     dueDate: Date;
     tags: Tag[];
     attachments: Attachment[];
+
+    serialize(): string {
+        return serializeObj({
+            body: this.body
+        });
+    }
 }

@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {AppService} from '../services/app-service';
 
@@ -18,13 +18,13 @@ export class NavComponent {
     constructor(
         private appService: AppService
     ) {
-        appService.getNav()
+        /*appService.getNav()
             .map(resp => resp.json())
             .subscribe(
                 resp => {
                     console.log(resp);
                 },
                 err => err
-            );
+            );*/
     }
 }

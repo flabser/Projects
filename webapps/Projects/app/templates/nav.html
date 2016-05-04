@@ -29,6 +29,12 @@
             <span>{{'completed'}}</span>
         </a>
     </li>
+    <li>
+        <a [routerLink]="['Tasks', {at: 'my'}]" class="nav-link">
+            <i class="fa fa-ticket"></i>
+            <span>{{'my_tasks'}}</span>
+        </a>
+    </li>
     <li class="divider"></li>
     <li>
         <a [routerLink]="['Projects']" class="nav-link">

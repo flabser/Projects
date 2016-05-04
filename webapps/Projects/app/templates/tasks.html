@@ -28,7 +28,7 @@
                     <label class="entry-select">
                         <input type="checkbox" name="docid" value="{{task.id}}" />
                     </label>
-                    <a href="{{task.id}}" class="entry-link">
+                    <a class="entry-link" [routerLink]="['Task', {id: task.id}]">
                         <div class="entry-fields">
                             <span>
                                 {{task.body}}
