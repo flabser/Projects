@@ -1,6 +1,6 @@
 import {Project} from '../models/project';
 
-export function createProject(json: any): Project {
+function createProject(json: any): Project {
     let result: Project = new Project();
 
     // console.log('factory:createProject', json);
@@ -25,7 +25,7 @@ export function createProject(json: any): Project {
 
 function createProjectList(json: Array<any>): Project[] {
     let result: Project[] = [];
-    json.forEach((project) => result.push(createProject(project)));
+    json.forEach(project => result.push(createProject(project)));
     return result;
 }
 

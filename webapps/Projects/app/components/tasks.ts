@@ -1,5 +1,5 @@
 import {Component, Inject} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
 // import {Observable} from 'rxjs/Observable';
 
 import {Task} from '../models/task';
@@ -17,9 +17,10 @@ export class TasksComponent {
 
     constructor(
         private _router: Router,
+        private _params: RouteParams,
         private taskService: TaskService
     ) {
-        taskService.getTasks()
+        taskService.getTasks(_params.get('at'))
             .map(response => TaskFactory.createTaskList(response.json()))
             .subscribe(response => this.tasks = response);
     }

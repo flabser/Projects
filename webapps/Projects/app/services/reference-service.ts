@@ -14,12 +14,12 @@ export class ReferenceService {
     }
 
     getTags() {
-        let url = '/Reference/p?id=tag-view';
+        let url = '/Reference/p?id=tags';
         return this.http.get(url, HEADER);
     }
 
     getTaskTypes() {
-        let url = '/Reference/p?id=tasktype-view';
+        let url = '/Reference/p?id=tasktypes';
         return this.http.get(url, HEADER);
     }
 }

@@ -63,7 +63,8 @@ export class App implements OnInit {
         this.isNavCollapsed = false;
     }
 
-    logout() {
+    logout(event) {
+        event.preventDefault();
         this.loggedUser = null;
     }
 

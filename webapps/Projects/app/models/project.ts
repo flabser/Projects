@@ -19,10 +19,10 @@ export class Project {
     name: string;
     status: number;
     customer: Organization;
-    manager: User;
-    programmer: User;
-    tester: User;
-    observers: User[];
+    manager: number;
+    programmer: number;
+    tester: number;
+    observers: number[];
     comment: string;
     finishDate: Date = new Date();
     attachments: Attachment[];
@@ -31,13 +31,13 @@ export class Project {
         return serializeObj({
             name: this.name,
             status: this.status,
-            customer: 0, //this.customer.id,
-            manager: 0, //this.manager.login,
-            programmer: 0, //this.programmer.login,
-            tester: 0, //this.tester.login,
-            observers: '', //this.observers.join(','),
+            customer: this.customer || 0,
+            manager: this.manager || 0,
+            programmer: this.programmer || 0,
+            tester: this.tester || 0,
+            observers: this.observers ? this.observers.join(',') : '',
             comment: this.comment,
-            finishDate: this.finishDate && this.finishDate.toString(),
+            finishDate: this.finishDate ? this.finishDate.toString() : '',
             attachments: '' //this.attachments.join('')
         });
     }

@@ -8,7 +8,9 @@ export class AppService {
 
     constructor(
         private http: Http
-    ) {}
+    ) {
+        http.get('/session', HEADER).subscribe(response => console.log(response));
+    }
 
     getTranslations() {
         let url = 'p?id=common-captions';

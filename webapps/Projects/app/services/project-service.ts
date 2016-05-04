@@ -21,12 +21,12 @@ export class ProjectService {
 
     getProjects() {
         return this.http.get(VIEW_URL, HEADER)
-            .map(resp => ProjectFactory.createProjectList(resp.json().objects[1].list));
+            .map(resp => ProjectFactory.createProjectList(resp.json().objects[0].list));
     }
 
     getProjectById(projectId: string) {
         return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
-            .map(resp => ProjectFactory.createProject(resp.json().objects[1]));
+            .map(resp => ProjectFactory.createProject(resp.json().objects[0]));
     }
 
     saveProject(project: Project) {

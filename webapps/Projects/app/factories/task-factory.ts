@@ -1,6 +1,6 @@
 import { Task } from '../models/task';
 
-export function createTask(json: any): Task {
+function createTask(json: any): Task {
     let result: Task = new Task();
 
     // console.log('factory:createTask', json);

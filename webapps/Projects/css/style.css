@@ -1,0 +1,8 @@
+.side-nav .nav-link {
+    padding: 8px 16px 8px 16px;
+}
+
+.side-nav .nav-link>i {
+    color: #565656;
+    font-size: 20px;
+}

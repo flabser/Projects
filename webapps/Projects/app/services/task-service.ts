@@ -14,8 +14,8 @@ export class TaskService {
         private http: Http
     ) {}
 
-    getTasks() {
-        return this.http.get(VIEW_URL, HEADER);
+    getTasks(at: string) {
+        return this.http.get(VIEW_URL + '&at=' + at, HEADER);
     }
 
     saveTask(task: Task) {
