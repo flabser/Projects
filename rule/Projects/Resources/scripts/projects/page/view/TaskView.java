@@ -2,13 +2,14 @@ package projects.page.view;
 
 import com.exponentus.scripting._Session;
 import com.exponentus.scripting._WebFormData;
-import projects.dao.ProjectDAO;
+import com.exponentus.scripting.event._DoPage;
+import projects.dao.TaskDAO;
 
-public class ProjectView extends AbstractProjectsView {
+public class TaskView extends _DoPage {
 
     @Override
     public void doGET(_Session session, _WebFormData formData) {
-        addContent(getViewPage(new ProjectDAO(session), formData));
+        addContent(getViewPage(new TaskDAO(session), formData));
     }
 
     @Override

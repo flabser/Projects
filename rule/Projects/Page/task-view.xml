@@ -3,7 +3,7 @@
     <caching>NO_CACHING</caching>
     <element mode="ON" type="SCRIPT">
         <events>
-            <doscript source="JAVA_CLASS">projects.page.navigator.MainNavigator</doscript>
+            <doscript source="JAVA_CLASS">projects.page.view.TaskView</doscript>
         </events>
     </element>
 </rule>

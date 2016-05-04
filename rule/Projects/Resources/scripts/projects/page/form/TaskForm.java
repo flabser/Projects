@@ -17,8 +17,8 @@ import com.exponentus.webserver.servlet.UploadedFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
-import projects.dao.ProjectDAO;
-import projects.model.Project;
+import projects.dao.TaskDAO;
+import projects.model.Task;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,16 +30,16 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class ProjectForm extends _DoPage {
+public class TaskForm extends _DoPage {
 
     @Override
     public void doGET(_Session session, _WebFormData formData) {
 
         IUser<Long> user = session.getUser();
-        Project entity;
+        Task entity;
         String id = formData.getValueSilently("docid");
         if (!id.isEmpty()) {
-            ProjectDAO dao = new ProjectDAO(session);
+            TaskDAO dao = new TaskDAO(session);
             entity = dao.findById(UUID.fromString(id));
             addValue("formsesid", Util.generateRandomAsText());
 
@@ -62,7 +62,7 @@ public class ProjectForm extends _DoPage {
                 setBadRequest();
             }
         } else {
-            entity = new Project();
+            entity = new Task();
             entity.setAuthor(user);
             entity.setRegDate(new Date());
             String fsId = formData.getValueSilently(EnvConst.FSID_FIELD_NAME);
@@ -110,19 +110,18 @@ public class ProjectForm extends _DoPage {
                 return;
             }
 
-            ProjectDAO dao = new ProjectDAO(session);
-            Project entity;
+            TaskDAO dao = new TaskDAO(session);
+            Task entity;
             String id = formData.getValueSilently("docid");
             boolean isNew = id.isEmpty();
 
             if (isNew) {
-                entity = new Project();
+                entity = new Task();
             } else {
                 entity = dao.findById(id);
             }
 
-            entity.setName(formData.getValue("name"));
-            entity.setComment(formData.getValue("comment"));
+            entity.setBody(formData.getValue("body"));
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {
@@ -176,8 +175,8 @@ public class ProjectForm extends _DoPage {
             return;
         }
 
-        ProjectDAO dao = new ProjectDAO(session);
-        Project entity = dao.findById(id);
+        TaskDAO dao = new TaskDAO(session);
+        Task entity = dao.findById(id);
 
         List<Attachment> atts = entity.getAttachments();
         List<Attachment> forRemove = atts.stream()
