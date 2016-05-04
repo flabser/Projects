@@ -49,10 +49,4 @@
     <caption name="interface_lang"/>
     <caption name="back_to_doc_list"/>
     <caption name="ft_search_result"/>
-
-    <caption name="orders"/>
-    <caption name="contracts"/>
-    <caption name="new_order"/>
-    <caption name="new_contract"/>
-    <caption name="office_memo"/>
 </rule>

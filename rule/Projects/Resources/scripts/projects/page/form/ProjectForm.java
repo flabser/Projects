@@ -1,5 +1,6 @@
 package projects.page.form;
 
+import administrator.dao.UserDAO;
 import com.exponentus.common.model.Attachment;
 import com.exponentus.env.EnvConst;
 import com.exponentus.env.Environment;
@@ -16,15 +17,14 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import projects.dao.ProjectDAO;
 import projects.model.Project;
+import projects.model.constants.ProjectStatusType;
+import staff.dao.OrganizationDAO;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectForm extends _DoPage {
@@ -55,8 +55,6 @@ public class ProjectForm extends _DoPage {
                     Server.logger.errorLogEntry(ioe);
                 }
                 return;
-            } else {
-                setBadRequest();
             }
         } else {
             entity = new Project();
@@ -100,6 +98,8 @@ public class ProjectForm extends _DoPage {
                 return;
             }
 
+            UserDAO userDAO = new UserDAO(session);
+            OrganizationDAO organizationDAO = new OrganizationDAO(session);
             ProjectDAO dao = new ProjectDAO(session);
             Project entity;
             String id = formData.getValueSilently("docid");
@@ -112,7 +112,14 @@ public class ProjectForm extends _DoPage {
             }
 
             entity.setName(formData.getValue("name"));
+            entity.setCustomer(organizationDAO.findById(formData.getValue("customer")));
+            entity.setManager(userDAO.findById(formData.getNumberValueSilently("manager", 0)).getId());
+            entity.setProgrammer(userDAO.findById(formData.getNumberValueSilently("programmer", 0)).getId());
+            entity.setTester(userDAO.findById(formData.getNumberValueSilently("tester", 0)).getId());
+            entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observers", 0)).map(Integer::longValue).collect(Collectors.toList()));
             entity.setComment(formData.getValue("comment"));
+            entity.setStatus(ProjectStatusType.getType(formData.getNumberValueSilently("status", 0)));
+            entity.setFinishDate(new Date());
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {

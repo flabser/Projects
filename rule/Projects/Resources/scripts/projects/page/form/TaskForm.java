@@ -55,8 +55,6 @@ public class TaskForm extends _DoPage {
                     Server.logger.errorLogEntry(ioe);
                 }
                 return;
-            } else {
-                setBadRequest();
             }
         } else {
             entity = new Task();
