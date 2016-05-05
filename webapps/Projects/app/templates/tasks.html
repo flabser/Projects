@@ -23,15 +23,15 @@
             </div>
         </header>
         <div class="entries">
-            <div *ngIf=loading>
+            <div *ngIf="!tasks">
                 {{'loading'}}
             </div>
-            <div class="entry-wrap" *ngFor="#task of tasks">
+            <div class="entry-wrap" *ngFor="let task of tasks">
                 <div data-id="{{task.id}}" class="entry">
                     <label class="entry-select">
                         <input type="checkbox" name="docid" value="{{task.id}}" />
                     </label>
-                    <a class="entry-link" [routerLink]="['Task', {id: task.id}]">
+                    <a class="entry-link" [routerLink]="['/task', task.id]">
                         <div class="entry-fields">
                             <span>
                                 {{task.body}}

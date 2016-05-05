@@ -1,18 +1,21 @@
-import {Component, Inject} from 'angular2/core';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Component, Inject} from '@angular/core';
+import {Router, Routes} from '@angular/router';
 
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project-service';
 import {ProjectFactory} from '../factories/project-factory';
+import {ProjectComponent} from '../components/project';
 
 @Component({
     selector: '[projects]',
-    template: require('../templates/projects.html'),
-    directives: [ROUTER_DIRECTIVES]
+    template: require('../templates/projects.html')
 })
 
+@Routes([
+    { path: '/:id', component: ProjectComponent }
+])
+
 export class ProjectsComponent {
-    loading: Boolean = true;
     projects: Project[];
 
     constructor(
@@ -20,14 +23,11 @@ export class ProjectsComponent {
         private projectService: ProjectService
     ) {
         projectService.getProjects()
-            .subscribe(projects => {
-                this.projects = projects;
-                this.loading = false;
-            });
+            .subscribe(projects => this.projects = projects);
     }
 
     composeRecord() {
-        this._router.navigate(['Project', { id: 'new' }]);
+        this._router.navigate(['/project', 'new']);
     }
 
     deleteProject(project: Project) {

@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from 'angular2/core';
-import {Router, RouteParams} from 'angular2/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from 'angular2/common';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Router, RouteSegment} from '@angular/router';
+import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task-service';
@@ -13,14 +13,14 @@ import {TaskFactory} from '../factories/task-factory';
 
 export class TaskComponent implements OnInit {
     loading: Boolean = true;
-    task: Task;
+    task: Task = new Task();
     taskForm: ControlGroup;
     body: Control;
 
     constructor (
         private _taskService: TaskService,
         private _router: Router,
-        private _params: RouteParams,
+        private _params: RouteSegment,
         private _formBuilder: FormBuilder
     ) {
         this.body = new Control('');
@@ -29,20 +29,20 @@ export class TaskComponent implements OnInit {
             body: this.body
         });
 
-        if (this._params.get('id') !== 'new') {
-            this._taskService.getTaskById(this._params.get('id')).subscribe(task => {
+        if (this._params.getParam('id') !== 'new') {
+            this._taskService.getTaskById(this._params.getParam('id')).subscribe(task => {
                 this.task = task;
                 this.loading = false;
             }, err => {
                 console.log(err);
             });
-
-            this.task.id = this._params.get('id');
+        } else {
+            this.loading = false;
         }
     }
 
     ngOnInit() {
-        this.task = new Task();
+
     }
 
     saveTask() {
@@ -50,6 +50,6 @@ export class TaskComponent implements OnInit {
     }
 
     close() {
-        this._router.navigate(['Tasks']);
+        this._router.navigate(['/tasks']);
     }
 }

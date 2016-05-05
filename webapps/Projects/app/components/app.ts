@@ -1,5 +1,5 @@
-import {Component, HostBinding, HostListener, OnInit} from 'angular2/core';
-import {Router, RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Component, HostBinding, HostListener, OnInit} from '@angular/core';
+import {Router, Routes, RouteSegment, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {AppService} from '../services/app-service';
 import {ReferenceService} from '../services/reference-service';
@@ -18,16 +18,20 @@ import {User} from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent]
+    directives: [
+        ROUTER_DIRECTIVES,
+        NavComponent
+    ]
 })
 
-@RouteConfig([
-    { path: '/projects', name: 'Projects', component: ProjectsComponent },
-    { path: '/projects/:id', name: 'Project', component: ProjectComponent },
-    { path: '/tasks', name: 'Tasks', component: TasksComponent, useAsDefault: true },
-    { path: '/tasks/:id', name: 'Task', component: TaskComponent },
-    { path: '/profile', name: 'UserProfile', component: UserProfileComponent },
-    { path: '/login', name: 'Login', component: LoginComponent }
+@Routes([
+    { path: '/projects', component: ProjectsComponent },
+    { path: '/project/:id', component: ProjectComponent },
+    { path: '/tasks', component: TasksComponent },
+    { path: '/tasks/:id', component: TasksComponent },
+    { path: '/task/:id', component: TaskComponent },
+    { path: '/user-profile', component: UserProfileComponent },
+    { path: '/login', component: LoginComponent }
 ])
 
 export class App implements OnInit {
@@ -35,7 +39,6 @@ export class App implements OnInit {
     HEADER_TITLE: string = "Projects";
     isNavCollapsed: Boolean;
     isMobileDevice: Boolean;
-    layoutClass: string;
 
     @HostListener('window:resize', ['$event.target']) resize(window) { this.onResize(window); };
     @HostBinding('class.phone') get device() { return this.isMobileDevice; };
@@ -43,9 +46,9 @@ export class App implements OnInit {
 
     constructor(
         private _router: Router,
-        private appService: AppService,
-        private referenceService: ReferenceService,
-        private staffService: StaffService
+        private _appService: AppService,
+        private _referenceService: ReferenceService,
+        private _staffService: StaffService
     ) { }
 
     ngOnInit() {
@@ -53,7 +56,7 @@ export class App implements OnInit {
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        this.appService.getTranslations()
+        this._appService.getTranslations()
             .subscribe(
                 captions => console.log(captions),
                 err => this._router.navigate(['Login'])

@@ -1,5 +1,5 @@
-import {Injectable, Inject} from 'angular2/core';
-import {Http, Headers} from 'angular2/http';
+import {Injectable, Inject} from '@angular/core';
+import {Http, Headers} from '@angular/http';
 
 import {Task} from '../models/task';
 import {TaskFactory} from '../factories/task-factory';
@@ -21,12 +21,12 @@ export class TaskService {
     ) {}
 
     getTasks(at: string) {
-        return this.http.get(VIEW_URL + (at ? '&at=' + at: ''), HEADER)
+        return this.http.get(VIEW_URL + (at ? '&at=' + at : ''), HEADER)
             .map(resp => TaskFactory.createTaskList(resp.json().objects[0].list));
     }
 
-    getTaskById(projectId: string) {
-        return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
+    getTaskById(taskId: string) {
+        return this.http.get(FORM_URL + '&docid=' + taskId, HEADER)
             .map(response => TaskFactory.createTask(response.json().objects[1]));
     }
 

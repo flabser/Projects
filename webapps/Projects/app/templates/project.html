@@ -1,7 +1,7 @@
-<div *ngIf=loading>
+<div *ngIf="loading">
     {{'loading'}}
 </div>
-<form [ngFormModel]="projectForm" [hidden]=loading>
+<form [ngFormModel]="projectForm" [hidden]="loading">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.customer" ngControl="customer">
-                        <option *ngFor="#c of customers" [value]="c">{{c}}</option>
+                        <option *ngFor="let c of customers" [value]="c">{{c}}</option>
                     </select>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.manager" ngControl="manager">
-                        <option *ngFor="#m of users" [value]="m.id">{{m.login}}</option>
+                        <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.programmer" ngControl="programmer">
-                        <option *ngFor="#p of users" [value]="p.id">{{p.login}}</option>
+                        <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
                     </select>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.tester" ngControl="tester">
-                        <option *ngFor="#t of users" [value]="t.id">{{t.login}}</option>
+                        <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
                     </select>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.observers" ngControl="observers">
-                        <option *ngFor="#obs of users" [value]="obs.id">{{obs.login}}</option>
+                        <option *ngFor="let obs of users" [value]="obs.id">{{obs.login}}</option>
                     </select>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="controls">
                     <select class="span6" [(ngModel)]="project.status" ngControl="status">
-                        <option *ngFor="#st of statuses" [value]="st">{{st}}</option>
+                        <option *ngFor="let st of statuses" [value]="st">{{st}}</option>
                     </select>
                 </div>
             </div>

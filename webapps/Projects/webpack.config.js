@@ -38,22 +38,25 @@ const plugins = basePlugins
 
 module.exports = {
 
-    // devtool: 'inline-source-map',
+    devtool: 'inline-source-map',
 
     entry: {
         app: './app/main.ts',
         vendor: [
             'es6-shim',
-            'angular2/bundles/angular2-polyfills',
-            'angular2/bootstrap',
-            'angular2/platform/browser',
-            'angular2/platform/common_dom',
-            'angular2/core',
-            'angular2/router',
-            'angular2/http',
-            // 'redux',
-            // 'redux-thunk',
-            // 'ng2-redux'
+            'reflect-metadata',
+
+            '@angular/common',
+            '@angular/compiler',
+            '@angular/core',
+            '@angular/http',
+            '@angular/platform-browser',
+            '@angular/platform-browser-dynamic',
+            '@angular/router',
+            // '@angular/router-deprecated',
+            '@angular/upgrade',
+
+            'zone.js'
         ]
     },
 
@@ -80,6 +83,6 @@ module.exports = {
             { test: /\.woff2/, loader: 'url' },
             { test: /\.ttf/, loader: 'url' },*/
         ],
-        noParse: [/zone\.js\/dist\/.+/, /angular2\/bundles\/.+/]
+        noParse: [/zone\.js\/dist\/.+/, /@angular\/.+/]
     }
 }

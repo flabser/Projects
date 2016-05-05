@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Component} from '@angular/core';
+import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {AppService} from '../services/app-service';
 

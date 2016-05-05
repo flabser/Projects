@@ -1,8 +1,8 @@
-import {bootstrap} from 'angular2/platform/browser';
-import {provide, enableProdMode} from 'angular2/core';
-import {HTTP_PROVIDERS, RequestOptions, BaseRequestOptions, Headers} from 'angular2/http';
-import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
-import {FORM_PROVIDERS} from 'angular2/common';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {bind, provide, enableProdMode, PLATFORM_DIRECTIVES} from '@angular/core';
+import {HTTP_PROVIDERS, RequestOptions, BaseRequestOptions, Headers} from '@angular/http';
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
+import {FORM_PROVIDERS, LocationStrategy, HashLocationStrategy} from '@angular/common';
 import 'rxjs/Rx';
 
 import {App} from './components/app';
@@ -28,6 +28,7 @@ bootstrap(App, [
     HTTP_PROVIDERS,
     ROUTER_DIRECTIVES,
     ROUTER_PROVIDERS,
+    provide(PLATFORM_DIRECTIVES, { useValue: ROUTER_DIRECTIVES, multi: true }),
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     // provide(RequestOptions, { useClass: MyBaseRequestOptions }),
     FORM_PROVIDERS,

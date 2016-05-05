@@ -1,35 +1,30 @@
-import {Component, Inject} from 'angular2/core';
-import {Router, RouteParams, ROUTER_DIRECTIVES} from 'angular2/router';
-// import {Observable} from 'rxjs/Observable';
+import {Component, Inject} from '@angular/core';
+import {Router, Routes, RouteSegment, RouteTree} from '@angular/router';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task-service';
 import {TaskFactory} from '../factories/task-factory';
+import {TaskComponent} from '../components/task';
 
 @Component({
     selector: '[tasks]',
-    template: require('../templates/tasks.html'),
-    directives: [ROUTER_DIRECTIVES]
+    template: require('../templates/tasks.html')
 })
 
 export class TasksComponent {
-    loading: Boolean = true;
     tasks: Task[];
 
     constructor(
         private _router: Router,
-        private _params: RouteParams,
+        private _params: RouteSegment,
         private taskService: TaskService
     ) {
-        taskService.getTasks(_params.get('at'))
-            .subscribe(tasks => {
-                this.tasks = tasks;
-                this.loading = false;
-            });
+        taskService.getTasks(_params.getParam('at'))
+            .subscribe(tasks => this.tasks = tasks);
     }
 
     composeRecord() {
-        this._router.navigate(['Task', { id: 'new' }]);
+        this._router.navigate(['/task', 'new']);
     }
 
     deleteTask(task: Task) {

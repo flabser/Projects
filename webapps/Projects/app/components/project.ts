@@ -1,6 +1,6 @@
-import {Component, Inject, OnInit} from 'angular2/core';
-import {Router, RouteParams} from 'angular2/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from 'angular2/common';
+import {Component, Inject, OnInit} from '@angular/core';
+import {Router, RouteSegment} from '@angular/router';
+import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
 
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project-service';
@@ -35,7 +35,7 @@ export class ProjectComponent implements OnInit {
         private _projectService: ProjectService,
         private _staffService: StaffService,
         private _router: Router,
-        private _params: RouteParams,
+        private _params: RouteSegment,
         private _formBuilder: FormBuilder
     ) {
         this.name = new Control('');
@@ -62,15 +62,17 @@ export class ProjectComponent implements OnInit {
             attachments: this.attachments
         });
 
-        if (this._params.get('id') !== 'new') {
-            this._projectService.getProjectById(this._params.get('id')).subscribe(project => {
+        if (this._params.getParam('id') !== 'new') {
+            this._projectService.getProjectById(this._params.getParam('id')).subscribe(project => {
                 this.project = project;
                 this.loading = false;
             }, err => {
                 console.log(err);
             });
 
-            this.project.id = this._params.get('id');
+            this.project.id = this._params.getParam('id');
+        } else {
+            this.loading = false;
         }
 
         _staffService.getEmployees().subscribe(users => this.users = users);
@@ -85,6 +87,6 @@ export class ProjectComponent implements OnInit {
     }
 
     close() {
-        this._router.navigate(['Projects']);
+        this._router.navigate(['/projects']);
     }
 }

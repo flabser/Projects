@@ -13,7 +13,7 @@
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
-                    <input type="checkbox" data-toggle="id" class="all" />
+                    <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
                     <span>
@@ -23,15 +23,15 @@
             </div>
         </header>
         <div class="entries">
-            <div *ngIf=loading>
+            <div *ngIf="!projects">
                 {{'loading'}}
             </div>
-            <div class="entry-wrap" *ngFor="#project of projects">
+            <div class="entry-wrap" *ngFor="let project of projects">
                 <div data-id="{{project.id}}" class="entry">
                     <label class="entry-select">
-                        <input type="checkbox" name="id" value="{{project.id}}" />
+                        <input type="checkbox" name="docid" value="{{project.id}}" />
                     </label>
-                    <a class="entry-link" [routerLink]="['Project', {id: project.id}]">
+                    <a class="entry-link" [routerLink]="['/project', project.id]">
                         <div class="entry-fields">
                             <span>
                                 {{project.name}}

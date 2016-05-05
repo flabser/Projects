@@ -1,27 +1,34 @@
 {
-  "name": "ng-projects",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "angular-ui-select": "^0.12.100",
-    "angular2": "2.0.0-beta.14",
-    "es6-shim": "^0.35.0",
-    "ng2-redux": "^2.0.2",
-    "redux": "^3.5.1",
-    "redux-thunk": "^2.0.1",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.10"
-  },
-  "devDependencies": {
-    "html-webpack-plugin": "^2.16.0",
-    "raw-loader": "^0.5.1",
-    "ts-loader": "^0.8.2",
-    "typescript": "^1.8.10",
-    "typings": "^0.8.1",
-    "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
-  }
+    "name": "ng-projects",
+    "version": "1.0.0",
+    "scripts": {
+        "postinstall": "npm run typings install",
+        "start": "node server.js",
+        "typings": "typings"
+    },
+    "dependencies": {
+        "@angular/common": "2.0.0-rc.1",
+        "@angular/compiler": "2.0.0-rc.1",
+        "@angular/core": "2.0.0-rc.1",
+        "@angular/http": "2.0.0-rc.1",
+        "@angular/platform-browser": "2.0.0-rc.1",
+        "@angular/platform-browser-dynamic": "2.0.0-rc.1",
+        "@angular/router": "2.0.0-rc.1",
+        "@angular/upgrade": "2.0.0-rc.1",
+
+        "angular-ui-select": "^0.12.100",
+        "es6-shim": "^0.35.0",
+        "reflect-metadata": "0.1.3",
+        "rxjs": "5.0.0-beta.7",
+        "zone.js": "^0.6.12"
+    },
+    "devDependencies": {
+        "ts-loader": "^0.8.2",
+        "typescript": "^1.8.10",
+        "typings": "^0.8.1",
+        "raw-loader": "^0.5.1",
+        "html-webpack-plugin": "^2.16.1",
+        "webpack": "^1.13.0",
+        "webpack-dev-server": "^1.14.1"
+    }
 }
