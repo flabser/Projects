@@ -5,7 +5,7 @@ import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@a
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project-service';
 import {ProjectFactory} from '../factories/project-factory';
-import {StaffService} from '../services/staff-service';
+import {AppService} from '../services/app-service';
 import {User} from '../models/user';
 
 @Component({
@@ -33,21 +33,21 @@ export class ProjectComponent implements OnInit {
 
     constructor(
         private _projectService: ProjectService,
-        private _staffService: StaffService,
+        private _appService: AppService,
         private _router: Router,
         private _params: RouteSegment,
         private _formBuilder: FormBuilder
     ) {
         this.name = new Control('');
-        this.status= new Control('');
-        this.customer= new Control('');
-        this.manager= new Control('');
-        this.programmer= new Control('');
-        this.tester= new Control('');
-        this.observers= new Control('');
-        this.comment= new Control('');
-        this.finishDate= new Control('');
-        this.attachments= new Control('');
+        this.status = new Control('');
+        this.customer = new Control('');
+        this.manager = new Control('');
+        this.programmer = new Control('');
+        this.tester = new Control('');
+        this.observers = new Control('');
+        this.comment = new Control('');
+        this.finishDate = new Control('');
+        this.attachments = new Control('');
 
         this.projectForm = _formBuilder.group({
             name: this.name,
@@ -75,11 +75,11 @@ export class ProjectComponent implements OnInit {
             this.loading = false;
         }
 
-        _staffService.getEmployees().subscribe(users => this.users = users);
+        _appService.getUsers().subscribe(users => this.users = users);
     }
 
     ngOnInit() {
-        
+
     }
 
     saveProject() {

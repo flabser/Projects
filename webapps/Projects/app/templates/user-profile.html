@@ -1,22 +1,30 @@
-<form name="{@entity}" class="form form-userprofile" action="" autocomplete="off">
+<form [ngFormModel]="userForm" name="user-profile" class="form form-userprofile" action="" autocomplete="off">
     <header class="content-header">
+        <button class="btn-back" type="button" (click)="close($event)">
+            <i class="fa fa-chevron-left"></i>
+        </button>
         <h1 class="header-title">
-            <xsl:value-of select="concat(//captions/employee/@caption, ' - ', fields/name)"/>
+            {{'employee'}} {{user.name}}
         </h1>
         <div class="content-actions">
-            <xsl:apply-templates select="//actionbar" />
+            <button class="btn btn-primary" type="button" [disabled]="!userForm.valid" (click)="updateUserProfile()">
+                {{'save_close'}}
+            </button>
+            <button class="btn" type="button" (click)="close($event)">
+                {{'close'}}
+            </button>
         </div>
     </header>
     <section class="content-body">
         <ul class="nav nav-tabs" role="tablist">
             <li class="active">
                 <a href="#tabs-1" role="tab" data-toggle="tab">
-                    <xsl:value-of select="//captions/properties/@caption" />
+                    {{'properties'}}
                 </a>
             </li>
             <li>
                 <a href="#tabs-3" role="tab" data-toggle="tab">
-                    <xsl:value-of select="//captions/interface/@caption" />
+                    {{'interface'}}
                 </a>
             </li>
         </ul>
@@ -28,79 +36,79 @@
                 <fieldset class="fieldset fieldset-user-fields">
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/user_name/@caption" />
+                            {{'user_name'}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
-                                <xsl:value-of select="fields/name"/>
+                                {{user.name}}
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/login_name/@caption" />
+                            {{'login_name'}}
                         </div>
                         <div class="controls">
-                            <input type="text" name="login" value="{fields/login}" class="span3" />
+                            <input type="text" class="span3" [(ngModel)]="user.login" ngControl="login" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/password/@caption" />
+                            {{'password'}}
                         </div>
                         <div class="controls">
-                            <input type="password" name="pwd" class="span3" />
+                            <input type="password" class="span3" [(ngModel)]="user.pwd" ngControl="pwd" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/password_confirm/@caption" />
+                            {{'password_confirm'}}
                         </div>
                         <div class="controls">
-                            <input type="password" name="pwd_confirm" class="span3" />
+                            <input type="password" class="span3" [(ngModel)]="user.pwd_confirm" ngControl="pwd_confirm" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/email/@caption" />
+                            {{'email'}}
                         </div>
                         <div class="controls">
-                            <input type="text" name="email" value="{fields/email}" class="span3" />
+                            <input type="email" class="span3" [(ngModel)]="user.email" ngControl="email" />
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/org_name/@caption" />
+                            {{'org_name'}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
-                                <xsl:value-of select="fields/organization"/>
+                                {{user.organization}}
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/department/@caption" />
+                            {{'department'}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
-                                <xsl:value-of select="fields/department"/>
+                                {{user.department}}
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/position/@caption" />
+                            {{'position'}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
-                                <xsl:value-of select="fields/position"/>
+                                {{user.position}}
                             </span>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/roles/@caption" />
+                            {{'roles'}}
                         </div>
                         <div class="controls">
                             <ul class="input-placeholder list-style-none">

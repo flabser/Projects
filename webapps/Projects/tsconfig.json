@@ -11,7 +11,7 @@
         "outDir": "./dist"
     },
     "filesGlob": [
-        "./src/app/**/*.ts",
+        "./app/**/*.ts",
         "!./node_modules/**/*.ts"
     ],
     "exclude": [
@@ -20,6 +20,6 @@
         "typings/main.d.ts"
     ],
     "atom": {
-        "rewriteTsconfig": true
+        "rewriteTsconfig": false
     }
 }

@@ -18,7 +18,7 @@ export class TaskService {
 
     constructor(
         private http: Http
-    ) {}
+    ) { }
 
     getTasks(at: string) {
         return this.http.get(VIEW_URL + (at ? '&at=' + at : ''), HEADER)

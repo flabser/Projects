@@ -7,17 +7,19 @@ import {serializeObj} from '../utils/obj-utils';
 
 const VIEW_URL = 'p?id=project-view';
 const FORM_URL = 'p?id=project-form';
-const HEADER = { headers: new Headers({
-    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    'Accept': 'application/json'
-}) };
+const HEADER = {
+    headers: new Headers({
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Accept': 'application/json'
+    })
+};
 
 @Injectable()
 export class ProjectService {
 
     constructor(
         private http: Http
-    ) {}
+    ) { }
 
     getProjects() {
         return this.http.get(VIEW_URL, HEADER)

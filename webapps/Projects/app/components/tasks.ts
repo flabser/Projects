@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {Router, Routes, RouteSegment, RouteTree} from '@angular/router';
+import {Router, Routes, RouteSegment, RouteTree, OnActivate} from '@angular/router';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task-service';
@@ -11,16 +11,26 @@ import {TaskComponent} from '../components/task';
     template: require('../templates/tasks.html')
 })
 
-export class TasksComponent {
+export class TasksComponent implements OnActivate {
     tasks: Task[];
 
     constructor(
         private _router: Router,
-        private _params: RouteSegment,
-        private taskService: TaskService
-    ) {
-        taskService.getTasks(_params.getParam('at'))
-            .subscribe(tasks => this.tasks = tasks);
+        private _routeSegment: RouteSegment,
+        private _taskService: TaskService
+    ) { }
+
+    routerOnActivate(current: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
+        // const id = +currTree.parent(current).getParam('id');
+
+        this._taskService.getTasks(this._routeSegment.getParam('at')).subscribe(
+            tasks => this.tasks = tasks,
+            errorResponse => {
+                if (errorResponse.status === 401) {
+                    this._router.navigate(['/login']);
+                }
+            }
+        );
     }
 
     composeRecord() {
@@ -28,8 +38,6 @@ export class TasksComponent {
     }
 
     deleteTask(task: Task) {
-        this.taskService.deleteTask(task)
-            .map(response => response)
-            .subscribe();
+        this._taskService.deleteTask(task).subscribe();
     }
 }

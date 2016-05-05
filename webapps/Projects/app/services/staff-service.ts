@@ -8,19 +8,10 @@ export class StaffService {
 
     constructor(
         private http: Http
-    ) {
-        this.getOrganizations().subscribe(resp => console.log(resp));
-        this.getEmployees().subscribe(resp => console.log(resp));
-    }
+    ) { }
 
     getOrganizations() {
         let url = '/Staff/p?id=get-organizations';
-        return this.http.get(url, HEADER)
-            .map(response => response.json().objects[0].list);
-    }
-
-    getEmployees() {
-        let url = 'p?id=users';
         return this.http.get(url, HEADER)
             .map(response => response.json().objects[0].list);
     }

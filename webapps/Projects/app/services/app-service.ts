@@ -8,14 +8,18 @@ export class AppService {
 
     constructor(
         private http: Http
-    ) {
-        // http.get('/session', HEADER).subscribe(response => console.log(response));
-    }
+    ) { }
 
     getTranslations() {
         let url = 'p?id=common-captions';
         return this.http.get(url, HEADER)
             .map(response => response.json().captions);
+    }
+
+    getUsers() {
+        let url = 'p?id=users';
+        return this.http.get(url, HEADER)
+            .map(response => response.json().objects[0].list);
     }
 
     getNav() {

@@ -16,6 +16,11 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import projects.dao.TaskDAO;
 import projects.model.Task;
+import projects.model.constants.TaskPriorityType;
+import projects.model.constants.TaskStatusType;
+import reference.dao.TagDAO;
+import reference.dao.TaskTypeDAO;
+import reference.model.Tag;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -98,6 +103,7 @@ public class TaskForm extends _DoPage {
                 return;
             }
 
+            TaskTypeDAO taskTypeDAO = new TaskTypeDAO(session);
             TaskDAO dao = new TaskDAO(session);
             Task entity;
             String id = formData.getValueSilently("docid");
@@ -109,7 +115,30 @@ public class TaskForm extends _DoPage {
                 entity = dao.findById(id);
             }
 
+            entity.setType(taskTypeDAO.findById(formData.getValue("task_type_id")));
+            entity.setStatus(TaskStatusType.getType(formData.getNumberValueSilently("status", 0)));
+            entity.setPriority(TaskPriorityType.getType(formData.getNumberValueSilently("priority", 0)));
+            entity.setStartDate(Util.convertStringToDate(formData.getValueSilently("start_date")));
+            entity.setDueDate(Util.convertStringToDate(formData.getValueSilently("due_date")));
             entity.setBody(formData.getValue("body"));
+            entity.setAssignee((long) formData.getNumberValueSilently("assignee", 0));
+
+            if (formData.containsField("tags")) {
+                String[] tagIds = formData.getListOfValuesSilently("tags");
+                if (tagIds.length > 0) {
+                    List<Tag> tags = new ArrayList<>();
+                    TagDAO tagDAO = new TagDAO(session);
+                    for (String tagId : tagIds) {
+                        if (!tagId.isEmpty()) {
+                            Tag tag = tagDAO.findById(UUID.fromString(tagId));
+                            if (tag != null) {
+                                tags.add(tag);
+                            }
+                        }
+                    }
+                    entity.setTags(tags);
+                }
+            }
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {

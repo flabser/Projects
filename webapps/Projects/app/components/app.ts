@@ -18,10 +18,7 @@ import {User} from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [
-        ROUTER_DIRECTIVES,
-        NavComponent
-    ]
+    directives: [ROUTER_DIRECTIVES, NavComponent]
 })
 
 @Routes([
@@ -49,7 +46,11 @@ export class App implements OnInit {
         private _appService: AppService,
         private _referenceService: ReferenceService,
         private _staffService: StaffService
-    ) { }
+    ) {
+        if (_router.urlTree.root.segment === '') {
+            _router.navigate(['/tasks']);
+        }
+    }
 
     ngOnInit() {
         this.isNavCollapsed = false;
@@ -58,8 +59,11 @@ export class App implements OnInit {
 
         this._appService.getTranslations()
             .subscribe(
-                captions => console.log(captions),
-                err => this._router.navigate(['Login'])
+              captions => console.log(captions),
+              err => {
+                  console.log(err);
+                  this._router.navigate(['/login']);
+              }
             );
     }
 
@@ -74,6 +78,7 @@ export class App implements OnInit {
     logout(event) {
         event.preventDefault();
         this.loggedUser = null;
+        window.location.href = 'Logout';
     }
 
     goBack() {

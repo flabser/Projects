@@ -17,7 +17,7 @@ export class TaskComponent implements OnInit {
     taskForm: ControlGroup;
     body: Control;
 
-    constructor (
+    constructor(
         private _taskService: TaskService,
         private _router: Router,
         private _params: RouteSegment,
