@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {Router, Routes, RouteSegment, RouteTree, OnActivate} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task.service';
@@ -8,7 +9,8 @@ import {TaskComponent} from '../components/task';
 
 @Component({
     selector: '[tasks]',
-    template: require('../templates/tasks.html')
+    template: require('../templates/tasks.html'),
+    pipes: [DatePipe]
 })
 
 export class TasksComponent implements OnActivate {

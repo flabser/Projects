@@ -18,7 +18,7 @@ export class Project {
 
     name: string;
     status: number;
-    customer: Organization;
+    customer: string;
     manager: number;
     programmer: number;
     tester: number;
@@ -31,13 +31,13 @@ export class Project {
         return serializeObj({
             name: this.name,
             status: this.status,
-            customer: (this.customer ? this.customer.id : '') || '',
+            customer: this.customer || '',
             manager: this.manager || 0,
             programmer: this.programmer || 0,
             tester: this.tester || 0,
             observers: Array.isArray(this.observers) ? this.observers.join(',') : '',
             comment: this.comment,
-            finishDate: this.finishDate ? this.finishDate.toString() : '',
+            finish_date: this.finishDate ? this.finishDate.toString() : '',
             attachments: this.attachments ? this.attachments.map(it => it.id).join(',') : ''
         });
     }

@@ -119,7 +119,7 @@ public class ProjectForm extends _DoPage {
             entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observers", 0)).map(Integer::longValue).collect(Collectors.toList()));
             entity.setComment(formData.getValue("comment"));
             entity.setStatus(ProjectStatusType.getType(formData.getNumberValueSilently("status", 0)));
-            entity.setFinishDate(new Date());
+            entity.setFinishDate(Util.convertStringToDate(formData.getValueSilently("finish_date")));
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {

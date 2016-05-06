@@ -2,10 +2,12 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Router, RouteSegment} from '@angular/router';
 import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@angular/common';
 
+import {AppService} from '../services/app.service';
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project.service';
 import {ProjectFactory} from '../factories/project.factory';
-import {AppService} from '../services/app.service';
+import {StaffService} from '../services/staff.service';
+import {Organization} from '../models/organization';
 import {User} from '../models/user';
 
 @Component({
@@ -16,17 +18,18 @@ import {User} from '../models/user';
 })
 
 export class ProjectComponent implements OnInit {
-    users: User[];
     project: Project;
-
     form: ControlGroup;
+    users: User[];
+    customers: Organization[];
 
     constructor(
         private _router: Router,
         private _routeSegment: RouteSegment,
         private _formBuilder: FormBuilder,
+        private _appService: AppService,
         private _projectService: ProjectService,
-        private _appService: AppService
+        private _staffService: StaffService
     ) {
         this.form = _formBuilder.group({
             name: new Control('', Validators.required),
@@ -54,6 +57,7 @@ export class ProjectComponent implements OnInit {
             this.project = new Project();
         }
 
+        _staffService.getOrganizations().subscribe(orgs => this.customers = orgs);
         _appService.getUsers().subscribe(users => this.users = users);
     }
 

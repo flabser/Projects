@@ -45,10 +45,10 @@ export class Task {
             priority: this.priority,
             body: this.body,
             assignee: this.assignee,
-            startDate: this.startDate,
-            dueDate: this.dueDate,
-            tags: this.tags.map(it => it.id).join(','),
-            attachments: this.attachments.map(it => it.id).join(',')
+            start_date: this.startDate,
+            due_date: this.dueDate,
+            tags: Array.isArray(this.tags) ? this.tags.map(it => it.id).join(',') : this.tags,
+            attachments: Array.isArray(this.attachments) ? this.attachments.map(it => it.id).join(',') : ''
         });
     }
 }

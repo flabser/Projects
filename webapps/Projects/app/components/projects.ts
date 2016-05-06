@@ -1,6 +1,6 @@
-import {DatePipe} from '@angular/common';
 import {Component, Inject} from '@angular/core';
 import {Router, Routes} from '@angular/router';
+import {DatePipe} from '@angular/common';
 
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project.service';

@@ -11,7 +11,7 @@ function createProject(obj: any): Project {
 
     result.name = obj.name;
     result.status = obj.status;
-    result.customer = OrganizationFactory.createOrganization(obj.customer);
+    result.customer = obj.customer; // OrganizationFactory.createOrganization(obj.customer);
     result.manager = obj.manager;
     result.programmer = obj.programmer;
     result.tester = obj.tester;

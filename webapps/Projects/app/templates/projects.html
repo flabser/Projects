@@ -32,7 +32,7 @@
                     <a class="entry-link" [routerLink]="['/project', project.id]">
                         <div class="entry-fields">
                             <span class="vw-project-name">{{project.name}}</span>
-                            <span class="vw-project-customer">{{project.customer}}</span>
+                            <span class="vw-project-customer">{{project.customer?.name}}</span>
                             <span class="vw-project-comment">{{project.comment}}</span>
                             <span class="vw-date">{{project.finishDate | date:'dd.MM.y'}}</span>
                         </div>

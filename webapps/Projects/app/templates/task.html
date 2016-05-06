@@ -84,7 +84,7 @@
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.assignee.valid">
                     <select class="span8" [(ngModel)]="task.assignee" ngControl="assignee">
-                        <option *ngFor="let m of users" [value]="m.id">{{m.user_name}}</option>
+                        <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                     <div [hidden]="form.controls.assignee.valid || form.controls.assignee.pristine" class="error-message">
                         {{'required'}}
@@ -112,7 +112,7 @@
                     {{'tags'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.tags.valid">
-                    <select class="span8" [(ngModel)]="task.tags" ngControl="tags">
+                    <select class="span8" multiple [(ngModel)]="task.tags" ngControl="tags">
                         <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
                     </select>
                     <div [hidden]="form.controls.tags.valid || form.controls.tags.pristine" class="error-message">

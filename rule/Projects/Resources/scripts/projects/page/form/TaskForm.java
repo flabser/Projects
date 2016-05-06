@@ -115,7 +115,7 @@ public class TaskForm extends _DoPage {
                 entity = dao.findById(id);
             }
 
-            entity.setType(taskTypeDAO.findById(formData.getValue("task_type_id")));
+            entity.setType(taskTypeDAO.findById(formData.getValue("type")));
             entity.setStatus(TaskStatusType.getType(formData.getNumberValueSilently("status", 0)));
             entity.setPriority(TaskPriorityType.getType(formData.getNumberValueSilently("priority", 0)));
             entity.setStartDate(Util.convertStringToDate(formData.getValueSilently("start_date")));
