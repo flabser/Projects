@@ -24,7 +24,15 @@ export class TaskComponent implements OnInit {
         private _taskService: TaskService
     ) {
         this.form = _formBuilder.group({
-            body: new Control('')
+            type: new Control('', Validators.required),
+            status: new Control(''),
+            priority: new Control(''),
+            body: new Control(''),
+            assignee: new Control(''),
+            startDate: new Control(''),
+            dueDate: new Control(''),
+            tags: new Control(''),
+            attachments: new Control('')
         });
 
         if (this._routeSegment.getParam('id') !== 'new') {

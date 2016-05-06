@@ -24,10 +24,11 @@
                 <div class="control-label">
                     {{'task_type'}}
                 </div>
-                <div class="controls">
-                    <select name="taskType">
-                        <option value=""></option>
-                    </select>
+                <div class="controls" [class.has-error]="!form.controls.type.valid">
+                    <input class="span6" [(ngModel)]="task.type" ngControl="type" />
+                    <div [hidden]="form.controls.type.valid || form.controls.type.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -35,37 +36,59 @@
                     {{'status'}}
                 </div>
                 <div class="controls">
-                    <select name="status">
-                        <option value=""></option>
-                    </select>
+                    <label>
+                        <input type="radio" name="status" value="453" [(ngModel)]="task.status" ngControl="status" />
+                        <span>DRAFT</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="status" value="454" [(ngModel)]="task.status" ngControl="status" />
+                        <span>WAITING</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="status" value="455" [(ngModel)]="task.status" ngControl="status" />
+                        <span>PROCESSED</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="status" value="456" [(ngModel)]="task.status" ngControl="status" />
+                        <span>FINISHED</span>
+                    </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'priority'}}
                 </div>
-                <div class="controls">
-                    <select name="priority">
-                        <option value=""></option>
+                <div class="controls" [class.has-error]="!form.controls.priority.valid">
+                    <select class="span3" [(ngModel)]="task.priority" ngControl="priority">
+                        <option *ngFor="let m of priorities" [value]="m.value">{{m.name}}</option>
                     </select>
+                    <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'body'}}
                 </div>
-                <div class="controls">
-                    <textarea class="span7" [(ngModel)]="task.body" ngControl="body"></textarea>
+                <div class="controls" [class.has-error]="!form.controls.body.valid">
+                    <textarea class="span8" [(ngModel)]="task.body" ngControl="body"></textarea>
+                    <div [hidden]="form.controls.body.valid || form.controls.body.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'assignee_user'}}
                 </div>
-                <div class="controls">
-                    <select name="assignee">
-                        <option value=""></option>
+                <div class="controls" [class.has-error]="!form.controls.assignee.valid">
+                    <select class="span8" [(ngModel)]="task.assignee" ngControl="assignee">
+                        <option *ngFor="let m of users" [value]="m.id">{{m.user_name}}</option>
                     </select>
+                    <div [hidden]="form.controls.assignee.valid || form.controls.assignee.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -73,7 +96,7 @@
                     {{'start_date'}}
                 </div>
                 <div class="controls">
-                    <input type="date" name="startDate" />
+                    <input type="date" class="span2" [(ngModel)]="task.startDate" ngControl="startDate" />
                 </div>
             </div>
             <div class="form-group">
@@ -81,21 +104,42 @@
                     {{'due_date'}}
                 </div>
                 <div class="controls">
-                    <input type="date" name="dueDate" />
+                    <input type="date" class="span2" [(ngModel)]="task.dueDate" ngControl="dueDate" />
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'tags'}}
                 </div>
-                <div class="controls">
-                    <select name="tags">
-                        <option value=""></option>
+                <div class="controls" [class.has-error]="!form.controls.tags.valid">
+                    <select class="span8" [(ngModel)]="task.tags" ngControl="tags">
+                        <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
                     </select>
+                    <div [hidden]="form.controls.tags.valid || form.controls.tags.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="legend">
+                {{'attachments'}}
+            </legend>
             <div class="form-group">
-                attachments
+                <button type="button" class="btn btn-upload" data-upload="">
+                    <i class="fa fa-paperclip"></i>
+                    <span>{{'attach_file'}}</span>
+                </button>
+                <div class="attachments" data-upload-files="">
+                    <div class="attachments-file" *ngFor="let att of task.attachments">
+                        <a class="file-name" href="{{att.url}}">
+                            {{att.realFileName}}
+                        </a>
+                        <span class="btn btn-sm btn-link btn-remove-file on-edit">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
             </div>
         </fieldset>
     </section>

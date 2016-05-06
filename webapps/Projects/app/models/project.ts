@@ -35,7 +35,7 @@ export class Project {
             manager: this.manager || 0,
             programmer: this.programmer || 0,
             tester: this.tester || 0,
-            observers: this.observers ? this.observers.join(',') : '',
+            observers: Array.isArray(this.observers) ? this.observers.join(',') : '',
             comment: this.comment,
             finishDate: this.finishDate ? this.finishDate.toString() : '',
             attachments: this.attachments ? this.attachments.map(it => it.id).join(',') : ''

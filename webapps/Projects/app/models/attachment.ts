@@ -14,4 +14,8 @@ export class Attachment {
         this.regDate = obj.regDate;
         this.size = obj.size;
     }
+
+    url() {
+        return 'go-to-file';
+    }
 }
