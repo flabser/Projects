@@ -1,7 +1,7 @@
-<div *ngIf="loading">
+<div *ngIf="!task">
     {{'loading'}}
 </div>
-<form [ngFormModel]="taskForm" [hidden]="loading">
+<form class="form" [ngFormModel]="form" *ngIf="task">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -10,7 +10,7 @@
             {{'task'}}
         </h1>
         <div class="content-actions">
-            <button class="btn btn-primary" type="button" [disabled]="!taskForm.valid" (click)="saveTask()">
+            <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveTask()">
                 {{'save_close'}}
             </button>
             <button class="btn" type="button" (click)="close($event)">

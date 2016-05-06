@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Router, RouteSegment} from '@angular/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
+import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@angular/common';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task.service';
@@ -8,14 +8,14 @@ import {TaskFactory} from '../factories/task.factory';
 
 @Component({
     selector: '[task]',
-    template: require('../templates/task.html')
+    template: require('../templates/task.html'),
+    directives: [FORM_DIRECTIVES],
+    providers: [FormBuilder]
 })
 
 export class TaskComponent implements OnInit {
-    loading: Boolean = true;
-    task: Task = new Task();
-    taskForm: ControlGroup;
-    body: Control;
+    task: Task;
+    form: ControlGroup;
 
     constructor(
         private _router: Router,
@@ -23,24 +23,19 @@ export class TaskComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _taskService: TaskService
     ) {
-        this.body = new Control('');
-
-        this.taskForm = _formBuilder.group({
-            body: this.body
+        this.form = _formBuilder.group({
+            body: new Control('')
         });
 
         if (this._routeSegment.getParam('id') !== 'new') {
             this._taskService.getTaskById(this._routeSegment.getParam('id')).subscribe(
                 task => {
                     this.task = task;
-                    this.loading = false;
                 },
                 err => {
                     console.log(err);
                 }
             );
-        } else {
-            this.loading = false;
         }
     }
 

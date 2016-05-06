@@ -1,7 +1,7 @@
-<div *ngIf="loading">
+<div *ngIf="!project">
     {{'loading'}}
 </div>
-<form [ngFormModel]="projectForm" [hidden]="loading">
+<form class="form" [ngFormModel]="form" *ngIf="project">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -10,7 +10,7 @@
             {{'project'}}
         </h1>
         <div class="content-actions">
-            <button class="btn btn-primary" type="button" [disabled]="!projectForm.valid" (click)="saveProject()">
+            <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveProject()">
                 {{'save_close'}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
@@ -24,48 +24,63 @@
                 <div class="control-label">
                     {{'name'}}
                 </div>
-                <div class="controls">
+                <div class="controls" [class.has-error]="!form.controls.name.valid">
                     <input class="span6" [(ngModel)]="project.name" ngControl="name" />
+                    <div [hidden]="form.controls.name.valid || form.controls.name.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'customer'}}
                 </div>
-                <div class="controls">
+                <div class="controls" [class.has-error]="!form.controls.customer.valid">
                     <select class="span6" [(ngModel)]="project.customer" ngControl="customer">
                         <option *ngFor="let c of customers" [value]="c">{{c}}</option>
                     </select>
+                    <div [hidden]="form.controls.customer.valid || form.controls.customer.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'manager'}}
                 </div>
-                <div class="controls">
+                <div class="controls" [class.has-error]="!form.controls.manager.valid">
                     <select class="span6" [(ngModel)]="project.manager" ngControl="manager">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
+                    <div [hidden]="form.controls.manager.valid || form.controls.manager.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'programmer'}}
                 </div>
-                <div class="controls">
+                <div class="controls" [class.has-error]="!form.controls.programmer.valid">
                     <select class="span6" [(ngModel)]="project.programmer" ngControl="programmer">
                         <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
                     </select>
+                    <div [hidden]="form.controls.programmer.valid || form.controls.programmer.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
                     {{'tester'}}
                 </div>
-                <div class="controls">
+                <div class="controls" [class.has-error]="!form.controls.tester.valid">
                     <select class="span6" [(ngModel)]="project.tester" ngControl="tester">
                         <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
                     </select>
+                    <div [hidden]="form.controls.tester.valid || form.controls.tester.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">

@@ -9,16 +9,14 @@
     </div>
 </div>
 <div class="content-body">
-    <div class="view">
+    <div class="view view-project">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
                     <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
-                    <span>
-                        {{'name'}}
-                    </span>
+                    <span class="vw-project-name">{{'name'}}</span>
                 </div>
             </div>
         </header>
@@ -33,9 +31,10 @@
                     </label>
                     <a class="entry-link" [routerLink]="['/project', project.id]">
                         <div class="entry-fields">
-                            <span>
-                                {{project.name}}
-                            </span>
+                            <span class="vw-project-name">{{project.name}}</span>
+                            <span class="vw-project-customer">{{project.customer}}</span>
+                            <span class="vw-project-comment">{{project.comment}}</span>
+                            <span class="vw-date">{{project.finishDate | date:'dd.MM.y'}}</span>
                         </div>
                     </a>
                 </div>

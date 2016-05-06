@@ -9,16 +9,14 @@
     </div>
 </div>
 <div class="content-body">
-    <div class="view">
+    <div class="view view-task">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
                     <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
-                    <span>
-                        {{'body'}}
-                    </span>
+                    <span>{{'body'}}</span>
                 </div>
             </div>
         </header>
@@ -33,9 +31,17 @@
                     </label>
                     <a class="entry-link" [routerLink]="['/task', task.id]">
                         <div class="entry-fields">
-                            <span>
-                                {{task.body}}
-                            </span>
+                            <div class="entry-fields">
+                                <span class="vw-task-status">{{task.status}}</span>
+                                <span class="vw-task-priority">{{task.priority}}</span>
+                                <span class="vw-task-body">{{task.body}}</span>
+                                <span class="vw-task-assignee">{{task.assignee}}</span>
+                                <span class="vw-date">{{task.startDate | date:'dd.MM.y'}}</span>
+                                <span class="vw-date">{{task.dueDate | date:'dd.MM.y'}}</span>
+                                <span class="vw-tags">
+                                    <span class="tag" *ngFor="let tag of tags">{{tag.name}}</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>

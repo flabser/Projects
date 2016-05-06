@@ -1,6 +1,8 @@
 import {Injectable, Inject} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
+import {User} from '../models/user';
+
 const HEADER = { headers: new Headers({ 'Accept': 'application/json' }) };
 
 @Injectable()
@@ -16,15 +18,19 @@ export class AppService {
             .map(response => response.json().captions);
     }
 
+    getNav() {
+        let url = 'p?id=outline';
+        return this._http.get(url, HEADER);
+    }
+
     getUsers() {
         let url = 'p?id=users';
         return this._http.get(url, HEADER)
             .map(response => response.json().objects[0].list);
     }
 
-    getNav() {
-        let url = 'p?id=outline';
-        return this._http.get(url, HEADER);
+    updateUserProfile(user: User) {
+        //
     }
 
     logout() {

@@ -47,7 +47,7 @@ export class App implements OnInit {
         private _staffService: StaffService
     ) {
         if (_router.urlTree.root.segment === '') {
-            _router.navigate(['/tasks']);
+            // _router.navigate(['/tasks']);
         }
     }
 

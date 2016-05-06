@@ -20,7 +20,7 @@ export class Tabs implements AfterContentInit {
     // contentChildren are set
     ngAfterContentInit() {
         // get all active tabs
-        let activeTabs = this.tabs.filter((tab) => tab.active);
+        let activeTabs = this.tabs.filter(tab => tab.active);
 
         // if there is no active tab set, activate the first
         if (activeTabs.length === 0) {
@@ -30,7 +30,7 @@ export class Tabs implements AfterContentInit {
 
     selectTab(tab: Tab) {
         // deactivate all tabs
-        this.tabs.toArray().forEach(tab => tab.active = false);
+        this.tabs.forEach(tab => tab.active = false);
 
         // activate the tab the user has clicked on.
         tab.active = true;

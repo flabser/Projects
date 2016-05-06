@@ -1,43 +1,40 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
+import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@angular/common';
 
 import {Tabs} from './tabs/tabs';
 import {Tab} from './tabs/tab';
 
+import {AppService} from '../services/app.service';
 import {User} from '../models/user';
 import {UserFactory} from '../factories/user.factory';
 
 @Component({
     selector: '[user-profile]',
     template: require('../templates/user-profile.html'),
-    directives: [Tabs, Tab]
+    directives: [FORM_DIRECTIVES, Tabs, Tab],
+    providers: [FormBuilder]
 })
 
 export class UserProfileComponent {
     user: User = new User();
-    userForm: ControlGroup;
-
-    login: Control;
-    pwd: Control;
-    pwd_confirm: Control;
-    email: Control;
+    form: ControlGroup;
 
     constructor(
         private _router: Router,
-        private _formBuilder: FormBuilder
+        private _formBuilder: FormBuilder,
+        private _appService: AppService
     ) {
-        this.login = new Control('');
-        this.pwd = new Control('');
-        this.pwd_confirm = new Control('');
-        this.email = new Control('');
-
-        this.userForm = _formBuilder.group({
-            login: this.login,
-            pwd: this.pwd,
-            pwd_confirm: this.pwd_confirm,
-            email: this.email
+        this.form = _formBuilder.group({
+            login: new Control(''),
+            pwd: new Control(''),
+            pwd_confirm: new Control(''),
+            email: new Control('')
         });
+    }
+
+    updateUserProfile() {
+        this._appService.updateUserProfile(this.user);
     }
 
     close(event) {
