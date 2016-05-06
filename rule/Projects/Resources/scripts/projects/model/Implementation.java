@@ -1,6 +1,7 @@
 package projects.model;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "impls")
 @NamedQuery(name = "Implementation.findAll", query = "SELECT m FROM Implementation AS m ORDER BY m.regDate")
-public class Implementation extends SecureAppEntity {
+public class Implementation extends SecureAppEntity<UUID> {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)

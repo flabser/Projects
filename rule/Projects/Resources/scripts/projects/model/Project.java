@@ -2,6 +2,7 @@ package projects.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import staff.model.Organization;
 @Entity
 @Table(name = "projects")
 @NamedQuery(name = "Project.findAll", query = "SELECT m FROM Project AS m ORDER BY m.regDate")
-public class Project extends SecureAppEntity {
+public class Project extends SecureAppEntity<UUID> {
 
 	private String name;
 
