@@ -2,8 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {Router, Routes} from '@angular/router';
 
 import {Project} from '../models/project';
-import {ProjectService} from '../services/project-service';
-import {ProjectFactory} from '../factories/project-factory';
+import {ProjectService} from '../services/project.service';
+import {ProjectFactory} from '../factories/project.factory';
 import {ProjectComponent} from '../components/project';
 
 @Component({
@@ -31,8 +31,6 @@ export class ProjectsComponent {
     }
 
     deleteProject(project: Project) {
-        this.projectService.deleteProject(project)
-            .map(response => response)
-            .subscribe();
+        this.projectService.deleteProject(project).subscribe();
     }
 }

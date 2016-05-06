@@ -2,11 +2,16 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
 
+import {Tabs} from './tabs/tabs';
+import {Tab} from './tabs/tab';
+
 import {User} from '../models/user';
+import {UserFactory} from '../factories/user.factory';
 
 @Component({
     selector: '[user-profile]',
-    template: require('../templates/user-profile.html')
+    template: require('../templates/user-profile.html'),
+    directives: [Tabs, Tab]
 })
 
 export class UserProfileComponent {

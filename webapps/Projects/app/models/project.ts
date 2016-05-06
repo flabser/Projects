@@ -5,7 +5,7 @@ import {serializeObj} from '../utils/obj-utils';
 
 export const ProjectStatusType = {
     UNKNOWN: 0,
-    DRAFT: 899, 
+    DRAFT: 899,
     PROCESSED: 900,
     FINISHED: 901
 };
@@ -24,7 +24,7 @@ export class Project {
     tester: number;
     observers: number[];
     comment: string;
-    finishDate: Date = new Date();
+    finishDate: Date;
     attachments: Attachment[];
 
     serialize(): string {
@@ -35,10 +35,10 @@ export class Project {
             manager: this.manager || 0,
             programmer: this.programmer || 0,
             tester: this.tester || 0,
-            observers: this.observers ? this.observers : '',
+            observers: this.observers ? this.observers.join(',') : '',
             comment: this.comment,
             finishDate: this.finishDate ? this.finishDate.toString() : '',
-            attachments: '' //this.attachments.join('')
+            attachments: this.attachments ? this.attachments.map(it => it.id).join(',') : ''
         });
     }
 }

@@ -2,8 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {Router, Routes, RouteSegment, RouteTree, OnActivate} from '@angular/router';
 
 import {Task} from '../models/task';
-import {TaskService} from '../services/task-service';
-import {TaskFactory} from '../factories/task-factory';
+import {TaskService} from '../services/task.service';
+import {TaskFactory} from '../factories/task.factory';
 import {TaskComponent} from '../components/task';
 
 @Component({

@@ -4,7 +4,7 @@ const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'production';
 
 const basePlugins = [
     new webpack.DefinePlugin({
@@ -53,7 +53,6 @@ module.exports = {
             '@angular/platform-browser',
             '@angular/platform-browser-dynamic',
             '@angular/router',
-            // '@angular/router-deprecated',
             '@angular/upgrade',
 
             'zone.js'

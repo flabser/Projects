@@ -3,9 +3,9 @@ import {Router, RouteSegment} from '@angular/router';
 import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
 
 import {Project} from '../models/project';
-import {ProjectService} from '../services/project-service';
-import {ProjectFactory} from '../factories/project-factory';
-import {AppService} from '../services/app-service';
+import {ProjectService} from '../services/project.service';
+import {ProjectFactory} from '../factories/project.factory';
+import {AppService} from '../services/app.service';
 import {User} from '../models/user';
 
 @Component({
@@ -32,11 +32,11 @@ export class ProjectComponent implements OnInit {
     attachments: Control;
 
     constructor(
-        private _projectService: ProjectService,
-        private _appService: AppService,
         private _router: Router,
-        private _params: RouteSegment,
-        private _formBuilder: FormBuilder
+        private _routeSegment: RouteSegment,
+        private _formBuilder: FormBuilder,
+        private _projectService: ProjectService,
+        private _appService: AppService
     ) {
         this.name = new Control('');
         this.status = new Control('');
@@ -62,15 +62,18 @@ export class ProjectComponent implements OnInit {
             attachments: this.attachments
         });
 
-        if (this._params.getParam('id') !== 'new') {
-            this._projectService.getProjectById(this._params.getParam('id')).subscribe(project => {
-                this.project = project;
-                this.loading = false;
-            }, err => {
-                console.log(err);
-            });
+        if (this._routeSegment.getParam('id') !== 'new') {
+            this._projectService.getProjectById(this._routeSegment.getParam('id')).subscribe(
+                project => {
+                    this.project = project;
+                    this.loading = false;
+                },
+                err => {
+                    console.log(err);
+                }
+            );
 
-            this.project.id = this._params.getParam('id');
+            this.project.id = this._routeSegment.getParam('id');
         } else {
             this.loading = false;
         }

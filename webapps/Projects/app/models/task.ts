@@ -32,7 +32,7 @@ export class Task {
     status: number;
     priority: number;
     body: string;
-    assignee: User;
+    assignee: number;
     startDate: Date;
     dueDate: Date;
     tags: Tag[];
@@ -40,7 +40,15 @@ export class Task {
 
     serialize(): string {
         return serializeObj({
-            body: this.body
+            type: this.type.id,
+            status: this.status,
+            priority: this.priority,
+            body: this.body,
+            assignee: this.assignee,
+            startDate: this.startDate,
+            dueDate: this.dueDate,
+            tags: this.tags.map(it => it.id).join(','),
+            attachments: this.attachments.map(it => it.id).join(',')
         });
     }
 }

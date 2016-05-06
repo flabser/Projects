@@ -4,7 +4,7 @@ import {Attachment} from '../models/attachment';
 
 @Component({
     selector: '[attachment]',
-    template: require('../templates/attachment.html')
+    template: '<div class="attachment">{{attachment.realFileName}}</div>'
 })
 
 export class AttachmentComponent {

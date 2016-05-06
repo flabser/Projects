@@ -1,9 +1,9 @@
 import {Component, HostBinding, HostListener, OnInit} from '@angular/core';
 import {Router, Routes, RouteSegment, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
 
-import {AppService} from '../services/app-service';
-import {ReferenceService} from '../services/reference-service';
-import {StaffService} from '../services/staff-service';
+import {AppService} from '../services/app.service';
+import {ReferenceService} from '../services/reference.service';
+import {StaffService} from '../services/staff.service';
 
 import {NavComponent} from './nav';
 import {ProjectsComponent} from './projects';
@@ -12,7 +12,6 @@ import {TasksComponent} from './tasks';
 import {TaskComponent} from './task';
 import {UserProfileComponent} from './user-profile';
 import {LoginComponent} from './login';
-import {UsersComponent} from './users';
 import {User} from '../models/user';
 
 @Component({
@@ -57,14 +56,13 @@ export class App implements OnInit {
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        this._appService.getTranslations()
-            .subscribe(
-              captions => console.log(captions),
-              err => {
-                  console.log(err);
-                  this._router.navigate(['/login']);
-              }
-            );
+        this._appService.getTranslations().subscribe(
+            captions => console.log(captions),
+            err => {
+                console.log(err);
+                this._router.navigate(['/login']);
+            }
+        );
     }
 
     toggleNav() {
