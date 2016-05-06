@@ -50,6 +50,8 @@ export class ProjectComponent implements OnInit {
                     console.log(err);
                 }
             );
+        } else {
+            this.project = new Project();
         }
 
         _appService.getUsers().subscribe(users => this.users = users);

@@ -36,6 +36,8 @@ export class TaskComponent implements OnInit {
                     console.log(err);
                 }
             );
+        } else {
+            this.task = new Task();
         }
     }
 
