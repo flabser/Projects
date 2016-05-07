@@ -16,6 +16,7 @@ declare let __PRODUCTION__: any;
 if (__PRODUCTION__) {
     enableProdMode();
 }
+
 bootstrap(App, [
     HTTP_PROVIDERS,
     ROUTER_DIRECTIVES,

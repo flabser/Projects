@@ -5,7 +5,6 @@ import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@
 import {AppService} from '../services/app.service';
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project.service';
-import {ProjectFactory} from '../factories/project.factory';
 import {StaffService} from '../services/staff.service';
 import {Organization} from '../models/organization';
 import {User} from '../models/user';

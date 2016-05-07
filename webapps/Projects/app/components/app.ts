@@ -21,11 +21,11 @@ import {User} from '../models/user';
 })
 
 @Routes([
-    { path: '/projects', component: ProjectsComponent },
-    { path: '/project/:id', component: ProjectComponent },
+    { path: '/tasks/:for', component: TasksComponent },
     { path: '/tasks', component: TasksComponent },
-    { path: '/tasks/:id', component: TasksComponent },
     { path: '/task/:id', component: TaskComponent },
+    { path: '/projects/:id', component: ProjectComponent },
+    { path: '/projects', component: ProjectsComponent },
     { path: '/user-profile', component: UserProfileComponent },
     { path: '/login', component: LoginComponent }
 ])
@@ -34,11 +34,13 @@ export class App implements OnInit {
     loggedUser: User;
     HEADER_TITLE: string = "Projects";
     isNavCollapsed: Boolean;
+    isSearchOpen: Boolean;
     isMobileDevice: Boolean;
 
     @HostListener('window:resize', ['$event.target']) resize(window) { this.onResize(window); };
     @HostBinding('class.phone') get device() { return this.isMobileDevice; };
     @HostBinding('class.side-nav-toggle') get toggleNavVisible() { return this.isNavCollapsed; };
+    @HostBinding('class.search-open') get toggleSearch() { return this.isSearchOpen; };
 
     constructor(
         private _router: Router,
@@ -52,6 +54,7 @@ export class App implements OnInit {
     }
 
     ngOnInit() {
+        this.isSearchOpen = false;
         this.isNavCollapsed = false;
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
@@ -69,13 +72,19 @@ export class App implements OnInit {
         this.isNavCollapsed = !this.isNavCollapsed;
     }
 
-    hideNav() {
+    hideNav(event) {
+        event.preventDefault();
         this.isNavCollapsed = false;
+        this.isSearchOpen = false;
+    }
+
+    searchToggle() {
+        this.isSearchOpen = !this.isSearchOpen;
     }
 
     logout(event) {
         event.preventDefault();
-        this.loggedUser = null;
+        // this.loggedUser = null;
         window.location.href = 'Logout';
     }
 

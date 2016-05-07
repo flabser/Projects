@@ -3,8 +3,6 @@ import {Http, Headers} from '@angular/http';
 
 import {User} from '../models/user';
 
-const HEADER = { headers: new Headers({ 'Accept': 'application/json' }) };
-
 @Injectable()
 export class AppService {
 
@@ -13,19 +11,25 @@ export class AppService {
     ) { }
 
     getTranslations() {
+        let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=common-captions';
-        return this._http.get(url, HEADER)
+
+        return this._http.get(url, header)
             .map(response => response.json().captions);
     }
 
     getNav() {
+        let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=outline';
-        return this._http.get(url, HEADER);
+
+        return this._http.get(url, header);
     }
 
     getUsers() {
+        let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=users';
-        return this._http.get(url, HEADER)
+
+        return this._http.get(url, header)
             .map(response => response.json().objects[0].list);
     }
 
@@ -34,6 +38,6 @@ export class AppService {
     }
 
     logout() {
-        return this._http.delete('');
+        return this._http.delete('/');
     }
 }

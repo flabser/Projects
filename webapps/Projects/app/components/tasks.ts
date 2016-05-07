@@ -1,10 +1,9 @@
 import {Component, Inject} from '@angular/core';
-import {Router, Routes, RouteSegment, RouteTree, OnActivate} from '@angular/router';
+import {Router, Routes, RouteSegment, RouteTree} from '@angular/router';
 import {DatePipe} from '@angular/common';
 
 import {Task} from '../models/task';
 import {TaskService} from '../services/task.service';
-import {TaskFactory} from '../factories/task.factory';
 import {TaskComponent} from '../components/task';
 
 @Component({
@@ -13,25 +12,17 @@ import {TaskComponent} from '../components/task';
     pipes: [DatePipe]
 })
 
-export class TasksComponent implements OnActivate {
+export class TasksComponent {
     tasks: Task[];
 
     constructor(
         private _router: Router,
         private _routeSegment: RouteSegment,
         private _taskService: TaskService
-    ) { }
-
-    routerOnActivate(current: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
-        // const id = +currTree.parent(current).getParam('id');
-
-        this._taskService.getTasks(this._routeSegment.getParam('at')).subscribe(
+    ) {
+        this._taskService.getTasks(this._routeSegment.getParam('for')).subscribe(
             tasks => this.tasks = tasks,
-            errorResponse => {
-                if (errorResponse.status === 401) {
-                    this._router.navigate(['/login']);
-                }
-            }
+            errorResponse => this.handleXhrError(errorResponse)
         );
     }
 
@@ -41,5 +32,11 @@ export class TasksComponent implements OnActivate {
 
     deleteTask(task: Task) {
         this._taskService.deleteTask(task).subscribe();
+    }
+
+    handleXhrError(errorResponse) {
+        if (errorResponse.status === 401) {
+            this._router.navigate(['/login']);
+        }
     }
 }

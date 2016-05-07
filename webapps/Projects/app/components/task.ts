@@ -5,7 +5,6 @@ import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@
 import {AppService} from '../services/app.service';
 import {Task} from '../models/task';
 import {TaskService} from '../services/task.service';
-import {TaskFactory} from '../factories/task.factory';
 import {ReferenceService} from '../services/reference.service';
 import {Tag} from '../models/tag';
 import {User} from '../models/user';

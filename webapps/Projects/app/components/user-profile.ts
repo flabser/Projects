@@ -7,7 +7,6 @@ import {Tab} from './tabs/tab';
 
 import {AppService} from '../services/app.service';
 import {User} from '../models/user';
-import {UserFactory} from '../factories/user.factory';
 
 @Component({
     selector: '[user-profile]',

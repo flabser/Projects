@@ -4,8 +4,6 @@ import {DatePipe} from '@angular/common';
 
 import {Project} from '../models/project';
 import {ProjectService} from '../services/project.service';
-import {ProjectFactory} from '../factories/project.factory';
-import {ProjectComponent} from '../components/project';
 import {DateFormatPipe} from '../pipes/date-format.pipe';
 
 @Component({
@@ -14,26 +12,34 @@ import {DateFormatPipe} from '../pipes/date-format.pipe';
     pipes: [DatePipe]
 })
 
-@Routes([
-    { path: '/:id', component: ProjectComponent }
-])
-
 export class ProjectsComponent {
     projects: Project[];
+    selectedProjects: Project[];
 
     constructor(
         private _router: Router,
         private projectService: ProjectService
     ) {
-        projectService.getProjects()
-            .subscribe(projects => this.projects = projects);
+        projectService.getProjects().subscribe(
+            (projects) => {
+                console.log(projects);
+                this.projects = projects;
+            },
+            errorResponse => this.handleXhrError(errorResponse)
+        );
     }
 
     composeRecord() {
-        this._router.navigate(['/project', 'new']);
+        this._router.navigate(['/projects', 'new']);
     }
 
-    deleteProject(project: Project) {
-        this.projectService.deleteProject(project).subscribe();
+    deleteProject() {
+        this.projectService.deleteProject(this.selectedProjects).subscribe();
+    }
+
+    handleXhrError(errorResponse) {
+        if (errorResponse.status === 401) {
+            this._router.navigate(['/login']);
+        }
     }
 }

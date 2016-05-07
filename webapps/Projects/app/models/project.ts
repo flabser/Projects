@@ -1,7 +1,6 @@
 import {Attachment} from './attachment';
 import {Organization} from './organization';
 import {User} from './user';
-import {serializeObj} from '../utils/obj-utils';
 
 export const ProjectStatusType = {
     UNKNOWN: 0,
@@ -26,19 +25,4 @@ export class Project {
     comment: string;
     finishDate: Date;
     attachments: Attachment[];
-
-    serialize(): string {
-        return serializeObj({
-            name: this.name,
-            status: this.status,
-            customer: this.customer || '',
-            manager: this.manager || 0,
-            programmer: this.programmer || 0,
-            tester: this.tester || 0,
-            observers: Array.isArray(this.observers) ? this.observers.join(',') : '',
-            comment: this.comment,
-            finish_date: this.finishDate ? this.finishDate.toString() : '',
-            attachments: this.attachments ? this.attachments.map(it => it.id).join(',') : ''
-        });
-    }
 }
