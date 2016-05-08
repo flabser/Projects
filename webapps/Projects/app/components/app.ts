@@ -1,10 +1,11 @@
 import {Component, HostBinding, HostListener, OnInit} from '@angular/core';
-import {Router, Routes, RouteSegment, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
+import {Router, Routes, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {AppService} from '../services/app.service';
 import {ReferenceService} from '../services/reference.service';
 import {StaffService} from '../services/staff.service';
 
+import {NBNotifyComponent} from './nb-notify';
 import {NavComponent} from './nav';
 import {ProjectsComponent} from './projects';
 import {ProjectComponent} from './project';
@@ -17,7 +18,7 @@ import {User} from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent]
+    directives: [ROUTER_DIRECTIVES, NavComponent, NBNotifyComponent]
 })
 
 @Routes([
@@ -47,11 +48,7 @@ export class App implements OnInit {
         private _appService: AppService,
         private _referenceService: ReferenceService,
         private _staffService: StaffService
-    ) {
-        if (_router.urlTree.root.segment === '') {
-            // _router.navigate(['/tasks']);
-        }
-    }
+    ) { }
 
     ngOnInit() {
         this.isSearchOpen = false;

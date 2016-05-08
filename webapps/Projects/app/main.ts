@@ -6,6 +6,7 @@ import {FORM_PROVIDERS, LocationStrategy, HashLocationStrategy} from '@angular/c
 import 'rxjs/Rx';
 
 import {App} from './components/app';
+import {NBNotifyComponent} from './components/nb-notify';
 import {AppService} from './services/app.service';
 import {TaskService} from './services/task.service';
 import {ProjectService} from './services/project.service';
@@ -24,6 +25,7 @@ bootstrap(App, [
     provide(PLATFORM_DIRECTIVES, { useValue: ROUTER_DIRECTIVES, multi: true }),
     provide(LocationStrategy, { useClass: HashLocationStrategy }),
     FORM_PROVIDERS,
+    NBNotifyComponent,
     AppService,
     TaskService,
     ProjectService,

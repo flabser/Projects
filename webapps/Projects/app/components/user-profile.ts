@@ -25,10 +25,10 @@ export class UserProfileComponent {
         private _appService: AppService
     ) {
         this.form = _formBuilder.group({
-            login: new Control(''),
-            pwd: new Control(''),
-            pwd_confirm: new Control(''),
-            email: new Control('')
+            login: [],
+            pwd: [],
+            pwd_confirm: [],
+            email: []
         });
     }
 

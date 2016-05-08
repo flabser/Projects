@@ -2,21 +2,21 @@ import {Attachment} from './attachment';
 import {Organization} from './organization';
 import {User} from './user';
 
-export const ProjectStatusType = {
-    UNKNOWN: 0,
-    DRAFT: 899,
-    PROCESSED: 900,
-    FINISHED: 901
-};
+export const ProjectStatusType = [
+    'DRAFT',
+    'PROCESSED',
+    'FINISHED'
+];
 
 export class Project {
     id: string;
     author: User;
     regDate: Date;
     url: string;
+    wasRead: boolean;
 
     name: string;
-    status: number;
+    status: string;
     customer: string;
     manager: number;
     programmer: number;

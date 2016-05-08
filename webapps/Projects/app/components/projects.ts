@@ -21,10 +21,7 @@ export class ProjectsComponent {
         private projectService: ProjectService
     ) {
         projectService.getProjects().subscribe(
-            (projects) => {
-                console.log(projects);
-                this.projects = projects;
-            },
+            projects => this.projects = projects,
             errorResponse => this.handleXhrError(errorResponse)
         );
     }

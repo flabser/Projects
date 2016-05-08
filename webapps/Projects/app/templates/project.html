@@ -25,7 +25,7 @@
                     {{'name'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.name.valid">
-                    <input class="span6" [(ngModel)]="project.name" ngControl="name" />
+                    <input class="span8" [(ngModel)]="project.name" ngControl="name" />
                     <div [hidden]="form.controls.name.valid || form.controls.name.pristine" class="error-message">
                         {{'required'}}
                     </div>
@@ -36,7 +36,7 @@
                     {{'customer'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.customer.valid">
-                    <select class="span6" [(ngModel)]="project.customer" ngControl="customer">
+                    <select class="span8" [(ngModel)]="project.customer" ngControl="customer">
                         <option *ngFor="let c of customers" [value]="c.id">{{c.name}}</option>
                     </select>
                     <div [hidden]="form.controls.customer.valid || form.controls.customer.pristine" class="error-message">
@@ -49,7 +49,7 @@
                     {{'manager'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.manager.valid">
-                    <select class="span6" [(ngModel)]="project.manager" ngControl="manager">
+                    <select class="span8" [(ngModel)]="project.manager" ngControl="manager">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                     <div [hidden]="form.controls.manager.valid || form.controls.manager.pristine" class="error-message">
@@ -62,7 +62,7 @@
                     {{'programmer'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.programmer.valid">
-                    <select class="span6" [(ngModel)]="project.programmer" ngControl="programmer">
+                    <select class="span8" [(ngModel)]="project.programmer" ngControl="programmer">
                         <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
                     </select>
                     <div [hidden]="form.controls.programmer.valid || form.controls.programmer.pristine" class="error-message">
@@ -75,7 +75,7 @@
                     {{'tester'}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.tester.valid">
-                    <select class="span6" [(ngModel)]="project.tester" ngControl="tester">
+                    <select class="span8" [(ngModel)]="project.tester" ngControl="tester">
                         <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
                     </select>
                     <div [hidden]="form.controls.tester.valid || form.controls.tester.pristine" class="error-message">
@@ -88,7 +88,7 @@
                     {{'observers'}}
                 </div>
                 <div class="controls">
-                    <select class="span6" [(ngModel)]="project.observers" ngControl="observers">
+                    <select class="span8" [(ngModel)]="project.observers" ngControl="observers">
                         <option *ngFor="let obs of users" [value]="obs.id">{{obs.login}}</option>
                     </select>
                 </div>
@@ -98,8 +98,8 @@
                     {{'status'}}
                 </div>
                 <div class="controls">
-                    <select class="span6" [(ngModel)]="project.status" ngControl="status">
-                        <option *ngFor="let st of statuses" [value]="st">{{st}}</option>
+                    <select class="span8" [(ngModel)]="project.status" ngControl="status">
+                        <option *ngFor="let st of statusOptions" [value]="st">{{st}}</option>
                     </select>
                 </div>
             </div>
@@ -115,8 +115,11 @@
                 <div class="control-label">
                     {{'comment'}}
                 </div>
-                <div class="controls">
-                    <textarea class="span6" [(ngModel)]="project.comment" ngControl="comment"></textarea>
+                <div class="controls" [class.has-error]="!form.controls.comment.valid">
+                    <textarea class="span8" [(ngModel)]="project.comment" ngControl="comment"></textarea>
+                    <div [hidden]="form.controls.comment.valid || form.controls.comment.pristine" class="error-message">
+                        {{'required'}}
+                    </div>
                 </div>
             </div>
         </fieldset>

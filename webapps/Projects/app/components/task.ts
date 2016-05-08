@@ -16,7 +16,7 @@ import {User} from '../models/user';
     providers: [FormBuilder]
 })
 
-export class TaskComponent implements OnInit {
+export class TaskComponent {
     task: Task;
     form: ControlGroup;
     users: User[];
@@ -31,25 +31,21 @@ export class TaskComponent implements OnInit {
         private _referenceService: ReferenceService
     ) {
         this.form = _formBuilder.group({
-            type: new Control('', Validators.required),
-            status: new Control(''),
-            priority: new Control(''),
-            body: new Control(''),
-            assignee: new Control(''),
-            startDate: new Control(''),
-            dueDate: new Control(''),
-            tags: new Control(''),
-            attachments: new Control('')
+            type: [''],
+            status: [''],
+            priority: [''],
+            body: ['', Validators.required],
+            assignee: [''],
+            startDate: [''],
+            dueDate: [''],
+            tags: [''],
+            attachments: ['']
         });
 
         if (this._routeSegment.getParam('id') !== 'new') {
             this._taskService.getTaskById(this._routeSegment.getParam('id')).subscribe(
-                task => {
-                    this.task = task;
-                },
-                err => {
-                    console.log(err);
-                }
+                task => this.task = task,
+                errorResponse => this.handleXhrError(errorResponse)
             );
         } else {
             this.task = new Task();
@@ -59,15 +55,17 @@ export class TaskComponent implements OnInit {
         this._referenceService.getTags().subscribe(tags => this.tags = tags);
     }
 
-    ngOnInit() {
-
-    }
-
     saveTask() {
-        this._taskService.saveTask(this.task).subscribe(resp => this.close());;
+        this._taskService.saveTask(this.task).subscribe(resp => this.close());
     }
 
     close() {
         this._router.navigate(['/tasks']);
+    }
+
+    handleXhrError(errorResponse) {
+        if (errorResponse.status === 401) {
+            this._router.navigate(['/login']);
+        }
     }
 }
