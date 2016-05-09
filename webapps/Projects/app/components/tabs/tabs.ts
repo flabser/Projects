@@ -1,5 +1,5 @@
-import {Component, ContentChildren, QueryList, AfterContentInit} from '@angular/core';
-import {Tab} from './tab';
+import { createPlatform, Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Tab } from './tab';
 
 @Component({
     selector: 'tabs',

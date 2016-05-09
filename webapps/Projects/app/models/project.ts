@@ -1,6 +1,6 @@
-import {Attachment} from './attachment';
-import {Organization} from './organization';
-import {User} from './user';
+import { Attachment } from './attachment';
+import { Organization } from './organization';
+import { User } from './user';
 
 export const ProjectStatusType = [
     'DRAFT',

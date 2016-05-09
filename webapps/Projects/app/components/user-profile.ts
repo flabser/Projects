@@ -1,12 +1,12 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import {Tabs} from './tabs/tabs';
-import {Tab} from './tabs/tab';
+import { Tabs } from './tabs/tabs';
+import { Tab } from './tabs/tab';
 
-import {AppService} from '../services/app.service';
-import {User} from '../models/user';
+import { AppService } from '../services/app.service';
+import { User } from '../models/user';
 
 @Component({
     selector: '[user-profile]',
@@ -20,11 +20,11 @@ export class UserProfileComponent {
     form: ControlGroup;
 
     constructor(
-        private _router: Router,
-        private _formBuilder: FormBuilder,
-        private _appService: AppService
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private appService: AppService
     ) {
-        this.form = _formBuilder.group({
+        this.form = formBuilder.group({
             login: [],
             pwd: [],
             pwd_confirm: [],
@@ -33,7 +33,7 @@ export class UserProfileComponent {
     }
 
     updateUserProfile() {
-        this._appService.updateUserProfile(this.user);
+        this.appService.updateUserProfile(this.user);
     }
 
     close(event) {

@@ -1,7 +1,7 @@
-import {Attachment} from './attachment';
-import {Tag} from './tag';
-import {TaskType} from './task-type';
-import {User} from './user';
+import { Attachment } from './attachment';
+import { Tag } from './tag';
+import { TaskType } from './task-type';
+import { User } from './user';
 
 export const TaskPriorityType = [
     'HEIGHEST',

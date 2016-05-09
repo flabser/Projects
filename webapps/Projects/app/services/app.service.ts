@@ -1,20 +1,20 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {User} from '../models/user';
+import { User } from '../models/user';
 
 @Injectable()
 export class AppService {
 
     constructor(
-        private _http: Http
+        private http: Http
     ) { }
 
     getTranslations() {
         let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=common-captions';
 
-        return this._http.get(url, header)
+        return this.http.get(url, header)
             .map(response => response.json().captions);
     }
 
@@ -22,14 +22,14 @@ export class AppService {
         let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=outline';
 
-        return this._http.get(url, header);
+        return this.http.get(url, header);
     }
 
     getUsers() {
         let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=users';
 
-        return this._http.get(url, header)
+        return this.http.get(url, header)
             .map(response => response.json().objects[0].list)
             .map((response: User[]) => response);
     }
@@ -39,6 +39,6 @@ export class AppService {
     }
 
     logout() {
-        return this._http.delete('/');
+        return this.http.delete('/');
     }
 }

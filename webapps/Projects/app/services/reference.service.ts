@@ -1,8 +1,8 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {Tag} from '../models/tag';
-import {TaskType} from '../models/task-type';
+import { Tag } from '../models/tag';
+import { TaskType } from '../models/task-type';
 
 @Injectable()
 export class ReferenceService {

@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Router, ROUTER_DIRECTIVES} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 
-import {AppService} from '../services/app.service';
+import { AppService } from '../services/app.service';
 
 @Component({
     selector: '[nav]',
@@ -11,7 +11,7 @@ import {AppService} from '../services/app.service';
 
 export class NavComponent {
     constructor(
-        private _router: Router,
-        private _appService: AppService
+        private router: Router,
+        private appService: AppService
     ) { }
 }

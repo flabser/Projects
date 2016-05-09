@@ -1,19 +1,19 @@
-import {Component, HostBinding, HostListener, OnInit} from '@angular/core';
-import {Router, Routes, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Router, Routes, RouteTree, ROUTER_DIRECTIVES } from '@angular/router';
 
-import {AppService} from '../services/app.service';
-import {ReferenceService} from '../services/reference.service';
-import {StaffService} from '../services/staff.service';
+import { AppService } from '../services/app.service';
+import { ReferenceService } from '../services/reference.service';
+import { StaffService } from '../services/staff.service';
 
-import {NBNotifyComponent} from './nb-notify';
-import {NavComponent} from './nav';
-import {ProjectsComponent} from './projects';
-import {ProjectComponent} from './project';
-import {TasksComponent} from './tasks';
-import {TaskComponent} from './task';
-import {UserProfileComponent} from './user-profile';
-import {LoginComponent} from './login';
-import {User} from '../models/user';
+import { NBNotifyComponent } from './nb-notify';
+import { NavComponent } from './nav';
+import { ProjectsComponent } from './projects';
+import { ProjectComponent } from './project';
+import { TasksComponent } from './tasks';
+import { TaskComponent } from './task';
+import { UserProfileComponent } from './user-profile';
+import { LoginComponent } from './login';
+import { User } from '../models/user';
 
 @Component({
     selector: 'project-app',
@@ -44,10 +44,10 @@ export class App implements OnInit {
     @HostBinding('class.search-open') get toggleSearch() { return this.isSearchOpen; };
 
     constructor(
-        private _router: Router,
-        private _appService: AppService,
-        private _referenceService: ReferenceService,
-        private _staffService: StaffService
+        private router: Router,
+        private appService: AppService,
+        private referenceService: ReferenceService,
+        private staffService: StaffService
     ) { }
 
     ngOnInit() {
@@ -56,11 +56,11 @@ export class App implements OnInit {
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        this._appService.getTranslations().subscribe(
+        this.appService.getTranslations().subscribe(
             captions => console.log(captions),
             err => {
                 console.log(err);
-                this._router.navigate(['/login']);
+                this.router.navigate(['/login']);
             }
         );
     }

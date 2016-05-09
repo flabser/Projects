@@ -1,8 +1,8 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {Task} from '../models/task';
-import {serializeObj} from '../utils/obj-utils';
+import { Task } from '../models/task';
+import { serializeObj } from '../utils/obj-utils';
 
 const VIEW_URL = 'p?id=task-view';
 const FORM_URL = 'p?id=task-form';

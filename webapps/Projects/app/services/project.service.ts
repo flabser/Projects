@@ -1,8 +1,8 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {Project} from '../models/project';
-import {serializeObj} from '../utils/obj-utils';
+import { Project } from '../models/project';
+import { serializeObj } from '../utils/obj-utils';
 
 const VIEW_URL = 'p?id=project-view';
 const FORM_URL = 'p?id=project-form';
@@ -17,28 +17,28 @@ const HEADER = {
 export class ProjectService {
 
     constructor(
-        private _http: Http
+        private http: Http
     ) { }
 
     getProjects() {
-        return this._http.get(VIEW_URL, HEADER)
+        return this.http.get(VIEW_URL, HEADER)
             .map(response => response.json().objects[0].list)
             .map((response: Project[]) => response);
     }
 
     getProjectById(projectId: string) {
-        return this._http.get(FORM_URL + '&docid=' + projectId, HEADER)
+        return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
             .map(response => response.json().objects[1])
             .map((response: Project) => response);
     }
 
     saveProject(project: Project) {
         let url = FORM_URL + (project.id ? '&docid=' + project.id : '');
-        return this._http.post(url, this.serializeProject(project), HEADER);
+        return this.http.post(url, this.serializeProject(project), HEADER);
     }
 
     deleteProject(projects: Project[]) {
-        return this._http.delete(VIEW_URL);
+        return this.http.delete(VIEW_URL);
     }
 
     //

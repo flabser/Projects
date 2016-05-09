@@ -1,13 +1,13 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Router, RouteSegment} from '@angular/router';
-import {FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES} from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router, RouteSegment } from '@angular/router';
+import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import {AppService} from '../services/app.service';
-import {Task} from '../models/task';
-import {TaskService} from '../services/task.service';
-import {ReferenceService} from '../services/reference.service';
-import {Tag} from '../models/tag';
-import {User} from '../models/user';
+import { AppService } from '../services/app.service';
+import { Task } from '../models/task';
+import { TaskService } from '../services/task.service';
+import { ReferenceService } from '../services/reference.service';
+import { Tag } from '../models/tag';
+import { User } from '../models/user';
 
 @Component({
     selector: '[task]',
@@ -23,14 +23,14 @@ export class TaskComponent {
     tags: Tag[];
 
     constructor(
-        private _router: Router,
-        private _routeSegment: RouteSegment,
-        private _formBuilder: FormBuilder,
-        private _appService: AppService,
-        private _taskService: TaskService,
-        private _referenceService: ReferenceService
+        private router: Router,
+        private routeSegment: RouteSegment,
+        private formBuilder: FormBuilder,
+        private appService: AppService,
+        private taskService: TaskService,
+        private referenceService: ReferenceService
     ) {
-        this.form = _formBuilder.group({
+        this.form = formBuilder.group({
             type: [''],
             status: [''],
             priority: [''],
@@ -42,8 +42,8 @@ export class TaskComponent {
             attachments: ['']
         });
 
-        if (this._routeSegment.getParam('id') !== 'new') {
-            this._taskService.getTaskById(this._routeSegment.getParam('id')).subscribe(
+        if (this.routeSegment.getParam('id') !== 'new') {
+            this.taskService.getTaskById(this.routeSegment.getParam('id')).subscribe(
                 task => this.task = task,
                 errorResponse => this.handleXhrError(errorResponse)
             );
@@ -51,21 +51,21 @@ export class TaskComponent {
             this.task = new Task();
         }
 
-        this._appService.getUsers().subscribe(users => this.users = users);
-        this._referenceService.getTags().subscribe(tags => this.tags = tags);
+        this.appService.getUsers().subscribe(users => this.users = users);
+        this.referenceService.getTags().subscribe(tags => this.tags = tags);
     }
 
     saveTask() {
-        this._taskService.saveTask(this.task).subscribe(resp => this.close());
+        this.taskService.saveTask(this.task).subscribe(resp => this.close());
     }
 
     close() {
-        this._router.navigate(['/tasks']);
+        this.router.navigate(['/tasks']);
     }
 
     handleXhrError(errorResponse) {
         if (errorResponse.status === 401) {
-            this._router.navigate(['/login']);
+            this.router.navigate(['/login']);
         }
     }
 }

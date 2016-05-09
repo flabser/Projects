@@ -1,10 +1,10 @@
-import {Component, Inject} from '@angular/core';
-import {Router, Routes} from '@angular/router';
-import {DatePipe} from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { Router, Routes } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
-import {Project} from '../models/project';
-import {ProjectService} from '../services/project.service';
-import {DateFormatPipe} from '../pipes/date-format.pipe';
+import { Project } from '../models/project';
+import { ProjectService } from '../services/project.service';
+import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 @Component({
     selector: '[projects]',
@@ -17,7 +17,7 @@ export class ProjectsComponent {
     selectedProjects: Project[];
 
     constructor(
-        private _router: Router,
+        private router: Router,
         private projectService: ProjectService
     ) {
         projectService.getProjects().subscribe(
@@ -27,7 +27,7 @@ export class ProjectsComponent {
     }
 
     composeRecord() {
-        this._router.navigate(['/projects', 'new']);
+        this.router.navigate(['/projects', 'new']);
     }
 
     deleteProject() {
@@ -36,7 +36,7 @@ export class ProjectsComponent {
 
     handleXhrError(errorResponse) {
         if (errorResponse.status === 401) {
-            this._router.navigate(['/login']);
+            this.router.navigate(['/login']);
         }
     }
 }

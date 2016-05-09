@@ -1,7 +1,7 @@
-import {Injectable, Inject} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers } from '@angular/http';
 
-import {Organization} from '../models/organization';
+import { Organization } from '../models/organization';
 
 @Injectable()
 export class StaffService {
