@@ -3,9 +3,10 @@
         {{'tasks'}}
     </h1>
     <div class="content-actions">
-        <button class="btn" type="button" (click)="composeRecord()">
+        <button class="btn" type="button" (click)="newTask()">
             {{'new_task'}}
         </button>
+        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)='goToPage($event)'></pagination>
     </div>
 </div>
 <div class="content-body">

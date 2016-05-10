@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import { Project } from '../models/project';
 import { serializeObj } from '../utils/obj-utils';
@@ -20,10 +20,23 @@ export class ProjectService {
         private http: Http
     ) { }
 
-    getProjects() {
-        return this.http.get(VIEW_URL, HEADER)
-            .map(response => response.json().objects[0].list)
-            .map((response: Project[]) => response);
+    getProjects(_params) {
+        let params: URLSearchParams = new URLSearchParams();
+        for (let p in _params) {
+            params.set(p, _params[p]);
+        }
+
+        return this.http.get(VIEW_URL, {
+            headers: HEADER.headers,
+            search: params
+        })
+            .map(response => response.json().objects[0])
+            .map(data => {
+                return {
+                    projects: <Project[]>data.list,
+                    meta: data.meta
+                }
+            });
     }
 
     getProjectById(projectId: string) {

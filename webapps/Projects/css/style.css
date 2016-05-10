@@ -1,8 +1,20 @@
-.side-nav .nav-link {
-    padding: 8px 16px 8px 16px;
+body:not(.side-nav-toggle) .aside + .content {
+    margin-left: 0;
 }
 
-.side-nav .nav-link>i {
+.body:not(.side-nav-toggle) .aside + .content {
+    margin-left: 280px;
+}
+
+pagination:empty {
+    display: none;
+}
+
+.side-nav .nav-link {
+    padding: 8px 16px;
+}
+
+.side-nav .nav-link > i {
     color: #565656;
     font-size: 20px;
 }
@@ -14,12 +26,9 @@
 }
 
 .entry-link.router-link-active {
-    background-color: #f5f5f5
+    background-color: #f5f5f5;
 }
-
-
 /* .vw-project */
-
 .vw-project-name {
     width: 18%;
 }
@@ -35,10 +44,7 @@
 .vw-date {
     width: 105px;
 }
-
-
 /* .vw-task */
-
 .vw-task-status {
     width: 100px;
 }

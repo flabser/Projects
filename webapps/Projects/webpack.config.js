@@ -4,7 +4,7 @@ const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = '';
 
 const basePlugins = [
     new webpack.DefinePlugin({
@@ -34,11 +34,11 @@ const prodPlugins = [
 
 const plugins = basePlugins
     .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
-    .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
+    .concat(process.env.NODE_ENV !== 'production' ? devPlugins : []);
 
 module.exports = {
 
-    devtool: 'inline-source-map',
+    devtool: process.env.NODE_ENV !== 'production' ? 'inline-source-map' : '',
 
     entry: {
         app: './app/main.ts',
@@ -55,7 +55,8 @@ module.exports = {
             '@angular/router',
             '@angular/upgrade',
 
-            'zone.js'
+            'zone.js',
+            'moment'
         ]
     },
 
@@ -82,6 +83,6 @@ module.exports = {
             { test: /\.woff2/, loader: 'url' },
             { test: /\.ttf/, loader: 'url' },*/
         ],
-        noParse: [/zone\.js\/dist\/.+/, /@angular\/.+/]
+        noParse: [/zone\.js\/dist\/.+/]
     }
 }

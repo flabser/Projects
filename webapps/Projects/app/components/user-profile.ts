@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import { Tabs } from './tabs/tabs';
-import { Tab } from './tabs/tab';
+import { Tabs } from '../shared/tabs/tabs';
+import { Tab } from '../shared/tabs/tab';
 
 import { AppService } from '../services/app.service';
 import { User } from '../models/user';

@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 
 import { Task } from '../models/task';
 import { serializeObj } from '../utils/obj-utils';
@@ -20,10 +20,23 @@ export class TaskService {
         private http: Http
     ) { }
 
-    getTasks(at: string) {
-        return this.http.get(VIEW_URL + (at ? '&for=' + at : ''), HEADER)
-            .map(response => response.json().objects[0].list)
-            .map((response: Task[]) => response);
+    getTasks(_params) {
+        let params: URLSearchParams = new URLSearchParams();
+        for (let p in _params) {
+            params.set(p, _params[p]);
+        }
+
+        return this.http.get(VIEW_URL, {
+            headers: HEADER.headers,
+            search: params
+        })
+            .map(response => response.json().objects[0])
+            .map(data => {
+                return {
+                    tasks: <Task[]>data.list,
+                    meta: data.meta
+                }
+            });
     }
 
     getTaskById(taskId: string) {
