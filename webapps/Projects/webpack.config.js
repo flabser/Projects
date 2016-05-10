@@ -56,7 +56,8 @@ module.exports = {
             '@angular/upgrade',
 
             'zone.js',
-            'moment'
+            'moment',
+            'ng2-translate'
         ]
     },
 
