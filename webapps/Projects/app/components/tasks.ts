@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/router';
-import { DatePipe } from '@angular/common';
+
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Task } from '../models/task';
@@ -10,7 +12,7 @@ import { TaskComponent } from '../components/task';
 @Component({
     selector: '[tasks]',
     template: require('../templates/tasks.html'),
-    pipes: [DatePipe],
+    pipes: [DateFormatPipe, TranslatePipe],
     directives: [PaginationComponent],
     providers: [TaskService]
 })

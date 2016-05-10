@@ -2,44 +2,44 @@
     <li>
         <a [routerLink]="['/tasks', 'inbox']" class="nav-link">
             <i class="fa fa-inbox"></i>
-            <span>{{'inbox'}}</span>
+            <span>{{'inbox' | translate}}</span>
         </a>
     </li>
     <li>
         <a [routerLink]="['/tasks', 'today']" class="nav-link">
             <i class="fa fa-calendar-o"></i>
-            <span>{{'today'}}</span>
+            <span>{{'today' | translate}}</span>
         </a>
     </li>
     <li>
         <a [routerLink]="['/tasks', 'week']" class="nav-link">
             <i class="fa fa-calendar"></i>
-            <span>{{'week'}}</span>
+            <span>{{'week' | translate}}</span>
         </a>
     </li>
     <li>
         <a [routerLink]="['/tasks', 'all']" class="nav-link">
             <i class="fa fa-database"></i>
-            <span>{{'all'}}</span>
+            <span>{{'all' | translate}}</span>
         </a>
     </li>
     <li>
         <a [routerLink]="['/tasks', 'completed']" class="nav-link">
             <i class="fa fa-check-square-o"></i>
-            <span>{{'completed'}}</span>
+            <span>{{'completed' | translate}}</span>
         </a>
     </li>
     <li>
         <a [routerLink]="['/tasks', 'my']" class="nav-link">
             <i class="fa fa-ticket"></i>
-            <span>{{'my_tasks'}}</span>
+            <span>{{'my_tasks' | translate}}</span>
         </a>
     </li>
     <li class="divider"></li>
     <li>
         <a [routerLink]="['/projects']" class="nav-link">
             <i class="fa fa-puzzle-piece"></i>
-            <span>{{'projects'}}</span>
+            <span>{{'projects' | translate}}</span>
         </a>
     </li>
 </ul>

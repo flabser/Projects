@@ -1,5 +1,5 @@
 <div *ngIf="!project">
-    {{'loading'}}
+    {{'loading' | translate}}
 </div>
 <form class="form" [ngFormModel]="form" *ngIf="project">
     <header class="content-header">
@@ -7,14 +7,14 @@
             <i class="fa fa-chevron-left"></i>
         </button>
         <h1 class="header-title">
-            {{'project'}}
+            {{'project' | translate}}
         </h1>
         <div class="content-actions">
             <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveProject()">
-                {{'save_close'}}
+                {{'save_close' | translate}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
-                {{'close'}}
+                {{'close' | translate}}
             </button>
         </div>
     </header>
@@ -22,70 +22,70 @@
         <fieldset class="fieldset">
             <div class="form-group">
                 <div class="control-label">
-                    {{'name'}}
+                    {{'name' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.name.valid">
                     <input class="span8" [(ngModel)]="project.name" ngControl="name" />
                     <div [hidden]="form.controls.name.valid || form.controls.name.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'customer'}}
+                    {{'customer' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.customer.valid">
                     <select class="span8" [(ngModel)]="project.customer" ngControl="customer">
                         <option *ngFor="let c of customers" [value]="c.id">{{c.name}}</option>
                     </select>
                     <div [hidden]="form.controls.customer.valid || form.controls.customer.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'manager'}}
+                    {{'manager' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.manager.valid">
                     <select class="span8" [(ngModel)]="project.manager" ngControl="manager">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                     <div [hidden]="form.controls.manager.valid || form.controls.manager.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'programmer'}}
+                    {{'programmer' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.programmer.valid">
                     <select class="span8" [(ngModel)]="project.programmer" ngControl="programmer">
                         <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
                     </select>
                     <div [hidden]="form.controls.programmer.valid || form.controls.programmer.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'tester'}}
+                    {{'tester' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.tester.valid">
                     <select class="span8" [(ngModel)]="project.tester" ngControl="tester">
                         <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
                     </select>
                     <div [hidden]="form.controls.tester.valid || form.controls.tester.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'observers'}}
+                    {{'observers' | translate}}
                 </div>
                 <div class="controls">
                     <select class="span8" [(ngModel)]="project.observers" ngControl="observers">
@@ -95,7 +95,7 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'status'}}
+                    {{'status' | translate}}
                 </div>
                 <div class="controls">
                     <select class="span8" [(ngModel)]="project.status" ngControl="status">
@@ -105,7 +105,7 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'finishDate'}}
+                    {{'finish_date' | translate}}
                 </div>
                 <div class="controls">
                     <input type="date" class="span2" [(ngModel)]="project.finishDate" ngControl="finishDate" />
@@ -113,24 +113,24 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'comment'}}
+                    {{'comment' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.comment.valid">
                     <textarea class="span8" [(ngModel)]="project.comment" ngControl="comment"></textarea>
                     <div [hidden]="form.controls.comment.valid || form.controls.comment.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
         </fieldset>
         <fieldset class="fieldset">
             <legend class="legend">
-                {{'attachments'}}
+                {{'attachments' | translate}}
             </legend>
             <div class="form-group">
                 <button type="button" class="btn btn-upload" data-upload="">
                     <i class="fa fa-paperclip"></i>
-                    <span>{{'attach_file'}}</span>
+                    <span>{{'attach_file' | translate}}</span>
                 </button>
                 <div class="attachments" data-upload-files="">
                     <div class="attachments-file" *ngFor="let att of project.attachments">

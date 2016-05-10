@@ -1,10 +1,10 @@
 <div class="content-header">
     <h1 class="header-title">
-        {{'projects'}}
+        {{'projects' | translate}}
     </h1>
     <div class="content-actions">
         <button class="btn" type="button" (click)="newProject()">
-            {{'new_project'}}
+            {{'new_project' | translate}}
         </button>
         <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)='goToPage($event)'></pagination>
     </div>
@@ -17,13 +17,13 @@
                     <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
-                    <span class="vw-project-name">{{'name'}}</span>
+                    <span class="vw-project-name">{{'name' | translate}}</span>
                 </div>
             </div>
         </header>
         <div class="entries">
             <div *ngIf="!projects">
-                {{'loading'}}
+                {{'loading' | translate}}
             </div>
             <div class="entry-wrap" *ngFor="let project of projects">
                 <div data-id="{{project.id}}" class="entry">
@@ -35,7 +35,7 @@
                             <span class="vw-project-name">{{project.name}}</span>
                             <span class="vw-project-customer">{{project.customer?.name}}</span>
                             <span class="vw-project-comment">{{project.comment}}</span>
-                            <span class="vw-date">{{project.finishDate | date:'dd.MM.y'}}</span>
+                            <span class="vw-date">{{project.finishDate | dateFmt}}</span>
                         </div>
                     </a>
                 </div>

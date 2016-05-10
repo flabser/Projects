@@ -1,5 +1,5 @@
 <div *ngIf="!task">
-    {{'loading'}}
+    {{'loading' | translate}}
 </div>
 <form class="form" [ngFormModel]="form" *ngIf="task">
     <header class="content-header">
@@ -7,14 +7,14 @@
             <i class="fa fa-chevron-left"></i>
         </button>
         <h1 class="header-title">
-            {{'task'}}
+            {{'task' | translate}}
         </h1>
         <div class="content-actions">
             <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveTask()">
-                {{'save_close'}}
+                {{'save_close' | translate}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
-                {{'close'}}
+                {{'close' | translate}}
             </button>
         </div>
     </header>
@@ -22,18 +22,18 @@
         <fieldset class="fieldset">
             <div class="form-group">
                 <div class="control-label">
-                    {{'task_type'}}
+                    {{'task_type' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.type.valid">
                     <input class="span6" [(ngModel)]="task.type" ngControl="type" />
                     <div [hidden]="form.controls.type.valid || form.controls.type.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'status'}}
+                    {{'status' | translate}}
                 </div>
                 <div class="controls">
                     <label>
@@ -56,44 +56,44 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'priority'}}
+                    {{'priority' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.priority.valid">
                     <select class="span3" [(ngModel)]="task.priority" ngControl="priority">
                         <option *ngFor="let m of priorities" [value]="m.value">{{m.name}}</option>
                     </select>
                     <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'body'}}
+                    {{'body' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.body.valid">
                     <textarea class="span8" [(ngModel)]="task.body" ngControl="body"></textarea>
                     <div [hidden]="form.controls.body.valid || form.controls.body.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'assignee_user'}}
+                    {{'assignee_user' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.assignee.valid">
                     <select class="span8" [(ngModel)]="task.assignee" ngControl="assignee">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
                     <div [hidden]="form.controls.assignee.valid || form.controls.assignee.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'start_date'}}
+                    {{'start_date' | translate}}
                 </div>
                 <div class="controls">
                     <input type="date" class="span2" [(ngModel)]="task.startDate" ngControl="startDate" />
@@ -101,7 +101,7 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'due_date'}}
+                    {{'due_date' | translate}}
                 </div>
                 <div class="controls">
                     <input type="date" class="span2" [(ngModel)]="task.dueDate" ngControl="dueDate" />
@@ -109,26 +109,26 @@
             </div>
             <div class="form-group">
                 <div class="control-label">
-                    {{'tags'}}
+                    {{'tags' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.tags.valid">
                     <select class="span8" multiple [(ngModel)]="task.tags" ngControl="tags">
                         <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
                     </select>
                     <div [hidden]="form.controls.tags.valid || form.controls.tags.pristine" class="error-message">
-                        {{'required'}}
+                        {{'required' | translate}}
                     </div>
                 </div>
             </div>
         </fieldset>
         <fieldset class="fieldset">
             <legend class="legend">
-                {{'attachments'}}
+                {{'attachments' | translate}}
             </legend>
             <div class="form-group">
                 <button type="button" class="btn btn-upload" data-upload="">
                     <i class="fa fa-paperclip"></i>
-                    <span>{{'attach_file'}}</span>
+                    <span>{{'attach_file' | translate}}</span>
                 </button>
                 <div class="attachments" data-upload-files="">
                     <div class="attachments-file" *ngFor="let att of task.attachments">

@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router, RouteSegment } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+
 import { AppService } from '../services/app.service';
 import { Project, ProjectStatusType } from '../models/project';
 import { ProjectService } from '../services/project.service';
@@ -13,7 +15,8 @@ import { User } from '../models/user';
     selector: '[project]',
     template: require('../templates/project.html'),
     directives: [FORM_DIRECTIVES],
-    providers: [FormBuilder]
+    providers: [FormBuilder],
+    pipes: [TranslatePipe]
 })
 
 export class ProjectComponent {

@@ -1,10 +1,10 @@
 <div class="content-header">
     <h1 class="header-title">
-        {{'tasks'}}
+        {{'tasks' | translate}}
     </h1>
     <div class="content-actions">
         <button class="btn" type="button" (click)="newTask()">
-            {{'new_task'}}
+            {{'new_task' | translate}}
         </button>
         <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)='goToPage($event)'></pagination>
     </div>
@@ -17,13 +17,13 @@
                     <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
-                    <span>{{'body'}}</span>
+                    <span>{{'body' | translate}}</span>
                 </div>
             </div>
         </header>
         <div class="entries">
             <div *ngIf="!tasks">
-                {{'loading'}}
+                {{'loading' | translate}}
             </div>
             <div class="entry-wrap" *ngFor="let task of tasks">
                 <div data-id="{{task.id}}" class="entry">
@@ -37,8 +37,8 @@
                                 <span class="vw-task-priority">{{task.priority}}</span>
                                 <span class="vw-task-body">{{task.body}}</span>
                                 <span class="vw-task-assignee">{{task.assignee}}</span>
-                                <span class="vw-date">{{task.startDate | date:'dd.MM.y'}}</span>
-                                <span class="vw-date">{{task.dueDate | date:'dd.MM.y'}}</span>
+                                <span class="vw-date">{{task.startDate | dateFmt}}</span>
+                                <span class="vw-date">{{task.dueDate | dateFmt}}</span>
                                 <span class="vw-tags">
                                     <span class="tag" *ngFor="let tag of tags">{{tag.name}}</span>
                                 </span>

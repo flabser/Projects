@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+
 import { Tabs } from '../shared/tabs/tabs';
 import { Tab } from '../shared/tabs/tab';
 
@@ -12,7 +14,8 @@ import { User } from '../models/user';
     selector: '[user-profile]',
     template: require('../templates/user-profile.html'),
     directives: [FORM_DIRECTIVES, Tabs, Tab],
-    providers: [FormBuilder]
+    providers: [FormBuilder],
+    pipes: [TranslatePipe]
 })
 
 export class UserProfileComponent {

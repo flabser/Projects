@@ -1,18 +1,19 @@
 import { Component, Inject, Output } from '@angular/core';
 import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/router';
-import { DatePipe } from '@angular/common';
+
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Project } from '../models/project';
 import { ProjectService } from '../services/project.service';
-import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 @Component({
     selector: '[projects]',
     template: require('../templates/projects.html'),
-    pipes: [DatePipe],
+    pipes: [DateFormatPipe, TranslatePipe],
     directives: [PaginationComponent],
-    providers: [ProjectService]
+    providers: [ProjectService],
 })
 
 export class ProjectsComponent implements OnActivate {

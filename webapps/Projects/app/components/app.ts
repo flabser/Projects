@@ -1,6 +1,8 @@
 import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
 import { Router, Routes, RouteTree, ROUTER_DIRECTIVES } from '@angular/router';
 
+import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
+
 import { AppService } from '../services/app.service';
 import { ReferenceService } from '../services/reference.service';
 import { StaffService } from '../services/staff.service';
@@ -18,7 +20,8 @@ import { User } from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent, NBNotifyComponent]
+    directives: [ROUTER_DIRECTIVES, NavComponent, NBNotifyComponent],
+    pipes: [TranslatePipe]
 })
 
 @Routes([
@@ -47,7 +50,8 @@ export class App implements OnInit {
         private router: Router,
         private appService: AppService,
         private referenceService: ReferenceService,
-        private staffService: StaffService
+        private staffService: StaffService,
+        public translate: TranslateService
     ) { }
 
     ngOnInit() {
@@ -56,13 +60,15 @@ export class App implements OnInit {
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        this.appService.getTranslations().subscribe(
-            captions => console.log(captions),
-            err => {
-                console.log(err);
-                this.router.navigate(['/login']);
-            }
-        );
+        // this.appService.getTranslations().subscribe(
+        //     captions => console.log(captions)
+        // );
+        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+        // this language will be used as a fallback when a translation isn't found in the current language
+        this.translate.setDefaultLang('en');
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        this.translate.use(userLang);
     }
 
     toggleNav() {

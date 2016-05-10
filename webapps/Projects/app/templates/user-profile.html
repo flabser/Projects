@@ -4,27 +4,27 @@
             <i class="fa fa-chevron-left"></i>
         </button>
         <h1 class="header-title">
-            {{'employee'}} {{user.name}}
+            {{'employee' | translate}} {{user.name}}
         </h1>
         <div class="content-actions">
             <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="updateUserProfile()">
-                {{'save_close'}}
+                {{'save_close' | translate}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
-                {{'close'}}
+                {{'close' | translate}}
             </button>
         </div>
     </header>
     <section class="content-body">
         <tabs>
-            <tab class="tab-pane" tabTitle="{{'properties'}}">
+            <tab class="tab-pane" tabTitle="{{'properties' | translate}}">
                 <!--<fieldset class="fieldset fieldset-user-avatar">
                             <img class="user-avatar" src="img/avatar.png"/>
                 </fieldset>-->
                 <fieldset class="fieldset fieldset-user-fields">
                     <div class="form-group">
                         <div class="control-label">
-                            {{'user_name'}}
+                            {{'user_name' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'login_name'}}
+                            {{'login_name' | translate}}
                         </div>
                         <div class="controls">
                             <input type="text" class="span3" [(ngModel)]="user.login" ngControl="login" />
@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'password'}}
+                            {{'password' | translate}}
                         </div>
                         <div class="controls">
                             <input type="password" class="span3" [(ngModel)]="user.pwd" ngControl="pwd" />
@@ -50,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'password_confirm'}}
+                            {{'password_confirm' | translate}}
                         </div>
                         <div class="controls">
                             <input type="password" class="span3" [(ngModel)]="user.pwd_confirm" ngControl="pwd_confirm" />
@@ -58,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'email'}}
+                            {{'email' | translate}}
                         </div>
                         <div class="controls">
                             <input type="email" class="span3" [(ngModel)]="user.email" ngControl="email" />
@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'org_name'}}
+                            {{'org_name' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'department'}}
+                            {{'department' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'position'}}
+                            {{'position' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'roles'}}
+                            {{'roles' | translate}}
                         </div>
                         <div class="controls">
                             <ul class="input-placeholder list-style-none">
@@ -110,11 +110,11 @@
                     </div>
                 </fieldset>
             </tab>
-            <tab class="tab-pane" tabTitle="{{'interface'}}">
+            <tab class="tab-pane" tabTitle="{{'interface' | translate}}">
                 <fieldset class="fieldset">
                     <div class="form-group">
                         <div class="control-label">
-                            {{'limit_view'}}
+                            {{'limit_view' | translate}}
                         </div>
                         <div class="controls">
                             <select name="pagesize" class="native span2">
@@ -147,7 +147,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'interface_lang'}}
+                            {{'interface_lang' | translate}}
                         </div>
                         <div class="controls">
                             <xsl:variable name="currentlang" select="/request/@lang" />
@@ -167,7 +167,7 @@
                         <div class="control-label"></div>
                         <div class="controls">
                             <a href="javascript:void(0)" data-toggle-theme="theme1" class="input-placeholder">
-                                {{'change_skin'}}
+                                {{'change_skin' | translate}}
                             </a>
                         </div>
                     </div>
