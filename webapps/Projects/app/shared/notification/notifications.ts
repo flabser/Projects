@@ -17,7 +17,8 @@ import { Notification } from './notification';
 })
 
 export class NotificationsComponent implements OnInit {
-    @HostBinding('class') className = 'nb-notify';
+    @HostBinding('class.nb-notify') true;
+    @HostBinding('class.hidden') get hidden() { return this.notifications.length == 0; };
 
     public notifications: Notification[] = [];
     private listener: any;
