@@ -6,7 +6,7 @@
         <button class="btn" type="button" (click)="newProject()">
             {{'new_project' | translate}}
         </button>
-        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)='goToPage($event)'></pagination>
+        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)="goToPage($event)"></pagination>
     </div>
 </div>
 <div class="content-body">

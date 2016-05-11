@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable'
 import 'rxjs/Rx';
 
 import { App } from './components/app';
-import { NBNotifyComponent } from './components/nb-notify';
+import { NotificationService } from './shared/notification';
 import { AppService } from './services/app.service';
 import { TaskService } from './services/task.service';
 import { ProjectService } from './services/project.service';
@@ -34,7 +34,7 @@ bootstrap(App, [
     }),
     TranslateService,
     FORM_PROVIDERS,
-    NBNotifyComponent,
+    NotificationService,
     AppService,
     TaskService,
     ProjectService,

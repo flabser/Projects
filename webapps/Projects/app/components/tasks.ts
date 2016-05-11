@@ -4,10 +4,10 @@ import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/ro
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
 
+import { NotificationService } from '../shared/notification';
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
-import { TaskComponent } from '../components/task';
 
 @Component({
     selector: '[tasks]',
@@ -24,12 +24,15 @@ export class TasksComponent implements OnActivate {
 
     constructor(
         private router: Router,
-        private taskService: TaskService
+        private taskService: TaskService,
+        private notifyService: NotificationService
     ) { }
 
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
         this.params.for = curr.getParam('for');
         this.loadData(this.params);
+
+        this.notifyService.info('tasks test notify').show().remove(300);
     }
 
     loadData(params) {

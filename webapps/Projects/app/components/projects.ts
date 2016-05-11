@@ -1,9 +1,10 @@
-import { Component, Inject, Output } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/router';
 
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
 
+import { NotificationService } from '../shared/notification';
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Project } from '../models/project';
 import { ProjectService } from '../services/project.service';
@@ -24,11 +25,14 @@ export class ProjectsComponent implements OnActivate {
 
     constructor(
         private router: Router,
-        private projectService: ProjectService
+        private projectService: ProjectService,
+        private notifyService: NotificationService
     ) { }
 
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
         this.loadData({});
+
+        this.notifyService.info('projects test notify').show().remove(800);
     }
 
     loadData(params) {
@@ -41,9 +45,9 @@ export class ProjectsComponent implements OnActivate {
         );
     }
 
-    goToPage(meta) {
+    goToPage(params) {
         this.loadData({
-            page: meta.page
+            page: params.page
         });
     }
 

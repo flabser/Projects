@@ -7,7 +7,8 @@ import { AppService } from '../services/app.service';
 import { ReferenceService } from '../services/reference.service';
 import { StaffService } from '../services/staff.service';
 
-import { NBNotifyComponent } from './nb-notify';
+import { NotificationService, NotificationsComponent } from '../shared/notification';
+
 import { NavComponent } from './nav';
 import { ProjectsComponent } from './projects';
 import { ProjectComponent } from './project';
@@ -20,7 +21,8 @@ import { User } from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent, NBNotifyComponent],
+    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationsComponent],
+    providers: [NotificationService],
     pipes: [TranslatePipe]
 })
 
@@ -51,7 +53,8 @@ export class App implements OnInit {
         private appService: AppService,
         private referenceService: ReferenceService,
         private staffService: StaffService,
-        public translate: TranslateService
+        public translate: TranslateService,
+        public notificationService: NotificationService
     ) { }
 
     ngOnInit() {
@@ -60,9 +63,7 @@ export class App implements OnInit {
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        // this.appService.getTranslations().subscribe(
-        //     captions => console.log(captions)
-        // );
+        // ng2-translate
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
         // this language will be used as a fallback when a translation isn't found in the current language

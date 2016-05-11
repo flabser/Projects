@@ -4,8 +4,7 @@ import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from 
 
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
-import { Tabs } from '../shared/tabs/tabs';
-import { Tab } from '../shared/tabs/tab';
+import { Tabs, Tab } from '../shared/tabs';
 
 import { AppService } from '../services/app.service';
 import { User } from '../models/user';
