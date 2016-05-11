@@ -31,8 +31,6 @@ export class TasksComponent implements OnActivate {
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
         this.params.for = curr.getParam('for');
         this.loadData(this.params);
-
-        this.notifyService.info('tasks test notify').show().remove(300);
     }
 
     loadData(params) {

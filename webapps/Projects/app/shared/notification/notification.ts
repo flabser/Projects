@@ -7,7 +7,6 @@ export class Notification {
     private message: string;
     private display = false;
     private delay;
-    private to;
     private promise;
 
     constructor(type: string, message: string) {
@@ -48,12 +47,11 @@ export class Notification {
 
     remove(delay: any) {
         this.delay = delay;
-        clearTimeout(this.to);
 
         if (delay === 'click') {
             // resolve on dismiss
         } else if (delay > 0) {
-            this.to = setTimeout(() => {
+            setTimeout(() => {
                 this.emitter.emit({ dismiss: true, notify: this, promise: this.promise });
             }, delay);
         } else {

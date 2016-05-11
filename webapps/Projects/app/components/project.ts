@@ -2,8 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router, RouteSegment } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
+import { NotificationService } from '../shared/notification';
 import { AppService } from '../services/app.service';
 import { Project, ProjectStatusType } from '../models/project';
 import { ProjectService } from '../services/project.service';
@@ -30,9 +31,11 @@ export class ProjectComponent {
         private router: Router,
         private routeSegment: RouteSegment,
         private formBuilder: FormBuilder,
+        private translate: TranslateService,
         private appService: AppService,
         private projectService: ProjectService,
-        private staffService: StaffService
+        private staffService: StaffService,
+        private notifyService: NotificationService
     ) {
         this.form = formBuilder.group({
             name: ['', Validators.required],
@@ -50,7 +53,7 @@ export class ProjectComponent {
         if (this.routeSegment.getParam('id') !== 'new') {
             this.projectService.getProjectById(this.routeSegment.getParam('id')).subscribe(
                 project => this.project = project,
-                errorResponse => this.handleXhrError(errorResponse)
+                error => this.handleXhrError(error)
             );
         } else {
             this.project = new Project();
@@ -61,7 +64,21 @@ export class ProjectComponent {
     }
 
     saveProject() {
-        this.projectService.saveProject(this.project).subscribe(response => this.close());
+        let noty = this.notifyService.process(this.translate.get('wait_while_document_save')).show();
+        this.projectService.saveProject(this.project).subscribe(
+            response => {
+                noty.set({ type: 'success', message: response.message }).remove(1500);
+                this.close();
+            },
+            error => {
+                noty.set({ type: 'error', message: error.message }).remove(1500);
+                this.errorSaveProject(error);
+            }
+        );
+    }
+
+    errorSaveProject(errorResponse) {
+        console.log(errorResponse);
     }
 
     close() {

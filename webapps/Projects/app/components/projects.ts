@@ -31,8 +31,6 @@ export class ProjectsComponent implements OnActivate {
 
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
         this.loadData({});
-
-        this.notifyService.info('projects test notify').show().remove(800);
     }
 
     loadData(params) {

@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 
 import { Task } from '../models/task';
 import { serializeObj } from '../utils/obj-utils';
@@ -47,17 +48,30 @@ export class TaskService {
 
     saveTask(task: Task) {
         let url = FORM_URL + (task.id ? '&docid=' + task.id : '');
-        return this.http.post(url, this.serializeTask(task), HEADER);
+        return this.http.post(url, this.serializeTask(task), HEADER)
+            .map(response => this.transformPostResponse(response))
+            .catch(error => Observable.throw(this.transformPostResponse(error)));
     }
 
     deleteTask(task: Task) {
         return this.http.delete(VIEW_URL);
     }
 
+    private transformPostResponse(response: Response) {
+        let json = response.json();
+        return {
+            ok: json.type === 'DOCUMENT_SAVED',
+            message: json.captions ? json.captions.type : json.message,
+            validation: json.validation,
+            redirectURL: json.redirectURL,
+            type: json.type
+        };
+    }
+
     //
-    serializeTask(task: Task): string {
+    private serializeTask(task: Task): string {
         return serializeObj({
-            type: task.type.id,
+            type: task.type ? task.type.id : '',
             status: task.status,
             priority: task.priority,
             body: task.body,

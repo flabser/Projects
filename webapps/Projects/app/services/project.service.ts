@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 
 import { Project } from '../models/project';
 import { serializeObj } from '../utils/obj-utils';
@@ -47,15 +48,28 @@ export class ProjectService {
 
     saveProject(project: Project) {
         let url = FORM_URL + (project.id ? '&docid=' + project.id : '');
-        return this.http.post(url, this.serializeProject(project), HEADER);
+        return this.http.post(url, this.serializeProject(project), HEADER)
+            .map(response => this.transformPostResponse(response))
+            .catch(error => Observable.throw(this.transformPostResponse(error)));
     }
 
     deleteProject(projects: Project[]) {
         return this.http.delete(VIEW_URL);
     }
 
+    private transformPostResponse(response: Response) {
+        let json = response.json();
+        return {
+            ok: json.type === 'DOCUMENT_SAVED',
+            message: json.captions ? json.captions.type : json.message,
+            validation: json.validation,
+            redirectURL: json.redirectURL,
+            type: json.type
+        };
+    }
+
     //
-    serializeProject(project: Project): string {
+    private serializeProject(project: Project): string {
         return serializeObj({
             name: project.name,
             status: project.status,
