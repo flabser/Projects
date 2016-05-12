@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Task } from '../models/task';
 import { serializeObj } from '../utils/obj-utils';
@@ -18,8 +20,27 @@ const HEADER = {
 export class TaskService {
 
     constructor(
-        private http: Http
+        private http: Http,
+        private translate: TranslateService
     ) { }
+
+    getTaskPriorityType() {
+        return this.translate.get(['heighest']).map(t => [
+            { value: 'HEIGHEST', text: this.translate.instant('heighest') },
+            { value: 'HEIGHT', text: this.translate.instant('height') },
+            { value: 'MEDIUM', text: this.translate.instant('medium') },
+            { value: 'NORMAL', text: this.translate.instant('normal'), default: true }
+        ]);
+    }
+
+    getTaskStatusType() {
+        return this.translate.get(['draft']).map(t => [
+            { value: 'DRAFT', text: this.translate.instant('draft'), default: true },
+            { value: 'WAITING', text: this.translate.instant('waiting') },
+            { value: 'PROCESSED', text: this.translate.instant('processed') },
+            { value: 'FINISHED', text: this.translate.instant('finished') }
+        ]);
+    }
 
     getTasks(_params) {
         let params: URLSearchParams = new URLSearchParams();

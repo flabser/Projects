@@ -1,7 +1,7 @@
-<div *ngIf="!task">
+<div *ngIf="!isReady">
     {{'loading' | translate}}
 </div>
-<form class="form" [ngFormModel]="form" *ngIf="task">
+<form class="form" [ngFormModel]="form" *ngIf="isReady">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -36,10 +36,14 @@
                     {{'status' | translate}}
                 </div>
                 <div class="controls">
-                    <label class="input" *ngFor="let ts of taskStatusTypes">
+                    <switch-button [model]="task" value="status" [items]="taskStatusTypes"></switch-button>
+                    <!-- <label class="input" *ngFor="let ts of taskStatusTypes">
                         <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="ts == task.status" />
                         <span>{{ts | text:'L' | translate}}</span>
-                    </label>
+                    </label> -->
+                    <div [hidden]="form.controls.status.valid || form.controls.status.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -47,10 +51,11 @@
                     {{'priority' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.priority.valid">
-                    <label class="input" *ngFor="let tp of taskPriorityTypes">
+                    <switch-button [model]="task" value="priority" [items]="taskPriorityTypes"></switch-button>
+                    <!-- <label class="input" *ngFor="let tp of taskPriorityTypes">
                         <input type="radio" name="priority" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
                         <span>{{tp | text:'L' | translate}}</span>
-                    </label>
+                    </label> -->
                     <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>

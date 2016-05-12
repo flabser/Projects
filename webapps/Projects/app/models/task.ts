@@ -3,20 +3,6 @@ import { Tag } from './tag';
 import { TaskType } from './task-type';
 import { User } from './user';
 
-export const TaskPriorityType = [
-    'HEIGHEST',
-    'HEIGHT',
-    'MEDIUM',
-    'NORMAL'
-];
-
-export const TaskStatusType = [
-    'DRAFT',
-    'WAITING',
-    'PROCESSED',
-    'FINISHED'
-];
-
 export class Task {
     id: string;
     author: User;

@@ -17,7 +17,7 @@ import { TaskService } from '../services/task.service';
     directives: [PaginationComponent]
 })
 
-export class TasksComponent implements OnActivate {
+export class TasksComponent {
     tasks: Task[];
     meta: any = {};
     params: any = {};

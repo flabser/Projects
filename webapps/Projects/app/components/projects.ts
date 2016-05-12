@@ -17,7 +17,7 @@ import { ProjectService } from '../services/project.service';
     directives: [PaginationComponent]
 })
 
-export class ProjectsComponent implements OnActivate {
+export class ProjectsComponent {
     projects: Project[];
     selectedProjects: Project[];
     params: any = {};

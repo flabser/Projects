@@ -2,12 +2,6 @@ import { Attachment } from './attachment';
 import { Organization } from './organization';
 import { User } from './user';
 
-export const ProjectStatusType = [
-    'DRAFT',
-    'PROCESSED',
-    'FINISHED'
-];
-
 export class Project {
     id: string;
     author: User;

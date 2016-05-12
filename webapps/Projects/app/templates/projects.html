@@ -3,7 +3,7 @@
         {{'projects' | translate}}
     </h1>
     <div class="content-actions">
-        <button class="btn" type="button" (click)="newProject()">
+        <button class="btn cta-button mdl-typography--font-regular mdl-button mdl-button--raised mdl-button--accent" type="button" (click)="newProject()">
             {{'new_project' | translate}}
         </button>
         <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)="goToPage($event)"></pagination>

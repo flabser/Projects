@@ -1,7 +1,7 @@
-<div *ngIf="!project">
+<div *ngIf="!isReady">
     {{'loading' | translate}}
 </div>
-<form class="form" [ngFormModel]="form" *ngIf="project">
+<form class="form" [ngFormModel]="form" *ngIf="isReady">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
@@ -10,7 +10,7 @@
             {{(project.id ? 'project' : 'new_project') | translate}}
         </h1>
         <div class="content-actions">
-            <button class="btn btn-primary" type="button" (click)="saveProject()">
+            <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveProject()">
                 {{'save_close' | translate}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
@@ -98,10 +98,7 @@
                     {{'status' | translate}}
                 </div>
                 <div class="controls">
-                    <label class="input" *ngFor="let ps of projectStatusTypes">
-                        <input type="radio" name="status" value="{{ps}}" (change)="setStatus(ps)" [checked]="ps == project.status" />
-                        <span>{{ps | text:'L' | translate}}</span>
-                    </label>
+                    <switch-button [model]="project" value="status" [items]="projectStatusTypes"></switch-button>
                 </div>
             </div>
             <div class="form-group">

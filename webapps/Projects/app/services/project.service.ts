@@ -1,6 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers, Response, URLSearchParams } from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
+
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Project } from '../models/project';
 import { serializeObj } from '../utils/obj-utils';
@@ -18,8 +20,17 @@ const HEADER = {
 export class ProjectService {
 
     constructor(
-        private http: Http
+        private http: Http,
+        private translate: TranslateService
     ) { }
+
+    getProjectStatusTypes() {
+        return this.translate.get(['draft', 'processed', 'finished']).map(t => [
+            { value: 'DRAFT', text: this.translate.instant('draft'), default: true },
+            { value: 'PROCESSED', text: this.translate.instant('processed') },
+            { value: 'FINISHED', text: this.translate.instant('finished') }
+        ]);
+    }
 
     getProjects(_params) {
         let params: URLSearchParams = new URLSearchParams();

@@ -1,13 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Router, RouteSegment } from '@angular/router';
+import { Router, RouteSegment, RouteTree, OnActivate } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
 import { NotificationService } from '../shared/notification';
+import { SwitchButtonComponent } from '../shared/switch-button';
 import { TextTransformPipe } from '../pipes/text-transform.pipe';
 import { AppService } from '../services/app.service';
-import { Task, TaskPriorityType, TaskStatusType } from '../models/task';
+import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 import { ReferenceService } from '../services/reference.service';
 import { Tag } from '../models/tag';
@@ -16,18 +18,19 @@ import { User } from '../models/user';
 @Component({
     selector: '[task]',
     template: require('../templates/task.html'),
-    directives: [FORM_DIRECTIVES],
+    directives: [FORM_DIRECTIVES, SwitchButtonComponent],
     providers: [FormBuilder],
     pipes: [TranslatePipe, TextTransformPipe]
 })
 
 export class TaskComponent {
+    isReady = false;
     task: Task;
     form: ControlGroup;
     users: User[];
     tags: Tag[];
-    taskPriorityTypes = TaskPriorityType;
-    taskStatusTypes = TaskStatusType;
+    taskPriorityTypes: any;
+    taskStatusTypes: any;
 
     constructor(
         private router: Router,
@@ -50,7 +53,9 @@ export class TaskComponent {
             tags: [''],
             attachments: ['']
         });
+    }
 
+    routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
         if (this.routeSegment.getParam('id') !== 'new') {
             this.taskService.getTaskById(this.routeSegment.getParam('id')).subscribe(
                 task => this.task = task,
@@ -60,8 +65,31 @@ export class TaskComponent {
             this.task = new Task();
         }
 
-        this.appService.getUsers().subscribe(users => this.users = users);
-        this.referenceService.getTags().subscribe(tags => this.tags = tags);
+        this.loadData();
+    }
+
+    loadData() {
+        Observable.forkJoin(
+            this.appService.getUsers(),
+            this.referenceService.getTags(),
+            this.taskService.getTaskStatusType(),
+            this.taskService.getTaskPriorityType()
+        ).subscribe(
+            data => {
+                this.users = data[0];
+                this.tags = data[1];
+                this.taskStatusTypes = data[2];
+                this.taskPriorityTypes = data[3];
+            },
+            error => {
+                this.handleXhrError(error)
+            },
+            () => this.isReady = true);
+
+        // this.appService.getUsers().subscribe(users => this.users = users);
+        // this.referenceService.getTags().subscribe(tags => this.tags = tags);
+        // this.taskService.getTaskStatusType().subscribe(result => this.taskStatusTypes = result);
+        // this.taskService.getTaskPriorityType().subscribe(result => this.taskPriorityTypes = result);
     }
 
     saveTask() {
