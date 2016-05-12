@@ -159,6 +159,27 @@ public class ProjectForm extends _DoPage {
         if (formData.getValueSilently("name").isEmpty()) {
             ve.addError("name", "required", getLocalizedWord("field_is_empty", lang));
         }
+        if (formData.getValueSilently("customer").isEmpty()) {
+            ve.addError("customer", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("manager", 0) == 0) {
+            ve.addError("manager", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("programmer", 0) == 0) {
+            ve.addError("programmer", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("tester", 0) == 0) {
+            ve.addError("tester", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValuesSilently("observers", 0)[0] == 0) {
+            ve.addError("observers", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("status", 0) == 0) {
+            ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("finish_date").isEmpty()) {
+            ve.addError("finish_date", "required", getLocalizedWord("field_is_empty", lang));
+        }
 
         return ve;
     }

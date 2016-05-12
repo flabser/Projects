@@ -175,8 +175,26 @@ public class TaskForm extends _DoPage {
     private _Validation validate(_WebFormData formData, LanguageCode lang) {
         _Validation ve = new _Validation();
 
+        if (formData.getValueSilently("type").isEmpty()) {
+            ve.addError("type", "required", getLocalizedWord("field_is_empty", lang));
+        }
         if (formData.getValueSilently("body").isEmpty()) {
             ve.addError("body", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("status", 0) == 0) {
+            ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("priority", 0) == 0) {
+            ve.addError("priority", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("start_date").isEmpty()) {
+            ve.addError("start_date", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("due_date").isEmpty()) {
+            ve.addError("due_date", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("assignee", 0) == 0) {
+            ve.addError("assignee", "required", getLocalizedWord("field_is_empty", lang));
         }
 
         return ve;
