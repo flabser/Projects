@@ -1,42 +1,30 @@
-<form [ngFormModel]="userForm" name="user-profile" class="form form-userprofile" action="" autocomplete="off">
+<form class="form form-userprofile" autocomplete="off" [ngFormModel]="form">
     <header class="content-header">
         <button class="btn-back" type="button" (click)="close($event)">
             <i class="fa fa-chevron-left"></i>
         </button>
         <h1 class="header-title">
-            {{'employee'}} {{user.name}}
+            {{'employee' | translate}} {{user.name}}
         </h1>
         <div class="content-actions">
-            <button class="btn btn-primary" type="button" [disabled]="!userForm.valid" (click)="updateUserProfile()">
-                {{'save_close'}}
+            <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="updateUserProfile()">
+                {{'save_close' | translate}}
             </button>
             <button class="btn" type="button" (click)="close($event)">
-                {{'close'}}
+                {{'close' | translate}}
             </button>
         </div>
     </header>
     <section class="content-body">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="active">
-                <a href="#tabs-1" role="tab" data-toggle="tab">
-                    {{'properties'}}
-                </a>
-            </li>
-            <li>
-                <a href="#tabs-3" role="tab" data-toggle="tab">
-                    {{'interface'}}
-                </a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="tabs-1">
+        <tabs>
+            <tab class="tab-pane" tabTitle="{{'properties' | translate}}">
                 <!--<fieldset class="fieldset fieldset-user-avatar">
                             <img class="user-avatar" src="img/avatar.png"/>
                 </fieldset>-->
                 <fieldset class="fieldset fieldset-user-fields">
                     <div class="form-group">
                         <div class="control-label">
-                            {{'user_name'}}
+                            {{'user_name' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -46,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'login_name'}}
+                            {{'login_name' | translate}}
                         </div>
                         <div class="controls">
                             <input type="text" class="span3" [(ngModel)]="user.login" ngControl="login" />
@@ -54,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'password'}}
+                            {{'password' | translate}}
                         </div>
                         <div class="controls">
                             <input type="password" class="span3" [(ngModel)]="user.pwd" ngControl="pwd" />
@@ -62,7 +50,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'password_confirm'}}
+                            {{'password_confirm' | translate}}
                         </div>
                         <div class="controls">
                             <input type="password" class="span3" [(ngModel)]="user.pwd_confirm" ngControl="pwd_confirm" />
@@ -70,7 +58,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'email'}}
+                            {{'email' | translate}}
                         </div>
                         <div class="controls">
                             <input type="email" class="span3" [(ngModel)]="user.email" ngControl="email" />
@@ -78,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'org_name'}}
+                            {{'org_name' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -88,7 +76,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'department'}}
+                            {{'department' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -98,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'position'}}
+                            {{'position' | translate}}
                         </div>
                         <div class="controls">
                             <span class="input-placeholder">
@@ -108,7 +96,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            {{'roles'}}
+                            {{'roles' | translate}}
                         </div>
                         <div class="controls">
                             <ul class="input-placeholder list-style-none">
@@ -121,12 +109,12 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="tabs-3">
+            </tab>
+            <tab class="tab-pane" tabTitle="{{'interface' | translate}}">
                 <fieldset class="fieldset">
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/limit_view/@caption" />
+                            {{'limit_view' | translate}}
                         </div>
                         <div class="controls">
                             <select name="pagesize" class="native span2">
@@ -159,7 +147,7 @@
                     </div>
                     <div class="form-group">
                         <div class="control-label">
-                            <xsl:value-of select="//captions/interface_lang/@caption" />
+                            {{'interface_lang' | translate}}
                         </div>
                         <div class="controls">
                             <xsl:variable name="currentlang" select="/request/@lang" />
@@ -179,12 +167,12 @@
                         <div class="control-label"></div>
                         <div class="controls">
                             <a href="javascript:void(0)" data-toggle-theme="theme1" class="input-placeholder">
-                                <xsl:value-of select="//captions/change_skin/@caption" />
+                                {{'change_skin' | translate}}
                             </a>
                         </div>
                     </div>
                 </fieldset>
-            </div>
-        </div>
+            </tab>
+        </tabs>
     </section>
 </form>

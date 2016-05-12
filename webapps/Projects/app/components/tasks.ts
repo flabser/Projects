@@ -1,43 +1,65 @@
-import {Component, Inject} from '@angular/core';
-import {Router, Routes, RouteSegment, RouteTree, OnActivate} from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/router';
 
-import {Task} from '../models/task';
-import {TaskService} from '../services/task-service';
-import {TaskFactory} from '../factories/task-factory';
-import {TaskComponent} from '../components/task';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { DateFormatPipe } from '../pipes/date-format.pipe';
+
+import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
+import { PaginationComponent } from '../shared/pagination/pagination';
+import { Task } from '../models/task';
+import { TaskService } from '../services/task.service';
 
 @Component({
     selector: '[tasks]',
-    template: require('../templates/tasks.html')
+    template: require('../templates/tasks.html'),
+    pipes: [DateFormatPipe, TranslatePipe, TextTransformPipe],
+    directives: [PaginationComponent]
 })
 
 export class TasksComponent implements OnActivate {
     tasks: Task[];
+    meta: any = {};
+    params: any = {};
 
     constructor(
-        private _router: Router,
-        private _routeSegment: RouteSegment,
-        private _taskService: TaskService
+        private router: Router,
+        private taskService: TaskService,
+        private notifyService: NotificationService
     ) { }
 
-    routerOnActivate(current: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
-        // const id = +currTree.parent(current).getParam('id');
+    routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
+        this.params.for = curr.getParam('for');
+        this.loadData(this.params);
+    }
 
-        this._taskService.getTasks(this._routeSegment.getParam('at')).subscribe(
-            tasks => this.tasks = tasks,
-            errorResponse => {
-                if (errorResponse.status === 401) {
-                    this._router.navigate(['/login']);
-                }
-            }
+    loadData(params) {
+        this.taskService.getTasks(params).subscribe(
+            data => {
+                this.tasks = data.tasks;
+                this.meta = data.meta;
+            },
+            errorResponse => this.handleXhrError(errorResponse)
         );
     }
 
-    composeRecord() {
-        this._router.navigate(['/task', 'new']);
+    goToPage(params) {
+        this.loadData({
+            page: params.page
+        });
+    }
+
+    newTask() {
+        this.router.navigate(['/task', 'new']);
     }
 
     deleteTask(task: Task) {
-        this._taskService.deleteTask(task).subscribe();
+        this.taskService.deleteTask(task).subscribe();
+    }
+
+    handleXhrError(errorResponse) {
+        if (errorResponse.status === 401) {
+            this.router.navigate(['/login']);
+        }
     }
 }

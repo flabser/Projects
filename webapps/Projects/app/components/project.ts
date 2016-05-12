@@ -1,92 +1,98 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Router, RouteSegment} from '@angular/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router, RouteSegment } from '@angular/router';
+import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import {Project} from '../models/project';
-import {ProjectService} from '../services/project-service';
-import {ProjectFactory} from '../factories/project-factory';
-import {AppService} from '../services/app-service';
-import {User} from '../models/user';
+import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
+
+import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
+import { AppService } from '../services/app.service';
+import { Project, ProjectStatusType } from '../models/project';
+import { ProjectService } from '../services/project.service';
+import { StaffService } from '../services/staff.service';
+import { Organization } from '../models/organization';
+import { User } from '../models/user';
 
 @Component({
     selector: '[project]',
-    template: require('../templates/project.html')
+    template: require('../templates/project.html'),
+    directives: [FORM_DIRECTIVES],
+    providers: [FormBuilder],
+    pipes: [TranslatePipe, TextTransformPipe]
 })
 
-export class ProjectComponent implements OnInit {
-    loading: Boolean = true;
+export class ProjectComponent {
+    project: Project;
+    form: ControlGroup;
     users: User[];
-    project: Project = new Project();
-
-    projectForm: ControlGroup;
-
-    name: Control;
-    status: Control;
-    customer: Control;
-    manager: Control;
-    programmer: Control;
-    tester: Control;
-    observers: Control;
-    comment: Control;
-    finishDate: Control;
-    attachments: Control;
+    customers: Organization[];
+    projectStatusTypes = ProjectStatusType;
 
     constructor(
-        private _projectService: ProjectService,
-        private _appService: AppService,
-        private _router: Router,
-        private _params: RouteSegment,
-        private _formBuilder: FormBuilder
+        private router: Router,
+        private routeSegment: RouteSegment,
+        private formBuilder: FormBuilder,
+        private translate: TranslateService,
+        private appService: AppService,
+        private projectService: ProjectService,
+        private staffService: StaffService,
+        private notifyService: NotificationService
     ) {
-        this.name = new Control('');
-        this.status = new Control('');
-        this.customer = new Control('');
-        this.manager = new Control('');
-        this.programmer = new Control('');
-        this.tester = new Control('');
-        this.observers = new Control('');
-        this.comment = new Control('');
-        this.finishDate = new Control('');
-        this.attachments = new Control('');
-
-        this.projectForm = _formBuilder.group({
-            name: this.name,
-            status: this.status,
-            customer: this.customer,
-            manager: this.manager,
-            programmer: this.programmer,
-            tester: this.tester,
-            observers: this.observers,
-            comment: this.comment,
-            finishDate: this.finishDate,
-            attachments: this.attachments
+        this.form = formBuilder.group({
+            name: ['', Validators.required],
+            status: [''],
+            customer: [''],
+            manager: [''],
+            programmer: [''],
+            tester: [''],
+            observers: [''],
+            comment: [''],
+            finishDate: [''],
+            attachments: ['']
         });
 
-        if (this._params.getParam('id') !== 'new') {
-            this._projectService.getProjectById(this._params.getParam('id')).subscribe(project => {
-                this.project = project;
-                this.loading = false;
-            }, err => {
-                console.log(err);
-            });
-
-            this.project.id = this._params.getParam('id');
+        if (this.routeSegment.getParam('id') !== 'new') {
+            this.projectService.getProjectById(this.routeSegment.getParam('id')).subscribe(
+                project => this.project = project,
+                error => this.handleXhrError(error)
+            );
         } else {
-            this.loading = false;
+            this.project = new Project();
         }
 
-        _appService.getUsers().subscribe(users => this.users = users);
-    }
-
-    ngOnInit() {
-
+        staffService.getOrganizations().subscribe(orgs => this.customers = orgs);
+        appService.getUsers().subscribe(users => this.users = users);
     }
 
     saveProject() {
-        this._projectService.saveProject(this.project).subscribe(response => this.close());
+        let noty = this.notifyService.process(this.translate.get('wait_while_document_save')).show();
+        this.projectService.saveProject(this.project).subscribe(
+            response => {
+                noty.set({ type: 'success', message: response.message }).remove(1500);
+                this.close();
+            },
+            error => {
+                noty.set({ type: 'error', message: error.message }).remove(1500);
+                this.errorSaveProject(error);
+            }
+        );
+    }
+
+    errorSaveProject(errorResponse) {
+        console.log(errorResponse);
     }
 
     close() {
-        this._router.navigate(['/projects']);
+        this.router.navigate(['/projects']);
+    }
+
+    handleXhrError(errorResponse) {
+        if (errorResponse.status === 401) {
+            this.router.navigate(['/login']);
+        }
+    }
+
+    setStatus(value) {
+        this.project.status = value;
     }
 }

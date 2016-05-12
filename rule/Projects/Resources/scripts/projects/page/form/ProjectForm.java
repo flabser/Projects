@@ -118,8 +118,8 @@ public class ProjectForm extends _DoPage {
             entity.setTester(userDAO.findById(formData.getNumberValueSilently("tester", 0)).getId());
             entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observers", 0)).map(Integer::longValue).collect(Collectors.toList()));
             entity.setComment(formData.getValue("comment"));
-            entity.setStatus(ProjectStatusType.getType(formData.getNumberValueSilently("status", 0)));
-            entity.setFinishDate(new Date());
+            entity.setStatus(ProjectStatusType.valueOf(formData.getValueSilently("status")));
+            entity.setFinishDate(Util.convertStringToDate(formData.getValueSilently("finish_date")));
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {
@@ -158,6 +158,27 @@ public class ProjectForm extends _DoPage {
 
         if (formData.getValueSilently("name").isEmpty()) {
             ve.addError("name", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("customer").isEmpty()) {
+            ve.addError("customer", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("manager", 0) == 0) {
+            ve.addError("manager", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("programmer", 0) == 0) {
+            ve.addError("programmer", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValueSilently("tester", 0) == 0) {
+            ve.addError("tester", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getNumberValuesSilently("observers", 0)[0] == 0) {
+            ve.addError("observers", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("status").isEmpty()) {
+            ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
+        }
+        if (formData.getValueSilently("finish_date").isEmpty()) {
+            ve.addError("finish_date", "required", getLocalizedWord("field_is_empty", lang));
         }
 
         return ve;

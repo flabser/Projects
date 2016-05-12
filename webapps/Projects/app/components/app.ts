@@ -1,83 +1,96 @@
-import {Component, HostBinding, HostListener, OnInit} from '@angular/core';
-import {Router, Routes, RouteSegment, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
+import { Component, HostBinding, HostListener, OnInit } from '@angular/core';
+import { Router, Routes, RouteTree, ROUTER_DIRECTIVES } from '@angular/router';
 
-import {AppService} from '../services/app-service';
-import {ReferenceService} from '../services/reference-service';
-import {StaffService} from '../services/staff-service';
+import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
-import {NavComponent} from './nav';
-import {ProjectsComponent} from './projects';
-import {ProjectComponent} from './project';
-import {TasksComponent} from './tasks';
-import {TaskComponent} from './task';
-import {UserProfileComponent} from './user-profile';
-import {LoginComponent} from './login';
-import {UsersComponent} from './users';
-import {User} from '../models/user';
+import { AppService } from '../services/app.service';
+import { ReferenceService } from '../services/reference.service';
+import { StaffService } from '../services/staff.service';
+
+import { NotificationService, NotificationsComponent } from '../shared/notification';
+
+import { NavComponent } from './nav';
+import { ProjectsComponent } from './projects';
+import { ProjectComponent } from './project';
+import { TasksComponent } from './tasks';
+import { TaskComponent } from './task';
+import { UserProfileComponent } from './user-profile';
+import { LoginComponent } from './login';
+import { User } from '../models/user';
 
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent]
+    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationsComponent],
+    providers: [NotificationService],
+    pipes: [TranslatePipe]
 })
 
 @Routes([
-    { path: '/projects', component: ProjectsComponent },
-    { path: '/project/:id', component: ProjectComponent },
+    { path: '/tasks/:for', component: TasksComponent },
     { path: '/tasks', component: TasksComponent },
-    { path: '/tasks/:id', component: TasksComponent },
     { path: '/task/:id', component: TaskComponent },
+    { path: '/projects/:id', component: ProjectComponent },
+    { path: '/projects', component: ProjectsComponent },
     { path: '/user-profile', component: UserProfileComponent },
     { path: '/login', component: LoginComponent }
 ])
 
 export class App implements OnInit {
     loggedUser: User;
-    HEADER_TITLE: string = "Projects";
+    HEADER_TITLE: any = "Projects";
     isNavCollapsed: Boolean;
+    isSearchOpen: Boolean;
     isMobileDevice: Boolean;
 
     @HostListener('window:resize', ['$event.target']) resize(window) { this.onResize(window); };
     @HostBinding('class.phone') get device() { return this.isMobileDevice; };
     @HostBinding('class.side-nav-toggle') get toggleNavVisible() { return this.isNavCollapsed; };
+    @HostBinding('class.search-open') get toggleSearch() { return this.isSearchOpen; };
 
     constructor(
-        private _router: Router,
-        private _appService: AppService,
-        private _referenceService: ReferenceService,
-        private _staffService: StaffService
-    ) {
-        if (_router.urlTree.root.segment === '') {
-            _router.navigate(['/tasks']);
-        }
-    }
+        private router: Router,
+        private appService: AppService,
+        private referenceService: ReferenceService,
+        private staffService: StaffService,
+        public translate: TranslateService,
+        public notificationService: NotificationService
+    ) { }
 
     ngOnInit() {
+        this.isSearchOpen = false;
         this.isNavCollapsed = false;
         this.loggedUser = new User();
         this.isMobileDevice = this.isMobile();
 
-        this._appService.getTranslations()
-            .subscribe(
-              captions => console.log(captions),
-              err => {
-                  console.log(err);
-                  this._router.navigate(['/login']);
-              }
-            );
+        // ng2-translate
+        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
+        userLang = /(fr|en)/gi.test(userLang) ? userLang : 'en';
+        // this language will be used as a fallback when a translation isn't found in the current language
+        this.translate.setDefaultLang('en');
+        // the lang to use, if the lang isn't available, it will use the current loader to get them
+        this.translate.use(userLang);
+
+        this.translate.get('brand').subscribe(value => this.HEADER_TITLE = value);
     }
 
     toggleNav() {
         this.isNavCollapsed = !this.isNavCollapsed;
     }
 
-    hideNav() {
+    hideNav(event) {
+        event.preventDefault();
         this.isNavCollapsed = false;
+        this.isSearchOpen = false;
+    }
+
+    searchToggle() {
+        this.isSearchOpen = !this.isSearchOpen;
     }
 
     logout(event) {
         event.preventDefault();
-        this.loggedUser = null;
+        // this.loggedUser = null;
         window.location.href = 'Logout';
     }
 

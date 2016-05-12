@@ -1,44 +1,28 @@
-import {Attachment} from './attachment';
-import {Organization} from './organization';
-import {User} from './user';
-import {serializeObj} from '../utils/obj-utils';
+import { Attachment } from './attachment';
+import { Organization } from './organization';
+import { User } from './user';
 
-export const ProjectStatusType = {
-    UNKNOWN: 0,
-    DRAFT: 899, 
-    PROCESSED: 900,
-    FINISHED: 901
-};
+export const ProjectStatusType = [
+    'DRAFT',
+    'PROCESSED',
+    'FINISHED'
+];
 
 export class Project {
     id: string;
     author: User;
     regDate: Date;
     url: string;
+    wasRead: boolean;
 
     name: string;
-    status: number;
-    customer: Organization;
+    status: string;
+    customer: string;
     manager: number;
     programmer: number;
     tester: number;
     observers: number[];
     comment: string;
-    finishDate: Date = new Date();
+    finishDate: Date;
     attachments: Attachment[];
-
-    serialize(): string {
-        return serializeObj({
-            name: this.name,
-            status: this.status,
-            customer: (this.customer ? this.customer.id : '') || '',
-            manager: this.manager || 0,
-            programmer: this.programmer || 0,
-            tester: this.tester || 0,
-            observers: this.observers ? this.observers : '',
-            comment: this.comment,
-            finishDate: this.finishDate ? this.finishDate.toString() : '',
-            attachments: '' //this.attachments.join('')
-        });
-    }
 }

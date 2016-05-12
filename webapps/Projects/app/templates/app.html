@@ -1,5 +1,6 @@
+<notifications></notifications>
 <div class="layout">
-    <div class="content-overlay" (mousedown)="hideNav()" (touchstart)="hideNav()"></div>
+    <div class="content-overlay" (mousedown)="hideNav($event)" (touchstart)="hideNav($event)"></div>
     <header class="header navbar navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,15 +25,15 @@
                             <li class="divider"></li>
                             <li>
                                 <a class="logout" href="#logout" (click)="logout($event)">
-                                    logout
+                                    {{'logout' | translate}}
                                 </a>
                             </li>
                         </ul>
                     </li>
                 </ul>
-                <form class="navbar-form navbar-search" name="ft-search">
+                <form class="navbar-form navbar-search" name="ft-search" (submit)="ftSearch()">
                     <input type="hidden" name="id" value="search" />
-                    <input type="search" class="q" name="keyword" value="{{search_keyword}}" placeholder={{search_placeholder}} required="required" autocomplete="off" />
+                    <input type="search" class="q" name="keyword" value="{{search_keyword}}" placeholder="{{'search'}}" required autocomplete="off" (focus)="searchToggle()" (blur)="searchToggle()" />
                     <button type="reset">
                         <i class="fa fa-times"></i>
                     </button>

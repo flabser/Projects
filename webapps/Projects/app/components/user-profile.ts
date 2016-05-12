@@ -1,38 +1,41 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-import {FORM_PROVIDERS, FormBuilder, Validators, ControlGroup, Control} from '@angular/common';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 
-import {User} from '../models/user';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
+
+import { Tabs, Tab } from '../shared/tabs';
+
+import { AppService } from '../services/app.service';
+import { User } from '../models/user';
 
 @Component({
     selector: '[user-profile]',
-    template: require('../templates/user-profile.html')
+    template: require('../templates/user-profile.html'),
+    directives: [FORM_DIRECTIVES, Tabs, Tab],
+    providers: [FormBuilder],
+    pipes: [TranslatePipe]
 })
 
 export class UserProfileComponent {
     user: User = new User();
-    userForm: ControlGroup;
-
-    login: Control;
-    pwd: Control;
-    pwd_confirm: Control;
-    email: Control;
+    form: ControlGroup;
 
     constructor(
-        private _router: Router,
-        private _formBuilder: FormBuilder
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private appService: AppService
     ) {
-        this.login = new Control('');
-        this.pwd = new Control('');
-        this.pwd_confirm = new Control('');
-        this.email = new Control('');
-
-        this.userForm = _formBuilder.group({
-            login: this.login,
-            pwd: this.pwd,
-            pwd_confirm: this.pwd_confirm,
-            email: this.email
+        this.form = formBuilder.group({
+            login: [],
+            pwd: [],
+            pwd_confirm: [],
+            email: []
         });
+    }
+
+    updateUserProfile() {
+        this.appService.updateUserProfile(this.user);
     }
 
     close(event) {

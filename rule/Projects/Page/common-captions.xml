@@ -16,12 +16,7 @@
     <caption name="expiry_date"/>
     <caption name="reg_number"/>
 
-    <caption name="notifications"/>
     <caption name="type"/>
-    <caption name="sender"/>
-    <caption name="recipient"/>
-    <caption name="sendtime"/>
-    <caption name="content"/>
 
     <caption name="attach_file"/>
     <caption name="properties"/>
@@ -49,4 +44,63 @@
     <caption name="interface_lang"/>
     <caption name="back_to_doc_list"/>
     <caption name="ft_search_result"/>
+
+    <caption name="inbox"/>
+    <caption name="today"/>
+    <caption name="week"/>
+    <caption name="all"/>
+    <caption name="completed"/>
+    <caption name="tasks"/>
+    <caption name="my_tasks"/>
+    <caption name="projects"/>
+
+    <caption name="new_project"/>
+    <caption name="new_task"/>
+
+    <!-- common form captions -->
+    <caption name="notes"/>
+    <caption name="body"/>
+    <caption name="files"/>
+    <caption name="additional"/>
+    <caption name="save_close"/>
+    <caption name="close"/>
+    <caption name="bin"/>
+    <caption name="editable"/>
+    <caption name="author"/>
+    <caption name="organization"/>
+    <caption name="object"/>
+    <caption name="description"/>
+    <caption name="reg_documents"/>
+
+    <caption name="additional_info"/>
+
+    <caption name="documents_of_title"/>
+    <caption name="note"/>
+    <caption name="tags"/>
+    <caption name="task"/>
+    <caption name="project"/>
+    <caption name="task_type"/>
+    <caption name="priority"/>
+    <caption name="assignee_user"/>
+    <caption name="start_date"/>
+    <caption name="due_date"/>
+    <caption name="finish_date"/>
+
+    <caption name="unknown"/>
+    <caption name="writtenoff"/>
+    <caption name="active"/>
+    <caption name="inactive"/>
+    <caption name="summary"/>
+    <caption name="content"/>
+    <caption name="signer"/>
+
+    <caption name="draft"/>
+    <caption name="waiting"/>
+    <caption name="processed"/>
+    <caption name="finished"/>
+
+    <caption name="highest"/>
+    <caption name="height"/>
+    <caption name="medium"/>
+    <caption name="normal"/>
 </rule>

@@ -1,30 +1,29 @@
 <div class="content-header">
     <h1 class="header-title">
-        {{'tasks'}}
+        {{'tasks' | translate}}
     </h1>
     <div class="content-actions">
-        <button class="btn" type="button" (click)="composeRecord()">
-            {{'new_task'}}
+        <button class="btn" type="button" (click)="newTask()">
+            {{'new_task' | translate}}
         </button>
+        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)="goToPage($event)"></pagination>
     </div>
 </div>
 <div class="content-body">
-    <div class="view">
+    <div class="view view-task">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
                     <input type="checkbox" data-toggle="docid" class="all" />
                 </label>
                 <div class="entry-captions">
-                    <span>
-                        {{'body'}}
-                    </span>
+                    <span>{{'body' | translate}}</span>
                 </div>
             </div>
         </header>
         <div class="entries">
             <div *ngIf="!tasks">
-                {{'loading'}}
+                {{'loading' | translate}}
             </div>
             <div class="entry-wrap" *ngFor="let task of tasks">
                 <div data-id="{{task.id}}" class="entry">
@@ -33,9 +32,17 @@
                     </label>
                     <a class="entry-link" [routerLink]="['/task', task.id]">
                         <div class="entry-fields">
-                            <span>
-                                {{task.body}}
-                            </span>
+                            <div class="entry-fields">
+                                <span class="vw-task-status">{{task.status | text:'L' | translate}}</span>
+                                <span class="vw-task-priority">{{task.priority | text:'L' | translate}}</span>
+                                <span class="vw-task-body">{{task.body}}</span>
+                                <span class="vw-task-assignee">{{task.assignee}}</span>
+                                <span class="vw-date">{{task.startDate | dateFmt}}</span>
+                                <span class="vw-date">{{task.dueDate | dateFmt}}</span>
+                                <span class="vw-tags">
+                                    <span class="tag" *ngFor="let tag of tags">{{tag.name}}</span>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>

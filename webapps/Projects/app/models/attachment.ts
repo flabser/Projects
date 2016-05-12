@@ -3,6 +3,6 @@ export class Attachment {
     fieldName: string;
     realFileName: string;
     author: string;
-    regDate: string;
-    size: string;
+    regDate: Date;
+    size: number;
 }

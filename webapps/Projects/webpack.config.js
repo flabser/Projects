@@ -3,6 +3,7 @@
 const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 process.env.NODE_ENV = 'production';
 
@@ -24,21 +25,31 @@ const basePlugins = [
 const devPlugins = [];
 
 const prodPlugins = [
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
+        beautify: false,
         mangle: false,
+        comments: false,
         compress: {
             warnings: false
         }
-    })
+    }),
+    // new CompressionPlugin({
+    //     asset: 'vendor.js.gz',
+    //     algorithm: 'gzip',
+    //     regExp: /\.js$|\.html|\.css|.map$/,
+    //     threshold: 10240,
+    //     minRatio: 0.8
+    // })
 ];
 
 const plugins = basePlugins
     .concat(process.env.NODE_ENV === 'production' ? prodPlugins : [])
-    .concat(process.env.NODE_ENV === 'development' ? devPlugins : []);
+    .concat(process.env.NODE_ENV !== 'production' ? devPlugins : []);
 
 module.exports = {
 
-    devtool: 'inline-source-map',
+    devtool: process.env.NODE_ENV !== 'production' ? 'inline-source-map' : '',
 
     entry: {
         app: './app/main.ts',
@@ -53,10 +64,11 @@ module.exports = {
             '@angular/platform-browser',
             '@angular/platform-browser-dynamic',
             '@angular/router',
-            // '@angular/router-deprecated',
             '@angular/upgrade',
 
-            'zone.js'
+            'zone.js',
+            'moment',
+            'ng2-translate'
         ]
     },
 
@@ -73,9 +85,14 @@ module.exports = {
     plugins: plugins,
 
     module: {
-        loaders: [
-            { test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ },
-            { test: /\.html$/, loader: 'raw' },
+        loaders: [{
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            }, {
+                test: /\.html$/,
+                loader: 'raw'
+            },
             /*{ test: /\.css$/, loader: 'style-loader!css-loader?sourceMap' },
             { test: /\.svg/, loader: 'url' },
             { test: /\.eot/, loader: 'url' },
@@ -83,6 +100,6 @@ module.exports = {
             { test: /\.woff2/, loader: 'url' },
             { test: /\.ttf/, loader: 'url' },*/
         ],
-        noParse: [/zone\.js\/dist\/.+/, /@angular\/.+/]
+        noParse: [/zone\.js\/dist\/.+/]
     }
 }
