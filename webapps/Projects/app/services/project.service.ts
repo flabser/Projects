@@ -77,7 +77,7 @@ export class ProjectService {
             manager: project.manager || 0,
             programmer: project.programmer || 0,
             tester: project.tester || 0,
-            observers: Array.isArray(project.observers) ? project.observers.join(',') : '',
+            observers: Array.isArray(project.observers) ? project.observers.join(',') : (project.observers ? project.observers : ''),
             comment: project.comment,
             finish_date: project.finishDate ? project.finishDate.toString() : '',
             attachments: project.attachments ? project.attachments.map(it => it.id).join(',') : ''
