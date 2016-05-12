@@ -37,7 +37,7 @@
                 </div>
                 <div class="controls">
                     <label class="input" *ngFor="let ts of taskStatusTypes">
-                        <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="tp == task.status" />
+                        <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="ts == task.status" />
                         <span>{{ts | text:'L' | translate}}</span>
                     </label>
                 </div>

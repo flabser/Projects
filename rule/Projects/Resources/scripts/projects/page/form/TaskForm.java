@@ -116,8 +116,8 @@ public class TaskForm extends _DoPage {
             }
 
             entity.setType(taskTypeDAO.findById(formData.getValue("type")));
-            entity.setStatus(TaskStatusType.getType(formData.getNumberValueSilently("status", 0)));
-            entity.setPriority(TaskPriorityType.getType(formData.getNumberValueSilently("priority", 0)));
+            entity.setStatus(TaskStatusType.valueOf(formData.getValueSilently("status")));
+            entity.setPriority(TaskPriorityType.valueOf(formData.getValueSilently("priority")));
             entity.setStartDate(Util.convertStringToDate(formData.getValueSilently("start_date")));
             entity.setDueDate(Util.convertStringToDate(formData.getValueSilently("due_date")));
             entity.setBody(formData.getValue("body"));
@@ -181,10 +181,10 @@ public class TaskForm extends _DoPage {
         if (formData.getValueSilently("body").isEmpty()) {
             ve.addError("body", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("status", 0) == 0) {
+        if (formData.getValueSilently("status").isEmpty()) {
             ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("priority", 0) == 0) {
+        if (formData.getValueSilently("priority").isEmpty()) {
             ve.addError("priority", "required", getLocalizedWord("field_is_empty", lang));
         }
         if (formData.getValueSilently("start_date").isEmpty()) {
