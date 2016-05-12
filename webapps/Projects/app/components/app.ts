@@ -38,7 +38,7 @@ import { User } from '../models/user';
 
 export class App implements OnInit {
     loggedUser: User;
-    HEADER_TITLE: string = "Projects";
+    HEADER_TITLE: any = "Projects";
     isNavCollapsed: Boolean;
     isSearchOpen: Boolean;
     isMobileDevice: Boolean;
@@ -70,6 +70,8 @@ export class App implements OnInit {
         this.translate.setDefaultLang('en');
         // the lang to use, if the lang isn't available, it will use the current loader to get them
         this.translate.use(userLang);
+
+        this.translate.get('brand').subscribe(value => this.HEADER_TITLE = value);
     }
 
     toggleNav() {

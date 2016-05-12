@@ -5,6 +5,7 @@ import { TranslatePipe } from 'ng2-translate/ng2-translate';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
@@ -12,9 +13,8 @@ import { TaskService } from '../services/task.service';
 @Component({
     selector: '[tasks]',
     template: require('../templates/tasks.html'),
-    pipes: [DateFormatPipe, TranslatePipe],
-    directives: [PaginationComponent],
-    providers: [TaskService]
+    pipes: [DateFormatPipe, TranslatePipe, TextTransformPipe],
+    directives: [PaginationComponent]
 })
 
 export class TasksComponent implements OnActivate {

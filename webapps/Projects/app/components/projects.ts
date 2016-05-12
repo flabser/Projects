@@ -5,6 +5,7 @@ import { TranslatePipe } from 'ng2-translate/ng2-translate';
 import { DateFormatPipe } from '../pipes/date-format.pipe';
 
 import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
 import { PaginationComponent } from '../shared/pagination/pagination';
 import { Project } from '../models/project';
 import { ProjectService } from '../services/project.service';
@@ -12,9 +13,8 @@ import { ProjectService } from '../services/project.service';
 @Component({
     selector: '[projects]',
     template: require('../templates/projects.html'),
-    pipes: [DateFormatPipe, TranslatePipe],
-    directives: [PaginationComponent],
-    providers: [ProjectService],
+    pipes: [DateFormatPipe, TranslatePipe, TextTransformPipe],
+    directives: [PaginationComponent]
 })
 
 export class ProjectsComponent implements OnActivate {

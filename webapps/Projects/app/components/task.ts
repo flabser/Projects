@@ -5,8 +5,9 @@ import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
 import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
 import { AppService } from '../services/app.service';
-import { Task } from '../models/task';
+import { Task, TaskPriorityType, TaskStatusType } from '../models/task';
 import { TaskService } from '../services/task.service';
 import { ReferenceService } from '../services/reference.service';
 import { Tag } from '../models/tag';
@@ -17,7 +18,7 @@ import { User } from '../models/user';
     template: require('../templates/task.html'),
     directives: [FORM_DIRECTIVES],
     providers: [FormBuilder],
-    pipes: [TranslatePipe]
+    pipes: [TranslatePipe, TextTransformPipe]
 })
 
 export class TaskComponent {
@@ -25,6 +26,8 @@ export class TaskComponent {
     form: ControlGroup;
     users: User[];
     tags: Tag[];
+    taskPriorityTypes = TaskPriorityType;
+    taskStatusTypes = TaskStatusType;
 
     constructor(
         private router: Router,
@@ -87,5 +90,13 @@ export class TaskComponent {
         if (errorResponse.status === 401) {
             this.router.navigate(['/login']);
         }
+    }
+
+    setStatus(value) {
+        this.task.status = value;
+    }
+
+    setPriority(value) {
+        this.task.priority = value;
     }
 }

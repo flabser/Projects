@@ -5,6 +5,7 @@ import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
 import { NotificationService } from '../shared/notification';
+import { TextTransformPipe } from '../pipes/text-transform.pipe';
 import { AppService } from '../services/app.service';
 import { Project, ProjectStatusType } from '../models/project';
 import { ProjectService } from '../services/project.service';
@@ -17,7 +18,7 @@ import { User } from '../models/user';
     template: require('../templates/project.html'),
     directives: [FORM_DIRECTIVES],
     providers: [FormBuilder],
-    pipes: [TranslatePipe]
+    pipes: [TranslatePipe, TextTransformPipe]
 })
 
 export class ProjectComponent {
@@ -25,7 +26,7 @@ export class ProjectComponent {
     form: ControlGroup;
     users: User[];
     customers: Organization[];
-    statusOptions = ProjectStatusType;
+    projectStatusTypes = ProjectStatusType;
 
     constructor(
         private router: Router,
@@ -89,5 +90,9 @@ export class ProjectComponent {
         if (errorResponse.status === 401) {
             this.router.navigate(['/login']);
         }
+    }
+
+    setStatus(value) {
+        this.project.status = value;
     }
 }

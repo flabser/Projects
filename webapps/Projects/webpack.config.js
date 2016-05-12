@@ -3,8 +3,9 @@
 const path = require("path");
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
-process.env.NODE_ENV = '';
+process.env.NODE_ENV = 'production';
 
 const basePlugins = [
     new webpack.DefinePlugin({
@@ -24,12 +25,22 @@ const basePlugins = [
 const devPlugins = [];
 
 const prodPlugins = [
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
+        beautify: false,
         mangle: false,
+        comments: false,
         compress: {
             warnings: false
         }
-    })
+    }),
+    // new CompressionPlugin({
+    //     asset: 'vendor.js.gz',
+    //     algorithm: 'gzip',
+    //     regExp: /\.js$|\.html|\.css|.map$/,
+    //     threshold: 10240,
+    //     minRatio: 0.8
+    // })
 ];
 
 const plugins = basePlugins
@@ -74,9 +85,14 @@ module.exports = {
     plugins: plugins,
 
     module: {
-        loaders: [
-            { test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/ },
-            { test: /\.html$/, loader: 'raw' },
+        loaders: [{
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            }, {
+                test: /\.html$/,
+                loader: 'raw'
+            },
             /*{ test: /\.css$/, loader: 'style-loader!css-loader?sourceMap' },
             { test: /\.svg/, loader: 'url' },
             { test: /\.eot/, loader: 'url' },

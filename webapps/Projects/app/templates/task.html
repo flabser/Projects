@@ -7,7 +7,7 @@
             <i class="fa fa-chevron-left"></i>
         </button>
         <h1 class="header-title">
-            {{'task' | translate}}
+            {{(task.id ? 'task' : 'new_task') | translate}}
         </h1>
         <div class="content-actions">
             <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveTask()">
@@ -36,21 +36,9 @@
                     {{'status' | translate}}
                 </div>
                 <div class="controls">
-                    <label>
-                        <input type="radio" name="status" value="453" [(ngModel)]="task.status" ngControl="status" />
-                        <span>DRAFT</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="454" [(ngModel)]="task.status" ngControl="status" />
-                        <span>WAITING</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="455" [(ngModel)]="task.status" ngControl="status" />
-                        <span>PROCESSED</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="456" [(ngModel)]="task.status" ngControl="status" />
-                        <span>FINISHED</span>
+                    <label class="input" *ngFor="let ts of taskStatusTypes">
+                        <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="tp == task.status" />
+                        <span>{{ts | text:'L' | translate}}</span>
                     </label>
                 </div>
             </div>
@@ -59,9 +47,10 @@
                     {{'priority' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.priority.valid">
-                    <select class="span3" [(ngModel)]="task.priority" ngControl="priority">
-                        <option *ngFor="let m of priorities" [value]="m.value">{{m.name}}</option>
-                    </select>
+                    <label class="input" *ngFor="let tp of taskPriorityTypes">
+                        <input type="radio" name="status" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
+                        <span>{{tp | text:'L' | translate}}</span>
+                    </label>
                     <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
