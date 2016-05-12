@@ -48,7 +48,7 @@
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.priority.valid">
                     <label class="input" *ngFor="let tp of taskPriorityTypes">
-                        <input type="radio" name="status" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
+                        <input type="radio" name="priority" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
                         <span>{{tp | text:'L' | translate}}</span>
                     </label>
                     <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
