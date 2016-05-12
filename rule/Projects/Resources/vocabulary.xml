@@ -1,15 +1,75 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <vocabulary primary="ENG">
-    <sentence mode="on" keyword="office_memo">
-        <entry lang="RUS">Служебные записки</entry>
-        <entry lang="ENG">Officememo</entry>
+    <sentence mode="on" keyword="inbox">
+        <entry lang="RUS">Входящие</entry>
+        <entry lang="ENG">Inbox</entry>
     </sentence>
-    <sentence mode="on" keyword="signer">
-        <entry lang="RUS">Подписывающий</entry>
-        <entry lang="ENG">Signer</entry>
+    <sentence mode="on" keyword="today">
+        <entry lang="RUS">Сегодня</entry>
+        <entry lang="ENG">Today</entry>
     </sentence>
-    <sentence mode="on" keyword="officememo">
-        <entry lang="RUS">Сулужебная записка</entry>
-        <entry lang="ENG">Officememo</entry>
+    <sentence mode="on" keyword="week">
+        <entry lang="RUS">Неделя</entry>
+        <entry lang="ENG">Week</entry>
+    </sentence>
+    <sentence mode="on" keyword="all">
+        <entry lang="RUS">Все</entry>
+        <entry lang="ENG">All</entry>
+    </sentence>
+    <sentence mode="on" keyword="completed">
+        <entry lang="RUS">Завершенные</entry>
+        <entry lang="ENG">Completed</entry>
+    </sentence>
+    <sentence mode="on" keyword="my_tasks">
+        <entry lang="RUS">Мои задачи</entry>
+        <entry lang="ENG">My tasks</entry>
+    </sentence>
+    <sentence mode="on" keyword="projects">
+        <entry lang="RUS">Проекты</entry>
+        <entry lang="ENG">Projects</entry>
+    </sentence>
+    <sentence mode="on" keyword="tasks">
+        <entry lang="RUS">Задачи</entry>
+        <entry lang="ENG">Tasks</entry>
+    </sentence>
+    <sentence mode="on" keyword="task">
+        <entry lang="RUS">Задача</entry>
+        <entry lang="ENG">Task</entry>
+    </sentence>
+    <sentence mode="on" keyword="project">
+        <entry lang="RUS">Проект</entry>
+        <entry lang="ENG">Project</entry>
+    </sentence>
+    <sentence mode="on" keyword="new_project">
+        <entry lang="RUS">Новый проект</entry>
+        <entry lang="ENG">New project</entry>
+    </sentence>
+    <sentence mode="on" keyword="new_task">
+        <entry lang="RUS">Новая задача</entry>
+        <entry lang="ENG">New task</entry>
+    </sentence>
+    <sentence mode="on" keyword="task_type">
+        <entry lang="RUS">Тип задачи</entry>
+        <entry lang="ENG">Task type</entry>
+    </sentence>
+    <sentence mode="on" keyword="priority">
+        <entry lang="RUS">Приоритет</entry>
+        <entry lang="ENG">Priority</entry>
+    </sentence>
+    <sentence mode="on" keyword="assignee_user">
+        <entry lang="RUS">Исполнитель</entry>
+        <entry lang="ENG">Assignee</entry>
+    </sentence>
+    <sentence mode="on" keyword="start_date">
+        <entry lang="RUS">Дата начала</entry>
+        <entry lang="ENG">Start date</entry>
+    </sentence>
+    <sentence mode="on" keyword="due_date">
+        <entry lang="RUS">Дата окончания</entry>
+        <entry lang="ENG">Due date</entry>
+    </sentence>
+    <sentence mode="on" keyword="finish_date">
+        <entry lang="RUS">Дата завершения</entry>
+        <entry lang="ENG">Finish date</entry>
     </sentence>
 </vocabulary>

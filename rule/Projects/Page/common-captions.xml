@@ -16,12 +16,7 @@
     <caption name="expiry_date"/>
     <caption name="reg_number"/>
 
-    <caption name="notifications"/>
     <caption name="type"/>
-    <caption name="sender"/>
-    <caption name="recipient"/>
-    <caption name="sendtime"/>
-    <caption name="content"/>
 
     <caption name="attach_file"/>
     <caption name="properties"/>
@@ -55,8 +50,12 @@
     <caption name="week"/>
     <caption name="all"/>
     <caption name="completed"/>
+    <caption name="tasks"/>
     <caption name="my_tasks"/>
     <caption name="projects"/>
+
+    <caption name="new_project"/>
+    <caption name="new_task"/>
 
     <!-- common form captions -->
     <caption name="notes"/>
@@ -77,6 +76,15 @@
 
     <caption name="documents_of_title"/>
     <caption name="note"/>
+    <caption name="tags"/>
+    <caption name="task"/>
+    <caption name="project"/>
+    <caption name="task_type"/>
+    <caption name="priority"/>
+    <caption name="assignee_user"/>
+    <caption name="start_date"/>
+    <caption name="due_date"/>
+    <caption name="finish_date"/>
 
     <caption name="unknown"/>
     <caption name="writtenoff"/>
@@ -85,4 +93,14 @@
     <caption name="summary"/>
     <caption name="content"/>
     <caption name="signer"/>
+
+    <caption name="draft"/>
+    <caption name="waiting"/>
+    <caption name="processed"/>
+    <caption name="finished"/>
+
+    <caption name="highest"/>
+    <caption name="height"/>
+    <caption name="medium"/>
+    <caption name="normal"/>
 </rule>

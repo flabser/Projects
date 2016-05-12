@@ -118,7 +118,7 @@ public class ProjectForm extends _DoPage {
             entity.setTester(userDAO.findById(formData.getNumberValueSilently("tester", 0)).getId());
             entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observers", 0)).map(Integer::longValue).collect(Collectors.toList()));
             entity.setComment(formData.getValue("comment"));
-            entity.setStatus(ProjectStatusType.getType(formData.getNumberValueSilently("status", 0)));
+            entity.setStatus(ProjectStatusType.valueOf(formData.getValueSilently("status")));
             entity.setFinishDate(Util.convertStringToDate(formData.getValueSilently("finish_date")));
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
@@ -174,7 +174,7 @@ public class ProjectForm extends _DoPage {
         if (formData.getNumberValuesSilently("observers", 0)[0] == 0) {
             ve.addError("observers", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("status", 0) == 0) {
+        if (formData.getValueSilently("status").isEmpty()) {
             ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
         }
         if (formData.getValueSilently("finish_date").isEmpty()) {
