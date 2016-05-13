@@ -5,7 +5,7 @@ import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router';
 import { FORM_PROVIDERS, LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 import { TRANSLATE_PROVIDERS, TranslateService, TranslatePipe, TranslateLoader } from 'ng2-translate/ng2-translate';
-import {Observable} from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable'
 import 'rxjs/Rx';
 
 import { App } from './components/app';

@@ -7,12 +7,12 @@ import { Component, HostBinding, Input } from '@angular/core';
             <input type="{{isMulti ? 'checkbox' : 'radio'}}"
                 name="{{name}}"
                 value="{{item.value}}"
-                [class.active]="item.value == model[value]"
-                (change)="select(item.value, $event)"
-                [checked]="item.value == model[value]" />
-            <ng-content></ng-content>
+                [class.active]="isSelected(item)"
+                [checked]="isSelected(item)"
+                (change)="select(item.value, $event)" />
             <i class="fa fa-{{item.icon}}" *ngIf="item.icon"></i>
             <span>{{item.text}}</span>
+            <ng-content></ng-content>
         </label>
     `
 })
@@ -21,12 +21,22 @@ export class SwitchButtonComponent {
     @HostBinding('class.switch-button') true;
 
     @Input() model;
-    @Input() value;
+    @Input() value; // model field name
     @Input() items;
     @Input() name = 'swb' + Math.random();
     @Input() isMulti = false;
 
+    private checkDefault = true;
+
     select(value, event) {
         this.model[this.value] = value;
+
+        if (this.checkDefault) {
+            this.checkDefault = false;
+        }
+    }
+
+    isSelected(item) {
+        return item.value == this.model[this.value] || (this.checkDefault && item.default);
     }
 }

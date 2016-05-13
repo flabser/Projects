@@ -10,6 +10,10 @@ pagination:empty {
     display: none;
 }
 
+.entry-wrap.active .entry {
+    background: #eee;
+}
+
 .side-nav .nav-link {
     padding: 8px 16px;
 }
@@ -28,7 +32,10 @@ pagination:empty {
 .entry-link.router-link-active {
     background-color: #f5f5f5;
 }
+
+
 /* .vw-project */
+
 .vw-project-name {
     width: 18%;
 }
@@ -44,7 +51,10 @@ pagination:empty {
 .vw-date {
     width: 105px;
 }
+
+
 /* .vw-task */
+
 .vw-task-status {
     width: 100px;
 }

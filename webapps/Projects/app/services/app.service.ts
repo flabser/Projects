@@ -39,8 +39,7 @@ export class AppService {
         let url = 'p?id=users';
 
         return this.http.get(url, header)
-            .map(response => response.json().objects[0].list)
-            .map((response: User[]) => response);
+            .map(response => <User[]>response.json().objects[0].list);
     }
 
     updateUserProfile(user: User) {

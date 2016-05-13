@@ -1,0 +1,20 @@
+<div class="entry-wrap" [class.active]="selected">
+    <div class="entry">
+        <label class="entry-select">
+            <input type="checkbox" name="task-id" value="{{task.id}}" (change)="toggleSelected()" [checked]="selected" />
+        </label>
+        <a class="entry-link" [routerLink]="['/task', task.id]">
+            <div class="entry-fields">
+                <span class="vw-task-status">{{task.status | text:'L' | translate}}</span>
+                <span class="vw-task-priority">{{task.priority | text:'L' | translate}}</span>
+                <span class="vw-task-body">{{task.body}}</span>
+                <span class="vw-task-assignee">{{task.assignee}}</span>
+                <span class="vw-date">{{task.startDate | dateFmt}}</span>
+                <span class="vw-date">{{task.dueDate | dateFmt}}</span>
+                <span class="vw-tags">
+                    <span class="tag" *ngFor="let tag of tags">{{tag.name}}</span>
+                </span>
+            </div>
+        </a>
+    </div>
+</div>

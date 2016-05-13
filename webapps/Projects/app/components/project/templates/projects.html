@@ -1,0 +1,31 @@
+<div class="content-header">
+    <h1 class="header-title">
+        {{'projects' | translate}}
+    </h1>
+    <div class="content-actions">
+        <button class="btn" type="button" (click)="newProject()">
+            {{'new_project' | translate}}
+        </button>
+        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)="goToPage($event)"></pagination>
+    </div>
+</div>
+<div class="content-body">
+    <div class="view view-project">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>{{'name' | translate}}</span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            <project-row [project]="project" *ngFor="let project of projects"></project-row>
+            <div *ngIf="!projects">
+                {{'loading' | translate}}
+            </div>
+        </div>
+    </div>
+</div>

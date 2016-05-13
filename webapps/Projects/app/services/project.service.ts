@@ -32,7 +32,7 @@ export class ProjectService {
         ]);
     }
 
-    getProjects(_params) {
+    getProjects(_params = {}) {
         let params: URLSearchParams = new URLSearchParams();
         for (let p in _params) {
             params.set(p, _params[p]);
@@ -53,8 +53,7 @@ export class ProjectService {
 
     getProjectById(projectId: string) {
         return this.http.get(FORM_URL + '&docid=' + projectId, HEADER)
-            .map(response => response.json().objects[1])
-            .map((response: Project) => response);
+            .map(response => <Project>response.json().objects[1]);
     }
 
     saveProject(project: Project) {

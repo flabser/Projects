@@ -15,7 +15,6 @@ export class StaffService {
         let url = '/Staff/p?id=get-organizations';
 
         return this.http.get(url, header)
-            .map(response => response.json().objects[0].list)
-            .map((response: Organization[]) => response);
+            .map(response => <Organization[]>response.json().objects[0].list);
     }
 }

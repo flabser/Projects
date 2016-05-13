@@ -14,7 +14,7 @@ import { Component, Input, Output, OnInit, HostBinding, EventEmitter } from '@an
 })
 
 export class PaginationComponent implements OnInit {
-    @HostBinding('class.hidden') get hidden() { return this.totalPages <= 0; };
+    @HostBinding('class.hidden') get hostHidden() { return this.totalPages <= 0; };
 
     @Input() maxPageControl: number = 5;
     @Input() totalPages: number = -1;

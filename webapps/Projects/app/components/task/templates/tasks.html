@@ -1,0 +1,31 @@
+<div class="content-header">
+    <h1 class="header-title">
+        {{'tasks' | translate}}
+    </h1>
+    <div class="content-actions">
+        <button class="btn" type="button" (click)="newTask()">
+            {{'new_task' | translate}}
+        </button>
+        <pagination class="pull-right" totalPages="{{meta.totalPages}}" page="{{meta.page}}" (goToPage)="goToPage($event)"></pagination>
+    </div>
+</div>
+<div class="content-body">
+    <div class="view view-task">
+        <header class="entries-head">
+            <div class="head-wrap">
+                <label class="entry-select">
+                    <input type="checkbox" class="all" />
+                </label>
+                <div class="entry-captions">
+                    <span>{{'body' | translate}}</span>
+                </div>
+            </div>
+        </header>
+        <div class="entries">
+            <task-row [task]="task" *ngFor="let task of tasks"></task-row>
+            <div *ngIf="!tasks">
+                {{'loading' | translate}}
+            </div>
+        </div>
+    </div>
+</div>

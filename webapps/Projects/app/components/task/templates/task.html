@@ -1,0 +1,140 @@
+<div *ngIf="!isReady">
+    {{'loading' | translate}}
+</div>
+<form class="form" [ngFormModel]="form" *ngIf="isReady">
+    <header class="content-header">
+        <button class="btn-back" type="button" (click)="close($event)">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <h1 class="header-title">
+            {{(task.id ? 'task' : 'new_task') | translate}}
+        </h1>
+        <div class="content-actions">
+            <button class="btn btn-primary" type="button" [disabled]="!form.valid" (click)="saveTask()">
+                {{'save_close' | translate}}
+            </button>
+            <button class="btn" type="button" (click)="close($event)">
+                {{'close' | translate}}
+            </button>
+        </div>
+    </header>
+    <section class="content-body">
+        <fieldset class="fieldset">
+            <div class="form-group">
+                <div class="control-label">
+                    {{'task_type' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.type.valid">
+                    <input class="span6" [(ngModel)]="task.type" ngControl="type" />
+                    <div [hidden]="form.controls.type.valid || form.controls.type.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'status' | translate}}
+                </div>
+                <div class="controls">
+                    <switch-button [model]="task" value="status" [items]="taskStatusTypes"></switch-button>
+                    <!-- <label class="input" *ngFor="let ts of taskStatusTypes">
+                        <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="ts == task.status" />
+                        <span>{{ts | text:'L' | translate}}</span>
+                    </label> -->
+                    <div [hidden]="form.controls.status.valid || form.controls.status.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'priority' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.priority.valid">
+                    <switch-button [model]="task" value="priority" [items]="taskPriorityTypes"></switch-button>
+                    <!-- <label class="input" *ngFor="let tp of taskPriorityTypes">
+                        <input type="radio" name="priority" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
+                        <span>{{tp | text:'L' | translate}}</span>
+                    </label> -->
+                    <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'body' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.body.valid">
+                    <textarea class="span8" [(ngModel)]="task.body" ngControl="body"></textarea>
+                    <div [hidden]="form.controls.body.valid || form.controls.body.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'assignee_user' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.assignee.valid">
+                    <select class="span8" [(ngModel)]="task.assignee" ngControl="assignee">
+                        <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
+                    </select>
+                    <div [hidden]="form.controls.assignee.valid || form.controls.assignee.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'start_date' | translate}}
+                </div>
+                <div class="controls">
+                    <input type="date" class="span2" [(ngModel)]="task.startDate" ngControl="startDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'due_date' | translate}}
+                </div>
+                <div class="controls">
+                    <input type="date" class="span2" [(ngModel)]="task.dueDate" ngControl="dueDate" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
+                    {{'tags' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.tags.valid">
+                    <select class="span8" multiple [(ngModel)]="task.tags" ngControl="tags">
+                        <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
+                    </select>
+                    <div [hidden]="form.controls.tags.valid || form.controls.tags.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="legend">
+                {{'attachments' | translate}}
+            </legend>
+            <div class="form-group">
+                <button type="button" class="btn btn-upload" data-upload="">
+                    <i class="fa fa-paperclip"></i>
+                    <span>{{'attach_file' | translate}}</span>
+                </button>
+                <div class="attachments" data-upload-files="">
+                    <div class="attachments-file" *ngFor="let att of task.attachments">
+                        <a class="file-name" href="{{att.url}}">
+                            {{att.realFileName}}
+                        </a>
+                        <span class="btn btn-sm btn-link btn-remove-file on-edit">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </section>
+</form>

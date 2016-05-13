@@ -16,8 +16,7 @@ export class ReferenceService {
         let url = '/Reference/p?id=tags';
 
         return this.http.get(url, header)
-            .map(response => response.json().objects[0].list)
-            .map((response: Tag[]) => response);
+            .map(response => <Tag[]>response.json().objects[0].list);
     }
 
     getTaskTypes() {
@@ -25,7 +24,6 @@ export class ReferenceService {
         let url = '/Reference/p?id=tasktypes';
 
         return this.http.get(url, header)
-            .map(response => response.json().objects[0].list)
-            .map((response: TaskType[]) => response);
+            .map(response => <TaskType[]>response.json().objects[0].list);
     }
 }

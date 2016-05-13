@@ -1,0 +1,15 @@
+<div class="entry-wrap" [class.active]="selected">
+    <div class="entry">
+        <label class="entry-select">
+            <input type="checkbox" name="project-id" value="{{project.id}}" (change)="toggleSelected()" [checked]="selected" />
+        </label>
+        <a class="entry-link" [routerLink]="['/projects', project.id]">
+            <div class="entry-fields">
+                <span class="vw-project-name">{{project.name}}</span>
+                <span class="vw-project-customer">{{project.customer?.name}}</span>
+                <span class="vw-project-comment">{{project.comment}}</span>
+                <span class="vw-date">{{project.finishDate | dateFmt}}</span>
+            </div>
+        </a>
+    </div>
+</div>

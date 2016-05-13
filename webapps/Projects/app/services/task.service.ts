@@ -42,7 +42,7 @@ export class TaskService {
         ]);
     }
 
-    getTasks(_params) {
+    getTasks(_params = {}) {
         let params: URLSearchParams = new URLSearchParams();
         for (let p in _params) {
             params.set(p, _params[p]);
@@ -63,8 +63,7 @@ export class TaskService {
 
     getTaskById(taskId: string) {
         return this.http.get(FORM_URL + '&docid=' + taskId, HEADER)
-            .map(response => response.json().objects[1])
-            .map((response: Task) => response);
+            .map(response => <Task>response.json().objects[1]);
     }
 
     saveTask(task: Task) {

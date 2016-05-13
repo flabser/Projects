@@ -10,10 +10,10 @@ import { StaffService } from '../services/staff.service';
 import { NotificationService, NotificationsComponent } from '../shared/notification';
 
 import { NavComponent } from './nav';
-import { ProjectsComponent } from './projects';
-import { ProjectComponent } from './project';
-import { TasksComponent } from './tasks';
-import { TaskComponent } from './task';
+import { ProjectsComponent } from './project/projects';
+import { ProjectComponent } from './project/project';
+import { TasksComponent } from './task/tasks';
+import { TaskComponent } from './task/task';
 import { UserProfileComponent } from './user-profile';
 import { LoginComponent } from './login';
 import { User } from '../models/user';
