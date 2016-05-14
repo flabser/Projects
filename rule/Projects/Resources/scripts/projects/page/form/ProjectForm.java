@@ -85,6 +85,11 @@ public class ProjectForm extends _DoPage {
         }
 
         addContent(entity);
+        // Embedding related resources
+        addContent(entity.getCustomer());
+        // TODO add other related resources by embed parameters ?
+        // addContent(entity.getManager());
+
         startSaveFormTransact(entity);
     }
 
@@ -112,14 +117,14 @@ public class ProjectForm extends _DoPage {
             }
 
             entity.setName(formData.getValue("name"));
-            entity.setCustomer(organizationDAO.findById(formData.getValue("customer")));
-            entity.setManager(userDAO.findById(formData.getNumberValueSilently("manager", 0)).getId());
-            entity.setProgrammer(userDAO.findById(formData.getNumberValueSilently("programmer", 0)).getId());
-            entity.setTester(userDAO.findById(formData.getNumberValueSilently("tester", 0)).getId());
-            entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observers", 0)).map(Integer::longValue).collect(Collectors.toList()));
+            entity.setCustomer(organizationDAO.findById(formData.getValue("customerUserId")));
+            entity.setManager(userDAO.findById(formData.getNumberValueSilently("managerUserId", 0)).getId());
+            entity.setProgrammer(userDAO.findById(formData.getNumberValueSilently("programmerUserId", 0)).getId());
+            entity.setTester(userDAO.findById(formData.getNumberValueSilently("testerUserId", 0)).getId());
+            entity.setObservers(Arrays.stream(formData.getNumberValuesSilently("observerUserIds", 0)).map(Integer::longValue).collect(Collectors.toList()));
             entity.setComment(formData.getValue("comment"));
             entity.setStatus(ProjectStatusType.valueOf(formData.getValueSilently("status")));
-            entity.setFinishDate(Util.convertStringToDate(formData.getValueSilently("finish_date")));
+            entity.setFinishDate(Util.convertStringToDate(formData.getValueSilently("finishDate")));
 
             String[] fileNames = formData.getListOfValuesSilently("fileid");
             if (fileNames.length > 0) {
@@ -159,26 +164,26 @@ public class ProjectForm extends _DoPage {
         if (formData.getValueSilently("name").isEmpty()) {
             ve.addError("name", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getValueSilently("customer").isEmpty()) {
-            ve.addError("customer", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getValueSilently("customerUserId").isEmpty()) {
+            ve.addError("customerUserId", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("manager", 0) == 0) {
-            ve.addError("manager", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getNumberValueSilently("managerUserId", 0) == 0) {
+            ve.addError("managerUserId", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("programmer", 0) == 0) {
-            ve.addError("programmer", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getNumberValueSilently("programmerUserId", 0) == 0) {
+            ve.addError("programmerUserId", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("tester", 0) == 0) {
-            ve.addError("tester", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getNumberValueSilently("testerUserId", 0) == 0) {
+            ve.addError("testerUserId", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValuesSilently("observers", 0)[0] == 0) {
-            ve.addError("observers", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getNumberValuesSilently("observerUserIds", 0)[0] == 0) {
+            ve.addError("observerUserIds", "required", getLocalizedWord("field_is_empty", lang));
         }
         if (formData.getValueSilently("status").isEmpty()) {
             ve.addError("status", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getValueSilently("finish_date").isEmpty()) {
-            ve.addError("finish_date", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getValueSilently("finishDate").isEmpty()) {
+            ve.addError("finishDate", "required", getLocalizedWord("field_is_empty", lang));
         }
 
         return ve;

@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <vocabulary primary="ENG">
+    <sentence mode="on" keyword="brand">
+        <entry lang="RUS">Проекты</entry>
+        <entry lang="ENG">Projects</entry>
+    </sentence>
     <sentence mode="on" keyword="inbox">
         <entry lang="RUS">Входящие</entry>
         <entry lang="ENG">Inbox</entry>

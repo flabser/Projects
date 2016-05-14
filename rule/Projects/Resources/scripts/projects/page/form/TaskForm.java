@@ -90,6 +90,11 @@ public class TaskForm extends _DoPage {
         }
 
         addContent(entity);
+        // Embedding related resources
+        addContent(entity.getTaskType());
+        // TODO add other related resources by embed parameters ?
+        // addContent(entity.getTags());
+
         startSaveFormTransact(entity);
     }
 
@@ -115,16 +120,16 @@ public class TaskForm extends _DoPage {
                 entity = dao.findById(id);
             }
 
-            entity.setType(taskTypeDAO.findById(formData.getValue("type")));
+            entity.setTaskType(taskTypeDAO.findById(formData.getValue("taskTypeId")));
             entity.setStatus(TaskStatusType.valueOf(formData.getValueSilently("status")));
             entity.setPriority(TaskPriorityType.valueOf(formData.getValueSilently("priority")));
-            entity.setStartDate(Util.convertStringToDate(formData.getValueSilently("start_date")));
-            entity.setDueDate(Util.convertStringToDate(formData.getValueSilently("due_date")));
+            entity.setStartDate(Util.convertStringToDate(formData.getValueSilently("startDate")));
+            entity.setDueDate(Util.convertStringToDate(formData.getValueSilently("dueDate")));
             entity.setBody(formData.getValue("body"));
-            entity.setAssignee((long) formData.getNumberValueSilently("assignee", 0));
+            entity.setAssignee((long) formData.getNumberValueSilently("assigneeUserId", 0));
 
-            if (formData.containsField("tags")) {
-                String[] tagIds = formData.getListOfValuesSilently("tags");
+            if (formData.containsField("tag_ids")) {
+                String[] tagIds = formData.getListOfValuesSilently("tag_ids");
                 if (tagIds.length > 0) {
                     List<Tag> tags = new ArrayList<>();
                     TagDAO tagDAO = new TagDAO(session);
@@ -175,8 +180,8 @@ public class TaskForm extends _DoPage {
     private _Validation validate(_WebFormData formData, LanguageCode lang) {
         _Validation ve = new _Validation();
 
-        if (formData.getValueSilently("type").isEmpty()) {
-            ve.addError("type", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getValueSilently("taskTypeId").isEmpty()) {
+            ve.addError("taskTypeId", "required", getLocalizedWord("field_is_empty", lang));
         }
         if (formData.getValueSilently("body").isEmpty()) {
             ve.addError("body", "required", getLocalizedWord("field_is_empty", lang));
@@ -187,14 +192,14 @@ public class TaskForm extends _DoPage {
         if (formData.getValueSilently("priority").isEmpty()) {
             ve.addError("priority", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getValueSilently("start_date").isEmpty()) {
-            ve.addError("start_date", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getValueSilently("startDate").isEmpty()) {
+            ve.addError("startDate", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getValueSilently("due_date").isEmpty()) {
-            ve.addError("due_date", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getValueSilently("dueDate").isEmpty()) {
+            ve.addError("dueDate", "required", getLocalizedWord("field_is_empty", lang));
         }
-        if (formData.getNumberValueSilently("assignee", 0) == 0) {
-            ve.addError("assignee", "required", getLocalizedWord("field_is_empty", lang));
+        if (formData.getNumberValueSilently("assigneeUserId", 0) == 0) {
+            ve.addError("assigneeUserId", "required", getLocalizedWord("field_is_empty", lang));
         }
 
         return ve;

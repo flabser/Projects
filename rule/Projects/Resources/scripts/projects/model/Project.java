@@ -1,145 +1,135 @@
 package projects.model;
 
+import com.exponentus.common.model.Attachment;
+import com.exponentus.dataengine.jpa.SecureAppEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import projects.model.constants.ProjectStatusType;
+import staff.model.Organization;
+
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.exponentus.common.model.Attachment;
-import com.exponentus.dataengine.jpa.SecureAppEntity;
-
-import projects.model.constants.ProjectStatusType;
-import staff.model.Organization;
-
+@JsonIgnoreProperties({"url"})
 @Entity
 @Table(name = "projects")
 @NamedQuery(name = "Project.findAll", query = "SELECT m FROM Project AS m ORDER BY m.regDate")
 public class Project extends SecureAppEntity<UUID> {
 
-	private String name;
+    private String name;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true, length = 10)
-	private ProjectStatusType status = ProjectStatusType.UNKNOWN;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true, length = 10)
+    private ProjectStatusType status = ProjectStatusType.UNKNOWN;
 
-	private Organization customer;
+    @JsonProperty("customerId")
+    private Organization customer;
 
-	private String customerRepresentative;
+    @JsonProperty("managerUserId")
+    private long manager;
 
-	private long manager;
+    @JsonProperty("programmerUserId")
+    private long programmer;
 
-	private long programmer;
+    @JsonProperty("testerUserId")
+    private long tester;
 
-	private long tester;
+    @JsonProperty("observerUserIds")
+    private List<Long> observers;
 
-	private List<Long> observers;
+    private Date finishDate;
 
-	private Date finishDate;
+    private String comment;
 
-	private String comment;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "project_attachments", joinColumns = {@JoinColumn(name = "parent_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "attachment_id", referencedColumnName = "id")})
+    private List<Attachment> attachments;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "project_attachments", joinColumns = { @JoinColumn(name = "parent_id", referencedColumnName = "id") }, inverseJoinColumns = {
-	        @JoinColumn(name = "attachment_id", referencedColumnName = "id") })
-	private List<Attachment> attachments;
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public ProjectStatusType getStatus() {
+        return status;
+    }
 
-	public ProjectStatusType getStatus() {
-		return status;
-	}
+    public void setStatus(ProjectStatusType status) {
+        this.status = status;
+    }
 
-	public void setStatus(ProjectStatusType status) {
-		this.status = status;
-	}
+    public Organization getCustomer() {
+        return customer;
+    }
 
-	public Organization getCustomer() {
-		return customer;
-	}
+    public void setCustomer(Organization customer) {
+        this.customer = customer;
+    }
 
-	public void setCustomer(Organization customer) {
-		this.customer = customer;
-	}
+    public long getManager() {
+        return manager;
+    }
 
-	public String getCustomerRepresentative() {
-		return customerRepresentative;
-	}
+    public void setManager(long manager) {
+        this.manager = manager;
+    }
 
-	public void setCustomerRepresentative(String customerRepresentative) {
-		this.customerRepresentative = customerRepresentative;
-	}
+    public long getProgrammer() {
+        return programmer;
+    }
 
-	public long getManager() {
-		return manager;
-	}
+    public void setProgrammer(long programmer) {
+        this.programmer = programmer;
+    }
 
-	public void setManager(long manager) {
-		this.manager = manager;
-	}
+    public long getTester() {
+        return tester;
+    }
 
-	public long getProgrammer() {
-		return programmer;
-	}
+    public void setTester(long tester) {
+        this.tester = tester;
+    }
 
-	public void setProgrammer(long programmer) {
-		this.programmer = programmer;
-	}
+    public List<Long> getObservers() {
+        return observers;
+    }
 
-	public long getTester() {
-		return tester;
-	}
+    public void setObservers(List<Long> observers) {
+        this.observers = observers;
+    }
 
-	public void setTester(long tester) {
-		this.tester = tester;
-	}
+    public Date getFinishDate() {
+        return finishDate;
+    }
 
-	public List<Long> getObservers() {
-		return observers;
-	}
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
 
-	public void setObservers(List<Long> observers) {
-		this.observers = observers;
-	}
+    public String getComment() {
+        return comment;
+    }
 
-	public Date getFinishDate() {
-		return finishDate;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public void setFinishDate(Date finishDate) {
-		this.finishDate = finishDate;
-	}
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
-
+    @JsonProperty("customerId")
+    public String getCustomerId() {
+        return customer != null ? customer.getIdentifier() : "";
+    }
 }

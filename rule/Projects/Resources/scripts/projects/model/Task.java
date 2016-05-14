@@ -1,166 +1,200 @@
 package projects.model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
 import com.exponentus.common.model.Attachment;
 import com.exponentus.dataengine.jpa.SecureAppEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import projects.model.constants.TaskPriorityType;
 import projects.model.constants.TaskStatusType;
 import reference.model.Tag;
 import reference.model.TaskType;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@JsonIgnoreProperties({"url"})
 @Entity
 @Table(name = "tasks")
 @NamedQuery(name = "Task.findAll", query = "SELECT m FROM Task AS m ORDER BY m.regDate")
 public class Task extends SecureAppEntity<UUID> {
 
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn
-	private Task parent;
+    @NotNull
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = false)
+    @JsonProperty("projectId")
+    private Project project;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "parent")
-	private List<Task> children;
+    @JsonProperty("parentTaskId")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn
+    private Task parent;
 
-	@NotNull
-	@ManyToOne(optional = false)
-	@JoinColumn(nullable = false)
-	private TaskType type;
+    @JsonProperty("childrenIds")
+    @OneToMany(mappedBy = "parent")
+    private List<Task> children;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = true, length = 10)
-	private TaskStatusType status = TaskStatusType.UNKNOWN;
+    @NotNull
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    @JsonProperty("taskTypeId")
+    private TaskType taskType;
 
-	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
-	private TaskPriorityType priority = TaskPriorityType.NORMAL;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true, length = 10)
+    private TaskStatusType status = TaskStatusType.UNKNOWN;
 
-	@Column(length = 2048)
-	private String body;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TaskPriorityType priority = TaskPriorityType.NORMAL;
 
-	private Long assignee;
+    @Column(length = 2048)
+    private String body;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
+    @JsonProperty("assigneeUserId")
+    private Long assignee;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dueDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "task_tags")
-	private List<Tag> tags;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dueDate;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "task_attachments", joinColumns = { @JoinColumn(name = "parent_id", referencedColumnName = "id") }, inverseJoinColumns = {
-	        @JoinColumn(name = "attachment_id", referencedColumnName = "id") })
-	private List<Attachment> attachments;
+    @JsonProperty("tagIds")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "task_tags")
+    private List<Tag> tags;
 
-	public Task getParent() {
-		return parent;
-	}
+    @JsonProperty("attachments")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "task_attachments", joinColumns = {@JoinColumn(name = "parent_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "attachment_id", referencedColumnName = "id")})
+    private List<Attachment> attachments;
 
-	public void setParent(Task parent) {
-		this.parent = parent;
-	}
+    public Project getProject() {
+        return project;
+    }
 
-	public List<Task> getChildren() {
-		return children;
-	}
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
-	public void setChildren(List<Task> children) {
-		this.children = children;
-	}
+    public Task getParent() {
+        return parent;
+    }
 
-	public TaskType getType() {
-		return type;
-	}
+    public void setParent(Task parent) {
+        this.parent = parent;
+    }
 
-	public void setType(TaskType type) {
-		this.type = type;
-	}
+    public List<Task> getChildren() {
+        return children;
+    }
 
-	public TaskStatusType getStatus() {
-		return status;
-	}
+    public void setChildren(List<Task> children) {
+        this.children = children;
+    }
 
-	public void setStatus(TaskStatusType status) {
-		this.status = status;
-	}
+    public TaskType getTaskType() {
+        return taskType;
+    }
 
-	public TaskPriorityType getPriority() {
-		return priority;
-	}
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
+    }
 
-	public void setPriority(TaskPriorityType priority) {
-		this.priority = priority;
-	}
+    public TaskStatusType getStatus() {
+        return status;
+    }
 
-	public String getBody() {
-		return body;
-	}
+    public void setStatus(TaskStatusType status) {
+        this.status = status;
+    }
 
-	public void setBody(String body) {
-		this.body = body;
-	}
+    public TaskPriorityType getPriority() {
+        return priority;
+    }
 
-	public Long getAssignee() {
-		return assignee;
-	}
+    public void setPriority(TaskPriorityType priority) {
+        this.priority = priority;
+    }
 
-	public void setAssignee(Long assignee) {
-		this.assignee = assignee;
-	}
+    public String getBody() {
+        return body;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public void setBody(String body) {
+        this.body = body;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public Long getAssignee() {
+        return assignee;
+    }
 
-	public Date getDueDate() {
-		return dueDate;
-	}
+    public void setAssignee(Long assignee) {
+        this.assignee = assignee;
+    }
 
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public List<Tag> getTags() {
-		return tags;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
-	}
+    public Date getDueDate() {
+        return dueDate;
+    }
 
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
 
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
+
+    @JsonProperty("projectId")
+    public String getProjectId() {
+        return project != null ? project.getIdentifier() : "";
+    }
+
+    @JsonProperty("parentTaskId")
+    public String getParentTaskId() {
+        return parent != null ? parent.getIdentifier() : "";
+    }
+
+    @JsonProperty("childrenIds")
+    public List<String> getChildrenTaskIds() {
+        return Optional.of(children).orElse(new ArrayList<>()).stream().map(it -> it.getIdentifier()).collect(Collectors.toList());
+    }
+
+    @JsonProperty("assigneeUserId")
+    public String getAssigneeUserId() {
+        return assignee != null ? String.valueOf(assignee.intValue()) : "";
+    }
+
+    @JsonProperty("taskTypeId")
+    public String getTaslTypeId() {
+        return taskType != null ? taskType.getIdentifier() : "";
+    }
+
+    @JsonProperty("tagIds")
+    public List<String> getTagIds() {
+        return Optional.of(tags).orElse(new ArrayList<>()).stream().map(it -> it.getIdentifier()).collect(Collectors.toList());
+    }
 }
