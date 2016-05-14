@@ -9,16 +9,16 @@ export class Task {
     regDate: Date;
     wasRead: boolean;
 
-    parent: Task;
-    children: Task[];
+    parentId: string;
+    childrenIds: string[];
 
-    type: TaskType;
+    taskTypeId: string;
     status: string;
     priority: string;
     body: string;
-    assignee: number;
+    assigneeUserId: string;
     startDate: Date;
     dueDate: Date;
-    tags: Tag[];
-    attachments: Attachment[];
+    tagIds: string[];
+    fileIds: string[];
 }

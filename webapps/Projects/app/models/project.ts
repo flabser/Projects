@@ -11,12 +11,12 @@ export class Project {
 
     name: string;
     status: string;
-    customer: string;
-    manager: number;
-    programmer: number;
-    tester: number;
-    observers: number[];
+    customerUserId: string;
+    managerUserId: string;
+    programmerUserId: string;
+    testerUserId: string;
+    observerUserIds: string[];
     comment: string;
     finishDate: Date;
-    attachments: Attachment[];
+    fileIds: Attachment[];
 }

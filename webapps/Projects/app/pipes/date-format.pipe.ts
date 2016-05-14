@@ -4,6 +4,10 @@ import * as moment from 'moment';
 @Pipe({ name: 'dateFmt' })
 export class DateFormatPipe {
     transform(date: Date, format: string): string {
+        if (!date) {
+            return '';
+        }
+
         if (!format) {
             format = 'DD.MM.YYYY';
         }

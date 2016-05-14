@@ -25,20 +25,20 @@ export class TaskService {
     ) { }
 
     getTaskPriorityType() {
-        return this.translate.get(['heighest']).map(t => [
-            { value: 'HEIGHEST', text: this.translate.instant('heighest') },
-            { value: 'HEIGHT', text: this.translate.instant('height') },
-            { value: 'MEDIUM', text: this.translate.instant('medium') },
-            { value: 'NORMAL', text: this.translate.instant('normal'), default: true }
+        return this.translate.get(['heighest', 'height', 'medium', 'normal']).map(t => [
+            { value: 'HEIGHEST', text: t.heighest },
+            { value: 'HEIGHT', text: t.height },
+            { value: 'MEDIUM', text: t.medium },
+            { value: 'NORMAL', text: t.normal, default: true }
         ]);
     }
 
     getTaskStatusType() {
-        return this.translate.get(['draft']).map(t => [
-            { value: 'DRAFT', text: this.translate.instant('draft'), default: true },
-            { value: 'WAITING', text: this.translate.instant('waiting') },
-            { value: 'PROCESSED', text: this.translate.instant('processed') },
-            { value: 'FINISHED', text: this.translate.instant('finished') }
+        return this.translate.get(['draft', 'waiting', 'processed', 'finished']).map(t => [
+            { value: 'DRAFT', text: t.draft, default: true },
+            { value: 'WAITING', text: t.waiting },
+            { value: 'PROCESSED', text: t.processed },
+            { value: 'FINISHED', text: t.finished }
         ]);
     }
 
@@ -91,15 +91,15 @@ export class TaskService {
     //
     private serializeTask(task: Task): string {
         return serializeObj({
-            type: task.type ? task.type.id : '',
+            taskTypeId: task.taskTypeId || '',
             status: task.status,
             priority: task.priority,
             body: task.body,
-            assignee: task.assignee,
-            start_date: task.startDate,
-            due_date: task.dueDate,
-            tags: Array.isArray(task.tags) ? task.tags.map(it => it.id).join(',') : task.tags,
-            attachments: Array.isArray(task.attachments) ? task.attachments.map(it => it.id).join(',') : ''
+            assigneeUserId: task.assigneeUserId,
+            startDate: task.startDate,
+            dueDate: task.dueDate,
+            tagIds: Array.isArray(task.tagIds) ? task.tagIds.join(',') : '',
+            fileIds: Array.isArray(task.fileIds) ? task.fileIds.join(',') : ''
         });
     }
 }

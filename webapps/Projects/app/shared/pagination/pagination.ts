@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, HostBinding, EventEmitter } from '@angular/core';
+import { Component, Input, Output, HostBinding, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'pagination',
@@ -13,8 +13,8 @@ import { Component, Input, Output, OnInit, HostBinding, EventEmitter } from '@an
     `
 })
 
-export class PaginationComponent implements OnInit {
-    @HostBinding('class.hidden') get hostHidden() { return this.totalPages <= 0; };
+export class PaginationComponent {
+    @HostBinding('hidden') get hostHidden() { return this.totalPages < 2; };
 
     @Input() maxPageControl: number = 5;
     @Input() totalPages: number = -1;
@@ -28,7 +28,7 @@ export class PaginationComponent implements OnInit {
         }
     }
 
-    @Output() goToPage = new EventEmitter<any>();
+    @Output() onPageChange = new EventEmitter<any>();
 
     initialized: number = 0;
     currentPage: number = 0;
@@ -38,14 +38,10 @@ export class PaginationComponent implements OnInit {
 
     constructor() { }
 
-    ngOnInit() {
-        // this.pagination();
-    }
-
     toPage(event, page: number) {
         event.preventDefault();
         this.currentPage = +page;
-        this.goToPage.emit({ page: page });
+        this.onPageChange.emit({ page: page });
         this.pagination();
     }
 

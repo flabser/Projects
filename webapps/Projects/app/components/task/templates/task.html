@@ -24,9 +24,11 @@
                 <div class="control-label">
                     {{'task_type' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.type.valid">
-                    <input class="span6" [(ngModel)]="task.type" ngControl="type" />
-                    <div [hidden]="form.controls.type.valid || form.controls.type.pristine" class="error-message">
+                <div class="controls" [class.has-error]="!form.controls.taskTypeId.valid">
+                    <select class="span8" [(ngModel)]="task.taskTypeId" ngControl="taskTypeId">
+                        <option *ngFor="let m of taskTypes" [value]="m.id">{{m.name}}</option>
+                    </select>
+                    <div [hidden]="form.controls.taskTypeId.valid || form.controls.taskTypeId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -37,10 +39,6 @@
                 </div>
                 <div class="controls">
                     <switch-button [model]="task" value="status" [items]="taskStatusTypes"></switch-button>
-                    <!-- <label class="input" *ngFor="let ts of taskStatusTypes">
-                        <input type="radio" name="status" value="{{ts}}" (change)="setStatus(ts)" [checked]="ts == task.status" />
-                        <span>{{ts | text:'L' | translate}}</span>
-                    </label> -->
                     <div [hidden]="form.controls.status.valid || form.controls.status.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -52,10 +50,6 @@
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.priority.valid">
                     <switch-button [model]="task" value="priority" [items]="taskPriorityTypes"></switch-button>
-                    <!-- <label class="input" *ngFor="let tp of taskPriorityTypes">
-                        <input type="radio" name="priority" value="{{tp}}" (change)="setPriority(tp)" [checked]="tp == task.priority" />
-                        <span>{{tp | text:'L' | translate}}</span>
-                    </label> -->
                     <div [hidden]="form.controls.priority.valid || form.controls.priority.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -76,11 +70,11 @@
                 <div class="control-label">
                     {{'assignee_user' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.assignee.valid">
-                    <select class="span8" [(ngModel)]="task.assignee" ngControl="assignee">
+                <div class="controls" [class.has-error]="!form.controls.assigneeUserId.valid">
+                    <select class="span8" [(ngModel)]="task.assigneeUserId" ngControl="assigneeUserId">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
-                    <div [hidden]="form.controls.assignee.valid || form.controls.assignee.pristine" class="error-message">
+                    <div [hidden]="form.controls.assigneeUserId.valid || form.controls.assigneeUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -105,11 +99,11 @@
                 <div class="control-label">
                     {{'tags' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.tags.valid">
-                    <select class="span8" multiple [(ngModel)]="task.tags" ngControl="tags">
+                <div class="controls" [class.has-error]="!form.controls.tagIds.valid">
+                    <select class="span8" multiple [(ngModel)]="task.tagIds" ngControl="tagIds">
                         <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
                     </select>
-                    <div [hidden]="form.controls.tags.valid || form.controls.tags.pristine" class="error-message">
+                    <div [hidden]="form.controls.tagIds.valid || form.controls.tagIds.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>

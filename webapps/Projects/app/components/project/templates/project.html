@@ -35,11 +35,11 @@
                 <div class="control-label">
                     {{'customer' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.customer.valid">
-                    <select class="span8" [(ngModel)]="project.customer" ngControl="customer">
+                <div class="controls" [class.has-error]="!form.controls.customerUserId.valid">
+                    <select class="span8" [(ngModel)]="project.customerUserId" ngControl="customerUserId">
                         <option *ngFor="let c of customers" [value]="c.id">{{c.name}}</option>
                     </select>
-                    <div [hidden]="form.controls.customer.valid || form.controls.customer.pristine" class="error-message">
+                    <div [hidden]="form.controls.customerUserId.valid || form.controls.customerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -48,11 +48,11 @@
                 <div class="control-label">
                     {{'manager' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.manager.valid">
-                    <select class="span8" [(ngModel)]="project.manager" ngControl="manager">
+                <div class="controls" [class.has-error]="!form.controls.managerUserId.valid">
+                    <select class="span8" [(ngModel)]="project.managerUserId" ngControl="managerUserId">
                         <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
                     </select>
-                    <div [hidden]="form.controls.manager.valid || form.controls.manager.pristine" class="error-message">
+                    <div [hidden]="form.controls.managerUserId.valid || form.controls.managerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -61,11 +61,11 @@
                 <div class="control-label">
                     {{'programmer' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.programmer.valid">
-                    <select class="span8" [(ngModel)]="project.programmer" ngControl="programmer">
+                <div class="controls" [class.has-error]="!form.controls.programmerUserId.valid">
+                    <select class="span8" [(ngModel)]="project.programmerUserId" ngControl="programmerUserId">
                         <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
                     </select>
-                    <div [hidden]="form.controls.programmer.valid || form.controls.programmer.pristine" class="error-message">
+                    <div [hidden]="form.controls.programmerUserId.valid || form.controls.programmerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -74,11 +74,11 @@
                 <div class="control-label">
                     {{'tester' | translate}}
                 </div>
-                <div class="controls" [class.has-error]="!form.controls.tester.valid">
-                    <select class="span8" [(ngModel)]="project.tester" ngControl="tester">
+                <div class="controls" [class.has-error]="!form.controls.testerUserId.valid">
+                    <select class="span8" [(ngModel)]="project.testerUserId" ngControl="testerUserId">
                         <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
                     </select>
-                    <div [hidden]="form.controls.tester.valid || form.controls.tester.pristine" class="error-message">
+                    <div [hidden]="form.controls.testerUserId.valid || form.controls.testerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     {{'observers' | translate}}
                 </div>
                 <div class="controls">
-                    <select class="span8" [(ngModel)]="project.observers" ngControl="observers">
+                    <select class="span8" [(ngModel)]="project.observerUserIds" ngControl="observerUserIds">
                         <option *ngFor="let obs of users" [value]="obs.id">{{obs.login}}</option>
                     </select>
                 </div>

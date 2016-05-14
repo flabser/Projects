@@ -13,6 +13,7 @@ import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { ReferenceService } from '../../services/reference.service';
 import { Tag } from '../../models/tag';
+import { TaskType } from '../../models/task-type';
 import { User } from '../../models/user';
 
 @Component({
@@ -29,6 +30,7 @@ export class TaskComponent {
     form: ControlGroup;
     users: User[];
     tags: Tag[];
+    taskTypes: TaskType[];
     taskPriorityTypes: any;
     taskStatusTypes: any;
 
@@ -43,14 +45,14 @@ export class TaskComponent {
         private notifyService: NotificationService
     ) {
         this.form = formBuilder.group({
-            type: [''],
+            taskTypeId: [''],
             status: [''],
             priority: [''],
             body: ['', Validators.required],
-            assignee: [''],
+            assigneeUserId: [''],
             startDate: [''],
             dueDate: [''],
-            tags: [''],
+            tagIds: [''],
             attachments: ['']
         });
     }
@@ -72,14 +74,16 @@ export class TaskComponent {
         Observable.forkJoin(
             this.appService.getUsers(),
             this.referenceService.getTags(),
+            this.referenceService.getTaskTypes(),
             this.taskService.getTaskStatusType(),
             this.taskService.getTaskPriorityType()
         ).subscribe(
             data => {
                 this.users = data[0];
                 this.tags = data[1];
-                this.taskStatusTypes = data[2];
-                this.taskPriorityTypes = data[3];
+                this.taskTypes = data[2];
+                this.taskStatusTypes = data[3];
+                this.taskPriorityTypes = data[4];
             },
             error => {
                 this.handleXhrError(error)

@@ -26,9 +26,9 @@ export class ProjectService {
 
     getProjectStatusTypes() {
         return this.translate.get(['draft', 'processed', 'finished']).map(t => [
-            { value: 'DRAFT', text: this.translate.instant('draft'), default: true },
-            { value: 'PROCESSED', text: this.translate.instant('processed') },
-            { value: 'FINISHED', text: this.translate.instant('finished') }
+            { value: 'DRAFT', text: t.draft, default: true },
+            { value: 'PROCESSED', text: t.processed },
+            { value: 'FINISHED', text: t.finished }
         ]);
     }
 
@@ -83,14 +83,14 @@ export class ProjectService {
         return serializeObj({
             name: project.name,
             status: project.status,
-            customer: project.customer || '',
-            manager: project.manager || 0,
-            programmer: project.programmer || 0,
-            tester: project.tester || 0,
-            observers: Array.isArray(project.observers) ? project.observers.join(',') : (project.observers ? project.observers : ''),
+            customerUserId: project.customerUserId || '',
+            managerUserId: project.managerUserId || '',
+            programmerUserId: project.programmerUserId || '',
+            testerUserId: project.testerUserId || '',
+            observerUserIds: Array.isArray(project.observerUserIds) ? project.observerUserIds.join(',') : project.observerUserIds,
             comment: project.comment,
-            finish_date: project.finishDate ? project.finishDate.toString() : '',
-            attachments: project.attachments ? project.attachments.map(it => it.id).join(',') : ''
+            finishDate: project.finishDate ? project.finishDate.toString() : '',
+            fileIds: project.fileIds ? project.fileIds.join(',') : ''
         });
     }
 }

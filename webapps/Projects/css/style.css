@@ -10,6 +10,11 @@ pagination:empty {
     display: none;
 }
 
+.nav-inline > li {
+    display: inline-block;
+    vertical-align: top;
+}
+
 .entry-wrap.active .entry {
     background: #eee;
 }

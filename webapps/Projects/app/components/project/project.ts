@@ -44,11 +44,11 @@ export class ProjectComponent {
         this.form = formBuilder.group({
             name: ['', Validators.required],
             status: [''],
-            customer: [''],
-            manager: [''],
-            programmer: [''],
-            tester: [''],
-            observers: [''],
+            customerUserId: [''],
+            managerUserId: [''],
+            programmerUserId: [''],
+            testerUserId: [''],
+            observerUserIds: [''],
             comment: [''],
             finishDate: [''],
             attachments: ['']
