@@ -2,7 +2,7 @@ package projects.model;
 
 import com.exponentus.common.model.Attachment;
 import com.exponentus.dataengine.jpa.SecureAppEntity;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import projects.model.constants.ProjectStatusType;
 import staff.model.Organization;
@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@JsonIgnoreProperties({"url"})
 @Entity
 @Table(name = "projects")
 @NamedQuery(name = "Project.findAll", query = "SELECT m FROM Project AS m ORDER BY m.regDate")
@@ -24,7 +23,6 @@ public class Project extends SecureAppEntity<UUID> {
     @Column(nullable = true, length = 10)
     private ProjectStatusType status = ProjectStatusType.UNKNOWN;
 
-    @JsonProperty("customerId")
     private Organization customer;
 
     @JsonProperty("managerUserId")
@@ -64,6 +62,7 @@ public class Project extends SecureAppEntity<UUID> {
         this.status = status;
     }
 
+    @JsonIgnore
     public Organization getCustomer() {
         return customer;
     }
@@ -128,7 +127,6 @@ public class Project extends SecureAppEntity<UUID> {
         this.attachments = attachments;
     }
 
-    @JsonProperty("customerId")
     public String getCustomerId() {
         return customer != null ? customer.getIdentifier() : "";
     }
