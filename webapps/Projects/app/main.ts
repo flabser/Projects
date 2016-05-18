@@ -16,10 +16,7 @@ import { ProjectService } from './services/project.service';
 import { ReferenceService } from './services/reference.service';
 import { StaffService } from './services/staff.service';
 
-declare let __PRODUCTION__: any;
-if (__PRODUCTION__) {
-    enableProdMode();
-}
+enableProdMode();
 
 bootstrap(App, [
     HTTP_PROVIDERS,
