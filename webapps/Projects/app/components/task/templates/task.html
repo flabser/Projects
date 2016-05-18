@@ -22,6 +22,19 @@
         <fieldset class="fieldset">
             <div class="form-group">
                 <div class="control-label">
+                    {{'project' | translate}}
+                </div>
+                <div class="controls" [class.has-error]="!form.controls.projectId.valid">
+                    <select class="span8" [(ngModel)]="task.projectId" ngControl="projectId">
+                        <option *ngFor="let m of projects" [value]="m.id">{{m.name}}</option>
+                    </select>
+                    <div [hidden]="form.controls.projectId.valid || form.controls.projectId.pristine" class="error-message">
+                        {{'required' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="control-label">
                     {{'task_type' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.taskTypeId.valid">

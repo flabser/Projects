@@ -7,11 +7,12 @@ export class Task {
     id: string;
     author: User;
     regDate: Date;
+    url: string;
     wasRead: boolean;
 
+    projectId: string;
     parentId: string;
     childrenIds: string[];
-
     taskTypeId: string;
     status: string;
     priority: string;

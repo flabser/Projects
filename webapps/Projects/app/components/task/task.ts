@@ -9,9 +9,11 @@ import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
 import { TextTransformPipe } from '../../pipes/text-transform.pipe';
 import { AppService } from '../../services/app.service';
-import { Task } from '../../models/task';
+import { ProjectService } from '../../services/project.service';
 import { TaskService } from '../../services/task.service';
 import { ReferenceService } from '../../services/reference.service';
+import { Project } from '../../models/project';
+import { Task } from '../../models/task';
 import { Tag } from '../../models/tag';
 import { TaskType } from '../../models/task-type';
 import { User } from '../../models/user';
@@ -30,6 +32,7 @@ export class TaskComponent {
     form: ControlGroup;
     users: User[];
     tags: Tag[];
+    projects: Project[];
     taskTypes: TaskType[];
     taskPriorityTypes: any;
     taskStatusTypes: any;
@@ -40,11 +43,13 @@ export class TaskComponent {
         private formBuilder: FormBuilder,
         private translate: TranslateService,
         private appService: AppService,
+        private projectService: ProjectService,
         private taskService: TaskService,
         private referenceService: ReferenceService,
         private notifyService: NotificationService
     ) {
         this.form = formBuilder.group({
+            projectId: [''],
             taskTypeId: [''],
             status: [''],
             priority: [''],
@@ -73,6 +78,7 @@ export class TaskComponent {
     loadData() {
         Observable.forkJoin(
             this.appService.getUsers(),
+            this.projectService.getProjects(),
             this.referenceService.getTags(),
             this.referenceService.getTaskTypes(),
             this.taskService.getTaskStatusType(),
@@ -80,10 +86,11 @@ export class TaskComponent {
         ).subscribe(
             data => {
                 this.users = data[0];
-                this.tags = data[1];
-                this.taskTypes = data[2];
-                this.taskStatusTypes = data[3];
-                this.taskPriorityTypes = data[4];
+                this.projects = data[1].projects;
+                this.tags = data[2];
+                this.taskTypes = data[3];
+                this.taskStatusTypes = data[4];
+                this.taskPriorityTypes = data[5];
             },
             error => {
                 this.handleXhrError(error)
