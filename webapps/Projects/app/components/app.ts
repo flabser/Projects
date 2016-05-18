@@ -8,9 +8,10 @@ import { ReferenceService } from '../services/reference.service';
 import { StaffService } from '../services/staff.service';
 
 import { NotificationService, NotificationsComponent } from '../shared/notification';
-import { Dropdown } from '../shared/dropdown/dropdown';
+import { DropdownDirective } from '../shared/dropdown/dropdown.directive';
 
 import { NavComponent } from './nav';
+import { HomeComponent } from './home';
 import { ProjectsComponent } from './project/projects';
 import { ProjectComponent } from './project/project';
 import { TasksComponent } from './task/tasks';
@@ -22,12 +23,13 @@ import { User } from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationsComponent, Dropdown],
+    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationsComponent, DropdownDirective],
     providers: [NotificationService],
     pipes: [TranslatePipe]
 })
 
 @Routes([
+    { path: '/', component: HomeComponent },
     { path: '/tasks/:for', component: TasksComponent },
     { path: '/tasks', component: TasksComponent },
     { path: '/task/:id', component: TaskComponent },

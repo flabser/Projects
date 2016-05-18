@@ -31,7 +31,7 @@ export class AppService {
         let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = 'p?id=outline';
 
-        return this.http.get(url, header);
+        return this.http.get(url, header).map(response => response.json().objects[0]);
     }
 
     getUsers() {
