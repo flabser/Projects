@@ -2,7 +2,7 @@ export class User {
     id: string;
     login: string;
     email: string;
-    user_name: string = '@anonymous';
+    userName: string = '@anonymous';
     pwd: string;
     pwd_confirm: string;
     organization: string;

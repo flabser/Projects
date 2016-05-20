@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
+import { DropdownComponent, DropdownToggleComponent } from '../../shared/dropdown';
 import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
 import { TextTransformPipe } from '../../pipes/text-transform.pipe';
@@ -21,7 +22,7 @@ import { User } from '../../models/user';
 @Component({
     selector: 'task',
     template: require('./templates/task.html'),
-    directives: [FORM_DIRECTIVES, SwitchButtonComponent],
+    directives: [FORM_DIRECTIVES, SwitchButtonComponent, DropdownComponent, DropdownToggleComponent],
     providers: [FormBuilder],
     pipes: [TranslatePipe, TextTransformPipe]
 })
@@ -30,6 +31,7 @@ export class TaskComponent {
     isReady = false;
     task: Task;
     form: ControlGroup;
+
     users: User[];
     tags: Tag[];
     projects: Project[];
@@ -132,5 +134,57 @@ export class TaskComponent {
 
     setPriority(value) {
         this.task.priority = value;
+    }
+
+    onScroll($el, listId) {
+        if ($el.scrollHeight <= $el.scrollTop + $el.offsetHeight) {
+            if (listId === 'project') {
+                this.searchProject({
+                    page: 2
+                });
+            }
+        }
+    }
+
+    searchProject(e) {
+        let param = {};
+        if (e.target) {
+            param = { name: e.target.value };
+        } else {
+            param = e;
+        }
+        this.projectService.getProjects(param).subscribe(data => {
+            this.projects = this.projects.concat(data.projects);
+        });
+    }
+
+    selectProject(project: Project) {
+        this.task.projectId = project.id;
+        this.task.project = project;
+        document.body.click();
+    }
+
+    selectTaskType(taskType: TaskType) {
+        this.task.taskTypeId = taskType.id;
+        this.task.taskType = taskType;
+        document.body.click();
+    }
+
+    selectAssigneeUser(assigneeUser: User) {
+        this.task.assigneeUserId = assigneeUser.id;
+        this.task.assigneeUser = assigneeUser;
+        document.body.click();
+    }
+
+    selectTag(tag: Tag) {
+        this.task.tags.push(tag);
+    }
+
+    removeTag(tag: Tag) {
+        this.task.tags.forEach((it, index) => {
+            if (it.id === tag.id) {
+                this.task.tags.splice(index, 1);
+            }
+        });
     }
 }

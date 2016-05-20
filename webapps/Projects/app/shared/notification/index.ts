@@ -1,3 +1,3 @@
 export * from './notification.service';
-export * from './notifications';
+export * from './notification.component';
 export * from './notification';

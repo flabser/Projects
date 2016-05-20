@@ -1,4 +1,4 @@
-<notifications></notifications>
+<notification></notification>
 <div class="layout">
     <div class="content-overlay" (mousedown)="hideNav($event)" (touchstart)="hideNav($event)"></div>
     <header class="header navbar navbar-fixed-top">
@@ -13,13 +13,13 @@
             <nav class="navbar-nav navbar-right">
                 <ul class="nav nav-inline navbar-right">
                     <li dropdown class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" (click)="preventDefault($event)">
+                        <a dropdown-toggle href="#" class="dropdown-toggle" (click)="preventDefault($event)">
                             <i class="fa fa-user"></i>
                         </a>
                         <ul class="dropdown-menu right">
                             <li>
                                 <a class="user-profile" [routerLink]="['/user-profile']">
-                                    {{loggedUser.user_name}}
+                                    {{loggedUser.userName}}
                                 </a>
                             </li>
                             <li class="divider"></li>
@@ -33,7 +33,7 @@
                 </ul>
                 <form class="navbar-form navbar-search" name="ft-search" (submit)="ftSearch()">
                     <input type="hidden" name="id" value="search" />
-                    <input type="search" class="q" name="keyword" value="{{search_keyword}}" placeholder="{{'search'}}" required autocomplete="off" (focus)="searchToggle()" (blur)="searchToggle()" />
+                    <input type="search" class="q" name="keyword" value="{{search_keyword}}" placeholder="{{'search' | translate}}" required autocomplete="off" (focus)="searchToggle()" (blur)="searchToggle()" />
                     <button type="reset">
                         <i class="fa fa-times"></i>
                     </button>

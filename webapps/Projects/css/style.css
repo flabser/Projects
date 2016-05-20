@@ -29,7 +29,7 @@ pagination:empty {
 }
 
 .side-nav .nav-link.router-link-active {
-    background-color: #ddeaf7;
+    background-color: rgba(0, 127, 255, 0.1);
     box-shadow: inset 0 0 0 1px #89bcec;
     color: #000;
 }

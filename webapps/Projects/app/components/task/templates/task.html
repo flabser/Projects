@@ -25,12 +25,32 @@
                     {{'project' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.projectId.valid">
-                    <select class="span8" [(ngModel)]="task.projectId" ngControl="projectId">
-                        <option *ngFor="let m of projects" [value]="m.id">{{m.name}}</option>
-                    </select>
-                    <div [hidden]="form.controls.projectId.valid || form.controls.projectId.pristine" class="error-message">
-                        {{'required' | translate}}
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <div *ngIf="task.project">
+                                    <span>{{task.project.name}}</span>
+                                    <div class="text-muted pull-right">{{task.project.status}}</div>
+                                    <span class="text-muted">{{task.project.comment}}</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <div class="select-search">
+                                    <input placeholder="{{'search' | translate}}" (keyup)="searchProject($event)" />
+                                </div>
+                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'project')">
+                                    <li class="select-option" [class.selected]="task.projectId == m.id" *ngFor="let m of projects" (click)="selectProject(m)">
+                                        {{m.name}}
+                                        <div class="text-muted pull-right">{{m.status}}</div>
+                                        <span class="text-muted" *ngIf="m.comment">{{m.comment}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div [hidden]="form.controls.projectId.valid || form.controls.projectId.pristine" class="error-message">
+                    {{'required' | translate}}
                 </div>
             </div>
             <div class="form-group">
@@ -38,9 +58,20 @@
                     {{'task_type' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.taskTypeId.valid">
-                    <select class="span8" [(ngModel)]="task.taskTypeId" ngControl="taskTypeId">
-                        <option *ngFor="let m of taskTypes" [value]="m.id">{{m.name}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span *ngIf="task.taskType">{{task.taskType.name}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'taskType')">
+                                    <li class="select-option" [class.selected]="task.taskTypeId == m.id" *ngFor="let m of taskTypes" (click)="selectTaskType(m)">
+                                        {{m.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.taskTypeId.valid || form.controls.taskTypeId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -84,9 +115,20 @@
                     {{'assignee_user' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.assigneeUserId.valid">
-                    <select class="span8" [(ngModel)]="task.assigneeUserId" ngControl="assigneeUserId">
-                        <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span *ngIf="task.assigneeUser">{{task.assigneeUser.userName || task.assigneeUser.userID}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'assigneeUser')">
+                                    <li class="select-option" [class.selected]="task.assigneeUserId == m.id" *ngFor="let m of users" (click)="selectAssigneeUser(m)">
+                                        {{m.name || m.userID}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.assigneeUserId.valid || form.controls.assigneeUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -113,9 +155,20 @@
                     {{'tags' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.tagIds.valid">
-                    <select class="span8" multiple [(ngModel)]="task.tagIds" ngControl="tagIds">
-                        <option *ngFor="let m of tags" [value]="m.id">{{m.name}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span class="tag" *ngFor="let m of task.tags" (click)="removeTag(m)">{{m.name}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'tags')">
+                                    <li class="select-option" *ngFor="let m of tags" (click)="selectTag(m)">
+                                        {{m.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.tagIds.valid || form.controls.tagIds.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
