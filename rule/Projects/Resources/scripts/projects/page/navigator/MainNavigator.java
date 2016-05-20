@@ -16,13 +16,21 @@ public class MainNavigator extends _DoPage {
     public void doGET(_Session session, _WebFormData formData) {
         List<IOutcomeObject> list = new ArrayList<IOutcomeObject>();
 
-        _Outline common_outline = new _Outline(getLocalizedWord("projects", session.getLang()), "common");
-        common_outline.addEntry(new _OutlineEntry(getLocalizedWord("projects", session.getLang()), "project-view"));
-        common_outline.addEntry(new _OutlineEntry(getLocalizedWord("tasks", session.getLang()), "task-view"));
+        _Outline root = new _Outline("", "common");
 
-        list.add(common_outline);
+        _OutlineEntry taskEntry = new _OutlineEntry("", "task-view");
+        taskEntry.addEntry(new _OutlineEntry(getLocalizedWord("inbox", session.getLang()), "", "task-inbox", "p?id=task-view&for=inbox"));
+        taskEntry.addEntry(new _OutlineEntry(getLocalizedWord("week", session.getLang()), "", "task-week", "p?id=task-view&for=week"));
+        taskEntry.addEntry(new _OutlineEntry(getLocalizedWord("all", session.getLang()), "", "task-all", "p?id=task-view&for=all"));
+        taskEntry.addEntry(new _OutlineEntry(getLocalizedWord("completed", session.getLang()), "", "task-completed", "p?id=task-view&for=completed"));
+        taskEntry.addEntry(new _OutlineEntry(getLocalizedWord("my_tasks", session.getLang()), "", "task-my", "p?id=task-view&for=my"));
+        root.addEntry(taskEntry);
 
-        addValue("outline_current", formData.getValueSilently("id").replace("-form", "-view"));
+        root.addEntry(new _OutlineEntry(getLocalizedWord("projects", session.getLang()), "project-view"));
+
+        list.add(root);
+
+        // addValue("outline_current", formData.getValueSilently("id").replace("-form", "-view"));
         addContent(list);
     }
 }

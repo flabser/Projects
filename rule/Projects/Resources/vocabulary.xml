@@ -76,4 +76,81 @@
         <entry lang="RUS">Дата завершения</entry>
         <entry lang="ENG">Finish date</entry>
     </sentence>
+    <sentence mode="on" keyword="body">
+        <entry lang="RUS">Содержимое</entry>
+        <entry lang="ENG">Body</entry>
+    </sentence>
+    <sentence mode="on" keyword="tags">
+        <entry lang="RUS">Метки</entry>
+        <entry lang="ENG">Tags</entry>
+    </sentence>
+
+    <sentence mode="on" keyword="name">
+        <entry lang="RUS">Название</entry>
+        <entry lang="ENG">Name</entry>
+    </sentence>
+    <sentence mode="on" keyword="customer">
+        <entry lang="RUS">Заказчик</entry>
+        <entry lang="ENG">Customer</entry>
+    </sentence>
+    <sentence mode="on" keyword="manager">
+        <entry lang="RUS">Менеджер</entry>
+        <entry lang="ENG">Manager</entry>
+    </sentence>
+    <sentence mode="on" keyword="programmer">
+        <entry lang="RUS">Программист</entry>
+        <entry lang="ENG">Programmer</entry>
+    </sentence>
+    <sentence mode="on" keyword="tester">
+        <entry lang="RUS">Тестировшик</entry>
+        <entry lang="ENG">Tester</entry>
+    </sentence>
+    <sentence mode="on" keyword="observers">
+        <entry lang="RUS">Наблюдатели</entry>
+        <entry lang="ENG">Observers</entry>
+    </sentence>
+    <sentence mode="on" keyword="comment">
+        <entry lang="RUS">Комментарий</entry>
+        <entry lang="ENG">Comment</entry>
+    </sentence>
+
+    <sentence mode="on" keyword="search">
+        <entry lang="RUS">Поиск</entry>
+        <entry lang="KAZ">Іздеу</entry>
+        <entry lang="ENG">Search</entry>
+    </sentence>
+
+    <sentence mode="on" keyword="draft">
+        <entry lang="RUS">Черновик</entry>
+        <entry lang="ENG">Draft</entry>
+    </sentence>
+    <sentence mode="on" keyword="waiting">
+        <entry lang="RUS">Ожидание</entry>
+        <entry lang="ENG">Waiting</entry>
+    </sentence>
+    <sentence mode="on" keyword="processed">
+        <entry lang="RUS">В работе</entry>
+        <entry lang="ENG">Processed</entry>
+    </sentence>
+    <sentence mode="on" keyword="finished">
+        <entry lang="RUS">Завершено</entry>
+        <entry lang="ENG">Finished</entry>
+    </sentence>
+
+    <sentence mode="on" keyword="highest">
+        <entry lang="RUS">Наивысший</entry>
+        <entry lang="ENG">Highest</entry>
+    </sentence>
+    <sentence mode="on" keyword="height">
+        <entry lang="RUS">Высокий</entry>
+        <entry lang="ENG">Height</entry>
+    </sentence>
+    <sentence mode="on" keyword="medium">
+        <entry lang="RUS">Средний</entry>
+        <entry lang="ENG">Medium</entry>
+    </sentence>
+    <sentence mode="on" keyword="normal">
+        <entry lang="RUS">Нормальный</entry>
+        <entry lang="ENG">Normal</entry>
+    </sentence>
 </vocabulary>

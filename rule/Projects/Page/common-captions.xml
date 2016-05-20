@@ -6,9 +6,11 @@
     <caption name="brand"/>
 
     <caption name="new_"/>
+    <caption name="save_close"/>
     <caption name="cancel"/>
     <caption name="select"/>
     <caption name="close"/>
+    <caption name="search"/>
     <caption name="filter"/>
     <caption name="wait_while_document_save"/>
 
@@ -17,14 +19,13 @@
     <caption name="reg_number"/>
 
     <caption name="type"/>
-
+    <caption name="attachments"/>
     <caption name="attach_file"/>
     <caption name="properties"/>
     <caption name="interface"/>
     <caption name="del_document"/>
     <caption name="logout"/>
     <caption name="user_profile"/>
-    <caption name="search"/>
     <caption name="change_skin"/>
     <caption name="employee"/>
     <caption name="position"/>
@@ -58,23 +59,24 @@
     <caption name="new_task"/>
 
     <!-- common form captions -->
-    <caption name="notes"/>
     <caption name="body"/>
     <caption name="files"/>
     <caption name="additional"/>
-    <caption name="save_close"/>
-    <caption name="close"/>
+
     <caption name="bin"/>
     <caption name="editable"/>
     <caption name="author"/>
     <caption name="organization"/>
     <caption name="object"/>
     <caption name="description"/>
-    <caption name="reg_documents"/>
-
     <caption name="additional_info"/>
-
-    <caption name="documents_of_title"/>
+    <caption name="name"/>
+    <caption name="customer"/>
+    <caption name="manager"/>
+    <caption name="programmer"/>
+    <caption name="tester"/>
+    <caption name="observers"/>
+    <caption name="comment"/>
     <caption name="note"/>
     <caption name="tags"/>
     <caption name="task"/>
@@ -87,12 +89,6 @@
     <caption name="finish_date"/>
 
     <caption name="unknown"/>
-    <caption name="writtenoff"/>
-    <caption name="active"/>
-    <caption name="inactive"/>
-    <caption name="summary"/>
-    <caption name="content"/>
-    <caption name="signer"/>
 
     <caption name="draft"/>
     <caption name="waiting"/>
