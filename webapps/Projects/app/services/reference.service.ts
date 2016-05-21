@@ -7,6 +7,9 @@ import { TaskType } from '../models/task-type';
 @Injectable()
 export class ReferenceService {
 
+    private tags: Tag[];
+    private taskTypes: TaskType[];
+
     constructor(
         private http: Http
     ) { }

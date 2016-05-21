@@ -10,11 +10,17 @@ export class StaffService {
         private http: Http
     ) { }
 
-    getOrganizations() {
+    getOrganizations(params?) {
         let header = { headers: new Headers({ 'Accept': 'application/json' }) };
         let url = '/Staff/p?id=get-organizations';
 
         return this.http.get(url, header)
-            .map(response => <Organization[]>response.json().objects[0].list);
+            .map(response => response.json().objects[0])
+            .map(data => {
+                return {
+                    organizations: <Organization[]>data.list,
+                    meta: data.meta
+                }
+            });
     }
 }

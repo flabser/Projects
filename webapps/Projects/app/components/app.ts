@@ -8,7 +8,7 @@ import { ReferenceService } from '../services/reference.service';
 import { StaffService } from '../services/staff.service';
 
 import { NotificationService, NotificationComponent } from '../shared/notification';
-import { DropdownComponent, DropdownToggleComponent } from '../shared/dropdown';
+import { DROPDOWN_DIRECTIVES } from '../shared/dropdown';
 
 import { NavComponent } from './nav';
 import { HomeComponent } from './home';
@@ -23,7 +23,7 @@ import { User } from '../models/user';
 @Component({
     selector: 'project-app',
     template: require('../templates/app.html'),
-    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationComponent, DropdownComponent, DropdownToggleComponent],
+    directives: [ROUTER_DIRECTIVES, NavComponent, NotificationComponent, DROPDOWN_DIRECTIVES],
     providers: [NotificationService],
     pipes: [TranslatePipe]
 })

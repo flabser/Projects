@@ -1,14 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouteSegment, RouteTree, OnActivate } from '@angular/router';
 import { FormBuilder, Validators, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
-import { DropdownComponent, DropdownToggleComponent } from '../../shared/dropdown';
+import { DROPDOWN_DIRECTIVES } from '../../shared/dropdown';
 import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
-import { TextTransformPipe } from '../../pipes/text-transform.pipe';
+import { TextTransformPipe } from '../../pipes';
 import { AppService } from '../../services/app.service';
 import { ProjectService } from '../../services/project.service';
 import { TaskService } from '../../services/task.service';
@@ -22,7 +22,7 @@ import { User } from '../../models/user';
 @Component({
     selector: 'task',
     template: require('./templates/task.html'),
-    directives: [FORM_DIRECTIVES, SwitchButtonComponent, DropdownComponent, DropdownToggleComponent],
+    directives: [FORM_DIRECTIVES, SwitchButtonComponent, DROPDOWN_DIRECTIVES],
     providers: [FormBuilder],
     pipes: [TranslatePipe, TextTransformPipe]
 })
@@ -65,16 +65,14 @@ export class TaskComponent {
     }
 
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
-        if (this.routeSegment.getParam('id') !== 'new') {
-            this.taskService.getTaskById(this.routeSegment.getParam('id')).subscribe(
-                task => this.task = task,
-                errorResponse => this.handleXhrError(errorResponse)
-            );
-        } else {
-            this.task = new Task();
-        }
-
-        this.loadData();
+        this.taskService.getTaskById(this.routeSegment.getParam('id')).subscribe(
+            task => {
+                this.task = task;
+                // resolve related data
+                this.loadData();
+            },
+            errorResponse => this.handleXhrError(errorResponse)
+        );
     }
 
     loadData() {
@@ -93,6 +91,27 @@ export class TaskComponent {
                 this.taskTypes = data[3];
                 this.taskStatusTypes = data[4];
                 this.taskPriorityTypes = data[5];
+
+                if (this.task.taskType) {
+                    this.taskTypes.forEach(it => {
+                        if (it.id === this.task.taskType.id) {
+                            this.task.taskType = it;
+                        }
+                    });
+                }
+                if (this.task.project) {
+                    this.projects.forEach(it => {
+                        if (it.id === this.task.project.id) {
+                            this.task.project = it;
+                        }
+                    });
+                }
+                if (this.task.tags) {
+                    let tts = this.task.tags.map(it => it.id);
+                    this.task.tags = this.tags.filter(it => tts.indexOf(it.id) != -1);
+                }
+
+                console.log(this);
             },
             error => {
                 this.handleXhrError(error)
@@ -136,7 +155,7 @@ export class TaskComponent {
         this.task.priority = value;
     }
 
-    onScroll($el, listId) {
+    onScrollSelectList($el, listId) {
         if ($el.scrollHeight <= $el.scrollTop + $el.offsetHeight) {
             if (listId === 'project') {
                 this.searchProject({
@@ -159,32 +178,45 @@ export class TaskComponent {
     }
 
     selectProject(project: Project) {
-        this.task.projectId = project.id;
         this.task.project = project;
         document.body.click();
     }
 
     selectTaskType(taskType: TaskType) {
-        this.task.taskTypeId = taskType.id;
         this.task.taskType = taskType;
         document.body.click();
     }
 
     selectAssigneeUser(assigneeUser: User) {
-        this.task.assigneeUserId = assigneeUser.id;
-        this.task.assigneeUser = assigneeUser;
+        this.task.assignee = assigneeUser;
         document.body.click();
     }
 
     selectTag(tag: Tag) {
+        if (!this.task.tags) {
+            this.task.tags = [];
+        }
         this.task.tags.push(tag);
+        document.body.click();
     }
 
-    removeTag(tag: Tag) {
+    removeTag(tag: Tag, $event) {
         this.task.tags.forEach((it, index) => {
             if (it.id === tag.id) {
                 this.task.tags.splice(index, 1);
             }
         });
+
+        $event.stopPropagation();
+        document.body.click();
+    }
+
+    ngOnDestroy() {
+        this.users = [];
+        this.tags = [];
+        this.projects = [];
+        this.taskTypes = [];
+        this.taskPriorityTypes = [];
+        this.taskStatusTypes = [];
     }
 }

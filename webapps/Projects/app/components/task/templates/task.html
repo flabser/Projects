@@ -38,8 +38,8 @@
                                 <div class="select-search">
                                     <input placeholder="{{'search' | translate}}" (keyup)="searchProject($event)" />
                                 </div>
-                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'project')">
-                                    <li class="select-option" [class.selected]="task.projectId == m.id" *ngFor="let m of projects" (click)="selectProject(m)">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'project')">
+                                    <li class="select-option" [class.selected]="task.project?.id == m.id" *ngFor="let m of projects" (click)="selectProject(m)">
                                         {{m.name}}
                                         <div class="text-muted pull-right">{{m.status}}</div>
                                         <span class="text-muted" *ngIf="m.comment">{{m.comment}}</span>
@@ -64,8 +64,8 @@
                                 <span *ngIf="task.taskType">{{task.taskType.name}}</span>
                             </div>
                             <div class="dropdown-menu select-dropdown">
-                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'taskType')">
-                                    <li class="select-option" [class.selected]="task.taskTypeId == m.id" *ngFor="let m of taskTypes" (click)="selectTaskType(m)">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'taskType')">
+                                    <li class="select-option" [class.selected]="task.taskType?.id == m.id" *ngFor="let m of taskTypes" (click)="selectTaskType(m)">
                                         {{m.name}}
                                     </li>
                                 </ul>
@@ -118,11 +118,11 @@
                     <div class="span8">
                         <div dropdown class="select">
                             <div dropdown-toggle class="select-selection input">
-                                <span *ngIf="task.assigneeUser">{{task.assigneeUser.userName || task.assigneeUser.userID}}</span>
+                                <span *ngIf="task.assignee">{{task.assignee.userName || task.assignee.userID}}</span>
                             </div>
                             <div class="dropdown-menu select-dropdown">
-                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'assigneeUser')">
-                                    <li class="select-option" [class.selected]="task.assigneeUserId == m.id" *ngFor="let m of users" (click)="selectAssigneeUser(m)">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'assigneeUser')">
+                                    <li class="select-option" [class.selected]="task.assignee?.id == m.id" *ngFor="let m of users" (click)="selectAssigneeUser(m)">
                                         {{m.name || m.userID}}
                                     </li>
                                 </ul>
@@ -158,10 +158,10 @@
                     <div class="span8">
                         <div dropdown class="select">
                             <div dropdown-toggle class="select-selection input">
-                                <span class="tag" *ngFor="let m of task.tags" (click)="removeTag(m)">{{m.name}}</span>
+                                <span class="tag" *ngFor="let m of task.tags" (click)="removeTag(m, $event)">{{m.name}}</span>
                             </div>
                             <div class="dropdown-menu select-dropdown">
-                                <ul class="select-list scroll-shadow" (scroll)="onScroll($event.target, 'tags')">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'tags')">
                                     <li class="select-option" *ngFor="let m of tags" (click)="selectTag(m)">
                                         {{m.name}}
                                     </li>

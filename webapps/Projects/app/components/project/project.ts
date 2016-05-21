@@ -5,9 +5,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
+import { DROPDOWN_DIRECTIVES } from '../../shared/dropdown';
 import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
-import { TextTransformPipe } from '../../pipes/text-transform.pipe';
+import { TextTransformPipe } from '../../pipes';
 import { AppService } from '../../services/app.service';
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
@@ -18,7 +19,7 @@ import { User } from '../../models/user';
 @Component({
     selector: 'project',
     template: require('./templates/project.html'),
-    directives: [FORM_DIRECTIVES, SwitchButtonComponent],
+    directives: [FORM_DIRECTIVES, SwitchButtonComponent, DROPDOWN_DIRECTIVES],
     providers: [FormBuilder],
     pipes: [TranslatePipe, TextTransformPipe]
 })
@@ -27,6 +28,7 @@ export class ProjectComponent {
     isReady = false;
     project: Project;
     form: ControlGroup;
+
     users: User[];
     customers: Organization[];
     projectStatusTypes: any;
@@ -56,14 +58,10 @@ export class ProjectComponent {
     }
 
     routerOnActivate(curr: RouteSegment, prev?: RouteSegment, currTree?: RouteTree, prevTree?: RouteTree) {
-        if (this.routeSegment.getParam('id') !== 'new') {
-            this.projectService.getProjectById(this.routeSegment.getParam('id')).subscribe(
-                project => this.project = project,
-                error => this.handleXhrError(error)
-            );
-        } else {
-            this.project = new Project();
-        }
+        this.projectService.getProjectById(this.routeSegment.getParam('id')).subscribe(
+            project => this.project = project,
+            error => this.handleXhrError(error)
+        );
 
         this.loadData();
     }
@@ -75,9 +73,19 @@ export class ProjectComponent {
             this.projectService.getProjectStatusTypes()
         ).subscribe(
             data => {
-                this.customers = data[0];
+                this.customers = data[0].organizations;
                 this.users = data[1];
                 this.projectStatusTypes = data[2];
+
+                if (this.project.customer) {
+                    this.customers.forEach(it => {
+                        if (it.id === this.project.customer.id) {
+                            this.project.customer = it;
+                        }
+                    });
+                }
+
+                console.log(this);
             },
             error => {
                 this.handleXhrError(error)
@@ -108,6 +116,7 @@ export class ProjectComponent {
     }
 
     handleXhrError(errorResponse) {
+        console.log(errorResponse);
         if (errorResponse.status === 401) {
             this.router.navigate(['/login']);
         }
@@ -115,5 +124,66 @@ export class ProjectComponent {
 
     setStatus(value) {
         this.project.status = value;
+    }
+
+    onScrollSelectList($el, listId) {
+        if ($el.scrollHeight <= $el.scrollTop + $el.offsetHeight) {
+            if (listId === 'customer') {
+                this.searchCustomer({
+                    page: 2
+                });
+            }
+        }
+    }
+
+    searchCustomer(e) {
+        let param = {};
+        if (e.target) {
+            param = { name: e.target.value };
+        } else {
+            param = e;
+        }
+        this.staffService.getOrganizations(param).subscribe(data => {
+            this.customers = this.customers.concat(data.organizations);
+        });
+    }
+
+    selectCustomer(customer: Organization) {
+        this.project.customer = customer;
+        document.body.click();
+    }
+
+    selectManager(user: User) {
+        this.project.manager = user;
+        document.body.click();
+    }
+
+    selectProgrammer(user: User) {
+        this.project.programmer = user;
+        document.body.click();
+    }
+
+    selectTester(user: User) {
+        this.project.tester = user;
+        document.body.click();
+    }
+
+    selectObserver(observer: User) {
+        if (!this.project.observers) {
+            this.project.observers = [];
+        }
+        this.project.observers.push(observer);
+        document.body.click();
+    }
+
+    removeObserver(observer: User, $event) {
+        this.project.observers.forEach((it, index) => {
+            if (it.id === observer.id) {
+                this.project.observers.splice(index, 1);
+            }
+        });
+
+        $event.stopPropagation();
+        document.body.click();
     }
 }

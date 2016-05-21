@@ -12,25 +12,15 @@ export class Task {
     wasRead: boolean;
 
     project: Project;
-    projectId: string;
-
-    parentId: string;
-    childrenIds: string[];
-
+    parent: Task;
+    children: Task[];
     taskType: TaskType;
-    taskTypeId: string;
-
-    status: string;
-    priority: string;
+    status: string = 'DRAFT';
+    priority: string = 'NORMAL';
     body: string;
-
-    assigneeUser: User;
-    assigneeUserId: string;
-
+    assignee: User;
     startDate: Date;
     dueDate: Date;
-
-    tags: Tag[] = [];
-    tagIds: string[];
-    fileIds: string[];
+    tags: Tag[];
+    attachments: Attachment[];
 }

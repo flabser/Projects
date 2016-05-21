@@ -36,9 +36,25 @@
                     {{'customer' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.customerUserId.valid">
-                    <select class="span8" [(ngModel)]="project.customerUserId" ngControl="customerUserId">
-                        <option *ngFor="let c of customers" [value]="c.id">{{c.name}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <div *ngIf="project.customer">
+                                    <span>{{project.customer.name}}</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <div class="select-search">
+                                    <input placeholder="{{'search' | translate}}" (keyup)="searchProject($event)" />
+                                </div>
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'customer')">
+                                    <li class="select-option" [class.selected]="project.customer?.id == m.id" *ngFor="let m of customers" (click)="selectCustomer(m)">
+                                        {{m.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.customerUserId.valid || form.controls.customerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -49,9 +65,20 @@
                     {{'manager' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.managerUserId.valid">
-                    <select class="span8" [(ngModel)]="project.managerUserId" ngControl="managerUserId">
-                        <option *ngFor="let m of users" [value]="m.id">{{m.login}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span *ngIf="project.manager">{{project.manager.userName || project.manager.userID}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'manager')">
+                                    <li class="select-option" [class.selected]="project.manager?.id == m.id" *ngFor="let m of users" (click)="selectManager(m)">
+                                        {{m.name || m.userID}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.managerUserId.valid || form.controls.managerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -62,9 +89,20 @@
                     {{'programmer' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.programmerUserId.valid">
-                    <select class="span8" [(ngModel)]="project.programmerUserId" ngControl="programmerUserId">
-                        <option *ngFor="let p of users" [value]="p.id">{{p.login}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span *ngIf="project.programmer">{{project.programmer.userName || project.programmer.userID}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'programmer')">
+                                    <li class="select-option" [class.selected]="project.programmer?.id == m.id" *ngFor="let m of users" (click)="selectProgrammer(m)">
+                                        {{m.name || m.userID}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.programmerUserId.valid || form.controls.programmerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -75,9 +113,20 @@
                     {{'tester' | translate}}
                 </div>
                 <div class="controls" [class.has-error]="!form.controls.testerUserId.valid">
-                    <select class="span8" [(ngModel)]="project.testerUserId" ngControl="testerUserId">
-                        <option *ngFor="let t of users" [value]="t.id">{{t.login}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span *ngIf="project.tester">{{project.tester.userName || project.tester.userID}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'tester')">
+                                    <li class="select-option" [class.selected]="project.tester?.id == m.id" *ngFor="let m of users" (click)="selectTester(m)">
+                                        {{m.name || m.userID}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <div [hidden]="form.controls.testerUserId.valid || form.controls.testerUserId.pristine" class="error-message">
                         {{'required' | translate}}
                     </div>
@@ -88,9 +137,20 @@
                     {{'observers' | translate}}
                 </div>
                 <div class="controls">
-                    <select class="span8" [(ngModel)]="project.observerUserIds" ngControl="observerUserIds">
-                        <option *ngFor="let obs of users" [value]="obs.id">{{obs.login}}</option>
-                    </select>
+                    <div class="span8">
+                        <div dropdown class="select">
+                            <div dropdown-toggle class="select-selection input">
+                                <span class="tag" *ngFor="let m of project.observers" (click)="removeObserver(m, $event)">{{m.userName || m.userID}}</span>
+                            </div>
+                            <div class="dropdown-menu select-dropdown">
+                                <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'observers')">
+                                    <li class="select-option" *ngFor="let m of users" (click)="selectObserver(m)">
+                                        {{m.userName || m.userID}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">

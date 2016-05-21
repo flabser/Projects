@@ -16,7 +16,7 @@ import { ProjectService } from './services/project.service';
 import { ReferenceService } from './services/reference.service';
 import { StaffService } from './services/staff.service';
 
-enableProdMode();
+// enableProdMode();
 
 bootstrap(App, [
     HTTP_PROVIDERS,

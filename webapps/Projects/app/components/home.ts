@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
     selector: '[home]',
-    template: 'home'
+    template: ''
 })
 
 export class HomeComponent {

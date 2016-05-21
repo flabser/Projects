@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Observable';
 
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
-import { Task } from '../models/task';
+import { ReferenceService } from './reference.service';
+import { Project, Task, TaskType, Tag, User, Attachment } from '../models';
 import { serializeObj } from '../utils/obj-utils';
 
 const VIEW_URL = 'p?id=task-view';
@@ -21,7 +22,8 @@ export class TaskService {
 
     constructor(
         private http: Http,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private referenceService: ReferenceService
     ) { }
 
     getTaskPriorityType() {
@@ -62,8 +64,12 @@ export class TaskService {
     }
 
     getTaskById(taskId: string) {
+        if (taskId === 'new') {
+            return Observable.of(<Task>this.makeTask({}));
+        }
+
         return this.http.get(FORM_URL + '&docid=' + taskId, HEADER)
-            .map(response => <Task>response.json().objects[1]);
+            .map(response => <Task>this.makeTask(response.json().objects[1]));
     }
 
     saveTask(task: Task) {
@@ -88,18 +94,80 @@ export class TaskService {
         };
     }
 
+    private makeTask(json: any): Task {
+        let task: Task = new Task();
+
+        task.id = json.id;
+        task.regDate = json.regDate;
+        task.wasRead = json.wasRead;
+
+        if (json.projectId) {
+            task.project = new Project();
+            task.project.id = json.projectId;
+        }
+
+        if (json.parentTaskId) {
+            task.parent = new Task();
+            task.parent.id = json.parentTaskId;
+        }
+
+        task.children = [];
+
+        if (json.taskTypeId) {
+            task.taskType = new TaskType();
+            task.taskType.id = json.taskTypeId;
+        }
+
+        task.status = json.status || 'DRAFT';
+        task.priority = json.priority || 'NORMAL';
+        task.body = json.body;
+
+        if (json.assigneeUserId) {
+            task.assignee = new User();
+            task.assignee.id = json.assigneeUserId;
+        }
+
+        task.startDate = json.startDate;
+        task.dueDate = json.dueDate;
+
+        if (json.tagIds) {
+            task.tags = json.tagIds.map(id => {
+                let t = new Tag();
+                t.id = id;
+                return t;
+            });
+        }
+        task.attachments = [];
+
+
+        // "projectId",
+        // "childrenTaskIds",
+        // "status",
+        // "priority",
+        // "body",
+        // "attachments",
+        // "customerObservation",
+        // "tagIds",
+        // "taskTypeId",
+        // "url",
+        // "assigneeUserId",
+
+        return task;
+    }
+
     //
     private serializeTask(task: Task): string {
         return serializeObj({
-            taskTypeId: task.taskTypeId || '',
+            projectId: task.project.id,
+            taskTypeId: task.taskType.id || '',
             status: task.status,
             priority: task.priority,
             body: task.body,
-            assigneeUserId: task.assigneeUserId,
+            assigneeUserId: task.assignee.id,
             startDate: task.startDate,
             dueDate: task.dueDate,
-            tagIds: Array.isArray(task.tagIds) ? task.tagIds.join(',') : '',
-            fileIds: Array.isArray(task.fileIds) ? task.fileIds.join(',') : ''
+            tagIds: Array.isArray(task.tags) ? task.tags.map(it => it.id).join(',') : '',
+            fileIds: Array.isArray(task.attachments) ? task.attachments.join(',') : ''
         });
     }
 }

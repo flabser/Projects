@@ -8,6 +8,8 @@ export class TextTransformPipe {
                 return text.toLowerCase();
             case 'U':
                 return text.toUpperCase();
+            default:
+                return text;
         }
     }
 }

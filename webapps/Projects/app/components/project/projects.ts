@@ -2,8 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { Router, Routes, RouteSegment, RouteTree, OnActivate } from '@angular/router';
 
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
-import { DateFormatPipe } from '../../pipes/date-format.pipe';
-import { TextTransformPipe } from '../../pipes/text-transform.pipe';
+import { TextTransformPipe, DateFormatPipe } from '../../pipes';
 
 import { NotificationService } from '../../shared/notification';
 import { PaginationComponent } from '../../shared/pagination';
