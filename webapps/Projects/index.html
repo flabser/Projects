@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="/SharedResources/vendor/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/SharedResources/nb/css/nb.min.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+        /* fix: fieldset content overflow */
+        fieldset {
+            display: block;
+            min-width: inherit; /* chrome */
+        }
+        @-moz-document url-prefix() {
+            fieldset {
+                display: table-column !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
