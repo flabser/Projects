@@ -27,6 +27,6 @@ export class ProjectRowComponent {
     }
 
     deleteProject() {
-        this.projectService.deleteProject([].concat(this.project)).subscribe();
+        this.projectService.deleteProject([this.project]).subscribe();
     }
 }

@@ -9,15 +9,12 @@ import { DROPDOWN_DIRECTIVES } from '../../shared/dropdown';
 import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
 import { TextTransformPipe } from '../../pipes';
-import { AppService } from '../../services/app.service';
-import { Project } from '../../models/project';
-import { ProjectService } from '../../services/project.service';
-import { StaffService } from '../../services/staff.service';
-import { Organization } from '../../models/organization';
-import { User } from '../../models/user';
+import { AppService, ProjectService, TaskService, StaffService, ReferenceService } from '../../services';
+import { Project, Organization, User } from '../../models';
 
 @Component({
     selector: 'project',
+    styles: [`project { display: block; }`],
     template: require('./templates/project.html'),
     directives: [FORM_DIRECTIVES, SwitchButtonComponent, DROPDOWN_DIRECTIVES],
     providers: [FormBuilder],
@@ -32,6 +29,7 @@ export class ProjectComponent {
     users: User[];
     customers: Organization[];
     projectStatusTypes: any;
+    private to;
 
     constructor(
         private router: Router,
@@ -126,7 +124,12 @@ export class ProjectComponent {
         this.project.status = value;
     }
 
+    closeDropdown() {
+        document.body.click();
+    }
+
     onScrollSelectList($el, listId) {
+        // if end scroll
         if ($el.scrollHeight <= $el.scrollTop + $el.offsetHeight) {
             if (listId === 'customer') {
                 this.searchCustomer({
@@ -137,35 +140,39 @@ export class ProjectComponent {
     }
 
     searchCustomer(e) {
-        let param = {};
+        let param: any = {};
         if (e.target) {
-            param = { name: e.target.value };
+            param.keyword = e.target.value;
         } else {
             param = e;
         }
         this.staffService.getOrganizations(param).subscribe(data => {
-            this.customers = this.customers.concat(data.organizations);
+            if (param.keyword) {
+                this.customers = data.organizations;
+            } else {
+                this.customers = this.customers.concat(data.organizations);
+            }
         });
     }
 
     selectCustomer(customer: Organization) {
         this.project.customer = customer;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectManager(user: User) {
         this.project.manager = user;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectProgrammer(user: User) {
         this.project.programmer = user;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectTester(user: User) {
         this.project.tester = user;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectObserver(observer: User) {
@@ -173,7 +180,7 @@ export class ProjectComponent {
             this.project.observers = [];
         }
         this.project.observers.push(observer);
-        document.body.click();
+        this.closeDropdown();
     }
 
     removeObserver(observer: User, $event) {
@@ -184,6 +191,6 @@ export class ProjectComponent {
         });
 
         $event.stopPropagation();
-        document.body.click();
+        this.closeDropdown();
     }
 }

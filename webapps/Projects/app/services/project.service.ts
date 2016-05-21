@@ -24,6 +24,14 @@ export class ProjectService {
         private translate: TranslateService
     ) { }
 
+    createURLSearchParams(_params): URLSearchParams {
+        let params: URLSearchParams = new URLSearchParams();
+        for (let p in _params) {
+            params.set(encodeURIComponent(p), encodeURIComponent(_params[p]));
+        }
+        return params;
+    }
+
     getProjectStatusTypes() {
         return this.translate.get(['draft', 'processed', 'finished']).map(t => [
             { value: 'DRAFT', text: t.draft, default: true },
@@ -32,15 +40,10 @@ export class ProjectService {
         ]);
     }
 
-    getProjects(_params = {}) {
-        let params: URLSearchParams = new URLSearchParams();
-        for (let p in _params) {
-            params.set(p, _params[p]);
-        }
-
+    getProjects(params = {}) {
         return this.http.get(VIEW_URL, {
             headers: HEADER.headers,
-            search: params
+            search: this.createURLSearchParams(params)
         })
             .map(response => response.json().objects[0])
             .map(data => {

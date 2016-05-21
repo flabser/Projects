@@ -3,13 +3,9 @@ import { Router, Routes, RouteTree, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { TranslatePipe, TranslateService } from 'ng2-translate/ng2-translate';
 
-import { AppService } from '../services/app.service';
-import { ReferenceService } from '../services/reference.service';
-import { StaffService } from '../services/staff.service';
-
+import { AppService, ReferenceService, StaffService } from '../services';
 import { NotificationService, NotificationComponent } from '../shared/notification';
 import { DROPDOWN_DIRECTIVES } from '../shared/dropdown';
-
 import { NavComponent } from './nav';
 import { HomeComponent } from './home';
 import { ProjectsComponent } from './project/projects';
@@ -30,13 +26,15 @@ import { User } from '../models/user';
 
 @Routes([
     { path: '/', component: HomeComponent },
+    // { path: '/tasks/:for/:id', component: TasksComponent },
     { path: '/tasks/:for', component: TasksComponent },
     { path: '/tasks', component: TasksComponent },
     { path: '/task/:id', component: TaskComponent },
     { path: '/projects/:id', component: ProjectComponent },
     { path: '/projects', component: ProjectsComponent },
     { path: '/user-profile', component: UserProfileComponent },
-    { path: '/login', component: LoginComponent }
+    { path: '/login', component: LoginComponent },
+    { path: '/**', component: HomeComponent }
 ])
 
 export class App implements OnInit {

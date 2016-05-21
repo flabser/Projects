@@ -10,11 +10,7 @@ import 'rxjs/Rx';
 
 import { App } from './components/app';
 import { NotificationService } from './shared/notification';
-import { AppService } from './services/app.service';
-import { TaskService } from './services/task.service';
-import { ProjectService } from './services/project.service';
-import { ReferenceService } from './services/reference.service';
-import { StaffService } from './services/staff.service';
+import { AppService, TaskService, ProjectService, ReferenceService, StaffService  } from './services';
 
 // enableProdMode();
 

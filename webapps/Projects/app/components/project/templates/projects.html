@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="content-body">
-    <div class="view view-project">
+    <div class="view view-project" [class.load]="requestProcess">
         <header class="entries-head">
             <div class="head-wrap">
                 <label class="entry-select">
@@ -23,9 +23,7 @@
         </header>
         <div class="entries">
             <project-row [project]="project" *ngFor="let project of projects"></project-row>
-            <div *ngIf="!projects">
-                {{'loading' | translate}}
-            </div>
         </div>
     </div>
 </div>
+<router-outlet></router-outlet>

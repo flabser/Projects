@@ -45,7 +45,7 @@
                             </div>
                             <div class="dropdown-menu select-dropdown">
                                 <div class="select-search">
-                                    <input placeholder="{{'search' | translate}}" (keyup)="searchProject($event)" />
+                                    <input name="keyword" placeholder="{{'search' | translate}}" (keyup)="searchCustomer($event)" />
                                 </div>
                                 <ul class="select-list scroll-shadow" (scroll)="onScrollSelectList($event.target, 'customer')">
                                     <li class="select-option" [class.selected]="project.customer?.id == m.id" *ngFor="let m of customers" (click)="selectCustomer(m)">

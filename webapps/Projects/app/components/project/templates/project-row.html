@@ -3,7 +3,7 @@
         <label class="entry-select">
             <input type="checkbox" name="project-id" value="{{project.id}}" (change)="toggleSelected()" [checked]="selected" />
         </label>
-        <a class="entry-link" [routerLink]="['/projects', project.id]">
+        <a class="entry-link" [routerLink]="['./', project.id]">
             <div class="entry-fields">
                 <span class="vw-project-name">{{project.name}}</span>
                 <span class="vw-project-customer">{{project.customer?.name}}</span>

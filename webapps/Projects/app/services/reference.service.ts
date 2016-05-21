@@ -1,8 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 
-import { Tag } from '../models/tag';
-import { TaskType } from '../models/task-type';
+import { Tag, TaskType } from '../models';
 
 @Injectable()
 export class ReferenceService {
@@ -14,19 +13,45 @@ export class ReferenceService {
         private http: Http
     ) { }
 
-    getTags() {
-        let header = { headers: new Headers({ 'Accept': 'application/json' }) };
-        let url = '/Reference/p?id=tags';
+    createURLSearchParams(_params): URLSearchParams {
+        let params: URLSearchParams = new URLSearchParams();
+        for (let p in _params) {
+            params.set(encodeURIComponent(p), encodeURIComponent(_params[p]));
+        }
+        return params;
+    }
 
-        return this.http.get(url, header)
-            .map(response => <Tag[]>response.json().objects[0].list);
+    getTags() {
+        let headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Accept': 'application/json'
+        });
+        let url = '/Reference/p?id=tags&as=json';
+
+        return this.http.get(url, headers)
+            .map(response => response.json().objects[0])
+            .map(data => {
+                return {
+                    tags: <Tag[]>data.list,
+                    meta: data.meta
+                }
+            });
     }
 
     getTaskTypes() {
-        let header = { headers: new Headers({ 'Accept': 'application/json' }) };
-        let url = '/Reference/p?id=tasktypes';
+        let headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+            'Accept': 'application/json'
+        });
+        let url = '/Reference/p?id=tasktypes&as=json';
 
-        return this.http.get(url, header)
-            .map(response => <TaskType[]>response.json().objects[0].list);
+        return this.http.get(url, headers)
+            .map(response => response.json().objects[0])
+            .map(data => {
+                return {
+                    taskTypes: <TaskType[]>data.list,
+                    meta: data.meta
+                }
+            });
     }
 }

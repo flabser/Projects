@@ -9,15 +9,8 @@ import { DROPDOWN_DIRECTIVES } from '../../shared/dropdown';
 import { NotificationService } from '../../shared/notification';
 import { SwitchButtonComponent } from '../../shared/switch-button';
 import { TextTransformPipe } from '../../pipes';
-import { AppService } from '../../services/app.service';
-import { ProjectService } from '../../services/project.service';
-import { TaskService } from '../../services/task.service';
-import { ReferenceService } from '../../services/reference.service';
-import { Project } from '../../models/project';
-import { Task } from '../../models/task';
-import { Tag } from '../../models/tag';
-import { TaskType } from '../../models/task-type';
-import { User } from '../../models/user';
+import { AppService, ProjectService, TaskService, ReferenceService } from '../../services';
+import { Project, Task, Tag, TaskType, User } from '../../models';
 
 @Component({
     selector: 'task',
@@ -87,8 +80,8 @@ export class TaskComponent {
             data => {
                 this.users = data[0];
                 this.projects = data[1].projects;
-                this.tags = data[2];
-                this.taskTypes = data[3];
+                this.tags = data[2].tags;
+                this.taskTypes = data[3].taskTypes;
                 this.taskStatusTypes = data[4];
                 this.taskPriorityTypes = data[5];
 
@@ -155,7 +148,12 @@ export class TaskComponent {
         this.task.priority = value;
     }
 
+    closeDropdown() {
+        document.body.click();
+    }
+
     onScrollSelectList($el, listId) {
+        // if end scroll
         if ($el.scrollHeight <= $el.scrollTop + $el.offsetHeight) {
             if (listId === 'project') {
                 this.searchProject({
@@ -179,17 +177,17 @@ export class TaskComponent {
 
     selectProject(project: Project) {
         this.task.project = project;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectTaskType(taskType: TaskType) {
         this.task.taskType = taskType;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectAssigneeUser(assigneeUser: User) {
         this.task.assignee = assigneeUser;
-        document.body.click();
+        this.closeDropdown();
     }
 
     selectTag(tag: Tag) {
@@ -197,7 +195,7 @@ export class TaskComponent {
             this.task.tags = [];
         }
         this.task.tags.push(tag);
-        document.body.click();
+        this.closeDropdown();
     }
 
     removeTag(tag: Tag, $event) {
@@ -208,7 +206,7 @@ export class TaskComponent {
         });
 
         $event.stopPropagation();
-        document.body.click();
+        this.closeDropdown();
     }
 
     ngOnDestroy() {

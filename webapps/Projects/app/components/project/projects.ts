@@ -9,6 +9,7 @@ import { PaginationComponent } from '../../shared/pagination';
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/project.service';
 import { ProjectRowComponent } from './project-row';
+import { ProjectComponent } from './project';
 
 @Component({
     selector: 'projects',
@@ -17,10 +18,15 @@ import { ProjectRowComponent } from './project-row';
     directives: [PaginationComponent, ProjectRowComponent]
 })
 
+@Routes([
+    { path: '/:id', component: ProjectComponent }
+])
+
 export class ProjectsComponent {
     projects: Project[];
     params: any = {};
     meta: any = {};
+    requestProcess: boolean = true;
 
     constructor(
         private router: Router,
@@ -33,10 +39,12 @@ export class ProjectsComponent {
     }
 
     loadData(params?) {
+        this.requestProcess = true;
         this.projectService.getProjects(params).subscribe(
             data => {
                 this.projects = data.projects;
                 this.meta = data.meta;
+                this.requestProcess = false;
             },
             errorResponse => this.handleXhrError(errorResponse)
         );

@@ -26,6 +26,14 @@ export class TaskService {
         private referenceService: ReferenceService
     ) { }
 
+    createURLSearchParams(_params): URLSearchParams {
+        let params: URLSearchParams = new URLSearchParams();
+        for (let p in _params) {
+            params.set(encodeURIComponent(p), encodeURIComponent(_params[p]));
+        }
+        return params;
+    }
+
     getTaskPriorityType() {
         return this.translate.get(['heighest', 'height', 'medium', 'normal']).map(t => [
             { value: 'HEIGHEST', text: t.heighest },
@@ -44,15 +52,10 @@ export class TaskService {
         ]);
     }
 
-    getTasks(_params = {}) {
-        let params: URLSearchParams = new URLSearchParams();
-        for (let p in _params) {
-            params.set(p, _params[p]);
-        }
-
+    getTasks(params = {}) {
         return this.http.get(VIEW_URL, {
             headers: HEADER.headers,
-            search: params
+            search: this.createURLSearchParams(params)
         })
             .map(response => response.json().objects[0])
             .map(data => {

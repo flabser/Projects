@@ -9,6 +9,7 @@ import { PaginationComponent } from '../../shared/pagination';
 import { Task } from '../../models/task';
 import { TaskService } from '../../services/task.service';
 import { TaskRowComponent } from './task-row';
+import { TaskComponent } from './task';
 
 @Component({
     selector: 'tasks',
@@ -17,10 +18,15 @@ import { TaskRowComponent } from './task-row';
     directives: [PaginationComponent, TaskRowComponent]
 })
 
+// @Routes([
+//     { path: '/:id', component: TaskComponent },
+// ])
+
 export class TasksComponent {
     tasks: Task[];
     params: any = {};
     meta: any = {};
+    requestProcess: boolean = true;
 
     constructor(
         private router: Router,
@@ -34,10 +40,12 @@ export class TasksComponent {
     }
 
     loadData(params) {
+        this.requestProcess = true;
         this.taskService.getTasks(params).subscribe(
             data => {
                 this.tasks = data.tasks;
                 this.meta = data.meta;
+                this.requestProcess = false;
             },
             errorResponse => this.handleXhrError(errorResponse)
         );
